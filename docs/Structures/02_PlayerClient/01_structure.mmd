@@ -1,0 +1,44 @@
+graph TD
+    subgraph PlayerClient["🎮 PLAYER_CLIENT - Estructura Completa"]
+        PC1["lib/azar_player/"]
+        PC1 --> PC2["contexts/"]
+        PC2 --> PC3["users/"]
+        PC2 --> PC4["purchases/"]
+        
+        PC3 --> PU1["player_user.ex"]
+        PC3 --> PU2["operations.ex"]
+        
+        PC4 --> PUR1["purchase.ex"]
+        PC4 --> PUR2["operations.ex"]
+        
+        PC1 --> PC5["channels/"]
+        PC5 --> PC6["purchase_channel.ex"]
+        
+        PC1 --> PC7["controllers/"]
+        PC7 --> PC8["purchase_controller.ex"]
+        
+        PC1 --> PC9["views/"]
+        PC9 --> PC10["purchase_view.ex"]
+    end
+    
+    subgraph ContextsU["contexts/users/"]
+        direction LR
+        PU1A["Struct:<br/>id<br/>full_name<br/>document<br/>email<br/>saldo<br/>estado"]
+        PU2A["Funciones:<br/>registrarse()<br/>login()<br/>editar_perfil()<br/>agregar_saldo()"]
+        PU1A -.->|usa| PU2A
+    end
+    
+    subgraph ContextsP["contexts/purchases/"]
+        direction LR
+        PUR1A["Struct:<br/>id<br/>user_id<br/>draw_id<br/>ticket<br/>precio<br/>estado"]
+        PUR2A["Funciones:<br/>comprar()<br/>devolver()<br/>historial()<br/>ver_premios()"]
+        PUR1A -.->|usa| PUR2A
+    end
+    
+    style PU1 fill:#4CAF50,color:#fff
+    style PU2 fill:#2196F3,color:#fff
+    style PUR1 fill:#4CAF50,color:#fff
+    style PUR2 fill:#2196F3,color:#fff
+    style PC6 fill:#FF9800,color:#fff
+    style PC8 fill:#FF5722,color:#fff
+    style PC10 fill:#9C27B0,color:#fff

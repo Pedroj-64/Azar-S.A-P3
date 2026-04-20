@@ -1,0 +1,34 @@
+graph LR
+    P1["👤 Jugador<br/>sin cuenta"]
+    
+    P1 -->|1. Registrarse| P2["📝 player_user<br/>.new"]
+    P2 -->|Crea struct| P3["🎮 PlayerUser<br/>con ID"]
+    P3 -->|2. Guarda en| P4["💾 JSON<br/>users.json"]
+    
+    P4 -->|3. Login| P5["🔐 Valida<br/>email + password"]
+    P5 -->|4. Obtiene| P6["📋 Sorteos<br/>disponibles"]
+    
+    P6 -->|5. Ve ofertas| P7["🛒 Selecciona<br/>billete"]
+    P7 -->|6. Compra| P8["💳 Pago<br/>simulado"]
+    
+    P8 -->|7. Server| P9["⚙️ operations<br/>.buy_ticket"]
+    P9 -->|8. Crea| P10["🎫 Ticket<br/>Struct"]
+    P10 -->|9. Guarda| P11["💾 JSON<br/>tickets.json"]
+    
+    P11 -->|10. Registra| P12["📝 Auditoría<br/>compra exitosa"]
+    P12 -->|11. Notifica| P13["📢 Broadcast<br/>WebSocket"]
+    
+    P13 -->|12. Muestra| P14["✅ Confirmación<br/>billete comprado"]
+    
+    style P1 fill:#C8E6C9,color:#000
+    style P3 fill:#C8E6C9,color:#000
+    style P4 fill:#FFCCBC,color:#000
+    style P5 fill:#B2DFDB,color:#000
+    style P7 fill:#FFF9C4,color:#000
+    style P8 fill:#F8BBD0,color:#000
+    style P9 fill:#BBDEFB,color:#000
+    style P10 fill:#C8E6C9,color:#000
+    style P11 fill:#FFCCBC,color:#000
+    style P12 fill:#FFE0B2,color:#000
+    style P13 fill:#D1C4E9,color:#000
+    style P14 fill:#A5D6A7,color:#000

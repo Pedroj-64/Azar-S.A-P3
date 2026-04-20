@@ -1,0 +1,38 @@
+graph TD
+    subgraph SharedDetail["📦 SHARED_CODE - Estructura"]
+        SH1["lib/azar_shared/"]
+        SH1 --> SH2["models/"]
+        SH1 --> SH3["utils/"]
+        
+        SH2 --> SHM1["user_schema.ex"]
+        SH2 --> SHM2["draw_schema.ex"]
+        SH2 --> SHM3["ticket_schema.ex"]
+        
+        SH3 --> SHU1["validations.ex"]
+        SH3 --> SHU2["calculations.ex"]
+        SH3 --> SHU3["date_helpers.ex"]
+        
+        SHM1A["Schemas compartidos<br/>-----------<br/>Estructuras base<br/>validaciones comunes<br/>funciones reutilizables"]
+        
+        SHU1A["validate_email()<br/>validate_document()<br/>validate_amount()<br/>validate_date()"]
+        
+        SHU2A["calculate_total_revenue()<br/>calculate_net_profit()<br/>calculate_winners()<br/>calculate_fractions()"]
+        
+        SHU3A["format_datetime()<br/>is_past_date()<br/>days_until()<br/>date_difference()"]
+    end
+    
+    SH2 -.->|Usa| SHM1A
+    SH3 -.->|Proporciona| SHU1A
+    SH3 -.->|Proporciona| SHU2A
+    SH3 -.->|Proporciona| SHU3A
+    
+    style SHM1 fill:#673AB7,color:#fff
+    style SHM2 fill:#673AB7,color:#fff
+    style SHM3 fill:#673AB7,color:#fff
+    style SHU1 fill:#2196F3,color:#fff
+    style SHU2 fill:#2196F3,color:#fff
+    style SHU3 fill:#2196F3,color:#fff
+    style SHM1A fill:#F3E5F5,color:#000
+    style SHU1A fill:#E3F2FD,color:#000
+    style SHU2A fill:#E3F2FD,color:#000
+    style SHU3A fill:#E3F2FD,color:#000

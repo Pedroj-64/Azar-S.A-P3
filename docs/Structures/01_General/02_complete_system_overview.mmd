@@ -1,0 +1,23 @@
+graph LR
+    A["📱 Jugador"] -->|Click Comprar| B["🎮 Player UI"]
+    B -->|POST /api/draws/123/buy| C["⚙️ Server Controller"]
+    C -->|Llama| D["📦 contexts/draws/operations"]
+    D -->|Lee| E["💾 priv/data/draws.json"]
+    D -->|Crea| F["🎫 Ticket Struct"]
+    F -->|Escribe| G["💾 priv/data/tickets.json"]
+    D -->|Llama| H["📝 contexts/audit/operations"]
+    H -->|Registra| I["💾 priv/data/audit.json"]
+    D -->|Llama| J["📢 contexts/notifications/broadcaster"]
+    J -->|Envía WebSocket| B
+    B -->|Muestra| A["✅ ¡Compra exitosa!"]
+    
+    style A fill:#c8e6c9,color:#000
+    style B fill:#bbdefb,color:#000
+    style C fill:#fff9c4,color:#000
+    style D fill:#ffccbc,color:#000
+    style E fill:#f8bbd0,color:#000
+    style F fill:#f0f4c3,color:#000
+    style G fill:#f8bbd0,color:#000
+    style H fill:#ffe0b2,color:#000
+    style I fill:#f8bbd0,color:#000
+    style J fill:#d1c4e9,color:#000

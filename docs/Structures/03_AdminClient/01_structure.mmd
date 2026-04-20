@@ -1,0 +1,48 @@
+graph TD
+    subgraph AdminClient["👨‍💼 ADMIN_CLIENT - Estructura Completa"]
+        AC1["lib/azar_admin/"]
+        AC1 --> AC2["contexts/"]
+        AC2 --> AC3["users/"]
+        AC2 --> AC4["reports/"]
+        
+        AC3 --> AU1["admin_user.ex"]
+        AC3 --> AU2["operations.ex"]
+        
+        AC4 --> AR1["income_report.ex"]
+        AC4 --> AR2["operations.ex"]
+        
+        AC1 --> AC5["channels/"]
+        AC5 --> AC6["admin_channel.ex"]
+        
+        AC1 --> AC7["controllers/"]
+        AC7 --> AC8["draw_controller.ex"]
+        AC7 --> AC9["report_controller.ex"]
+        
+        AC1 --> AC10["views/"]
+        AC10 --> AC11["draw_view.ex"]
+        AC10 --> AC12["report_view.ex"]
+    end
+    
+    subgraph ContextsU2["contexts/users/"]
+        direction LR
+        AU1A["Struct:<br/>id<br/>name<br/>email<br/>rol<br/>permisos<br/>estado"]
+        AU2A["Funciones:<br/>crear_admin()<br/>asignar_permisos()<br/>listar_admins()"]
+        AU1A -.->|usa| AU2A
+    end
+    
+    subgraph ContextsR["contexts/reports/"]
+        direction LR
+        AR1A["Struct:<br/>id<br/>draw_id<br/>ingresos<br/>premios<br/>ganancia<br/>tickets_vendidos"]
+        AR2A["Funciones:<br/>generar_reporte()<br/>calcular_ingresos()<br/>exportar()"]
+        AR1A -.->|usa| AR2A
+    end
+    
+    style AU1 fill:#4CAF50,color:#fff
+    style AU2 fill:#2196F3,color:#fff
+    style AR1 fill:#FF9800,color:#000
+    style AR2 fill:#2196F3,color:#fff
+    style AC6 fill:#E91E63,color:#fff
+    style AC8 fill:#FF5722,color:#fff
+    style AC9 fill:#FF5722,color:#fff
+    style AC11 fill:#9C27B0,color:#fff
+    style AC12 fill:#9C27B0,color:#fff

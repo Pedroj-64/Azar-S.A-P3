@@ -1,0 +1,17 @@
+graph TD
+    subgraph NotifDetail["📢 contexts/notifications/ - Detallado"]
+        N1["notification.ex"]
+        N2["broadcaster.ex"]
+        
+        N1A["Struct Notification<br/>-----------<br/>id: UUID<br/>type: success|error<br/>|warning|info<br/>message: String<br/>dest_user: UUID<br/>dest_type: player|admin<br/>source: draw|auction<br/>source_id: UUID<br/>created_at: DateTime<br/>read: boolean<br/>read_at: DateTime"]
+        
+        N2A["Funciones<br/>-----------<br/>send_to_user(notif, user)<br/>broadcast_to_all(notif)<br/>broadcast_to_draw(notif, draw)<br/>broadcast_to_admins(notif)<br/>get_user_notifications(user)<br/>mark_as_read(notif)<br/>delete_notification(id)"]
+    end
+    
+    N1 -.->|Define| N1A
+    N2 -.->|Usa struct| N2A
+    
+    style N1 fill:#E91E63,color:#fff
+    style N2 fill:#2196F3,color:#fff
+    style N1A fill:#FCE4EC,color:#000
+    style N2A fill:#E3F2FD,color:#000

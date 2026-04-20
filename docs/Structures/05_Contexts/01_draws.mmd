@@ -1,0 +1,29 @@
+graph TD
+    subgraph DrawsDetail["📦 contexts/draws/ - Detallado"]
+        D1["draw.ex"]
+        D2["schemas/ticket.ex"]
+        D3["schemas/prize.ex"]
+        D4["operations.ex"]
+        
+        D1A["Struct Draw<br/>-----------<br/>id: UUID<br/>name: String<br/>draw_date: DateTime<br/>full_ticket_value: number<br/>fractions_count: int<br/>total_tickets: int<br/>status: open|executed<br/>available_tickets: int<br/>winning_numbers: list<br/>remarks: string"]
+        
+        D2A["Struct Ticket<br/>-----------<br/>id: UUID<br/>number: String<br/>draw_id: UUID<br/>ticket_type: complete|fraction<br/>fraction_number: int<br/>owner: UUID<br/>owner_name: String<br/>purchase_date: DateTime<br/>status: active|returned<br/>purchase_price: number"]
+        
+        D3A["Struct Prize<br/>-----------<br/>id: UUID<br/>draw_id: UUID<br/>name: String<br/>value: number<br/>associated_numbers: list<br/>created_at: DateTime<br/>awarded_to: UUID<br/>status: pending|awarded"]
+        
+        D4A["Funciones<br/>-----------<br/>new_draw(attrs)<br/>buy_ticket(user, draw, num)<br/>return_ticket(user, ticket)<br/>execute_draw(draw_id)<br/>get_draw(id)<br/>list_draws()<br/>update_draw(id, attrs)<br/>calculate_winners(draw)"]
+    end
+    
+    D1 -.->|Define| D1A
+    D2 -.->|Define| D2A
+    D3 -.->|Define| D3A
+    D4 -.->|Usa structs| D4A
+    
+    style D1 fill:#4CAF50,color:#fff
+    style D2 fill:#4CAF50,color:#fff
+    style D3 fill:#4CAF50,color:#fff
+    style D4 fill:#2196F3,color:#fff
+    style D1A fill:#E8F5E9,color:#000
+    style D2A fill:#E8F5E9,color:#000
+    style D3A fill:#E8F5E9,color:#000
+    style D4A fill:#E3F2FD,color:#000

@@ -1,0 +1,24 @@
+sequenceDiagram
+    actor Jugador
+    participant PlayerUI as Player UI
+    participant ServerCtx as Server<br/>contexts/
+    participant Audit as Audit Log
+    participant DB as JSON Files
+    participant Notif as Notifications
+    
+    Jugador ->> PlayerUI: "Quiero comprar billete"
+    PlayerUI ->> ServerCtx: POST /api/draws/123/buy<br/>{user_id, ticket_number}
+    
+    ServerCtx ->> ServerCtx: contexts/draws/<br/>operations.ex<br/>buy_ticket()
+    
+    ServerCtx ->> DB: Lee draw.json<br/>Valida disponibilidad
+    DB -->> ServerCtx: OK - Billete disponible
+    
+    ServerCtx ->> DB: Escribe ticket.json<br/>Crea compra
+    
+    ServerCtx ->> Audit: Registra operación
+    Audit ->> DB: Escribe audit.json<br/>usuario X compró billete
+    
+    ServerCtx ->> Notif: Envía notificación
+    Notif ->> PlayerUI: WebSocket: "¡Compra exitosa!"
+    PlayerUI -->> Jugador: Muestra confirmación
