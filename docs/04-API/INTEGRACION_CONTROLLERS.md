@@ -1,4 +1,4 @@
-# 🚀 Integración de Controllers - Player Client
+#  Integración de Controllers - Player Client
 
 ## Resumen
 
@@ -14,14 +14,14 @@ Se han creado **3 controllers** para el cliente jugador:
 
 ```
 player_client/lib/azar_player/controllers/
-├── health_controller.ex        # ✅ NUEVO - Health check
-├── user_controller.ex          # ✅ NUEVO - Endpoints de usuario
-└── purchase_controller.ex      # ✅ NUEVO - Endpoints de compra
+├── health_controller.ex        # [OK] NUEVO - Health check
+├── user_controller.ex          # [OK] NUEVO - Endpoints de usuario
+└── purchase_controller.ex      # [OK] NUEVO - Endpoints de compra
 ```
 
 ---
 
-## 🎯 Endpoints Disponibles
+##  Endpoints Disponibles
 
 ### UserController
 
@@ -548,14 +548,14 @@ end
 
 ---
 
-## 🚀 Próximos Pasos
+##  Próximos Pasos
 
-1. ✅ **Controllers creados** (UserController, PurchaseController, HealthController)
-2. ⏳ **Implementar operaciones** en operations/operations.ex
-3. ⏳ **Crear tests** para los controllers
-4. ⏳ **Implementar middleware** de autenticación
-5. ⏳ **Configurar router** en la aplicación Phoenix
-6. ⏳ **Documentar API** con Swagger/OpenAPI
+1. [OK] **Controllers creados** (UserController, PurchaseController, HealthController)
+2. [CAMBIAR] **Implementar operaciones** en operations/operations.ex
+3. [CAMBIAR] **Crear tests** para los controllers
+4. [CAMBIAR] **Implementar middleware** de autenticación
+5. [CAMBIAR] **Configurar router** en la aplicación Phoenix
+6. [CAMBIAR] **Documentar API** con Swagger/OpenAPI
 
 ---
 

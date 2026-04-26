@@ -49,7 +49,7 @@ Azar S.A/
 
 ## server/
 
-### 📝 Propósito
+###  Propósito
 Aplicación **Phoenix** central que gestiona:
 - Lógica de negocio de sorteos
 - Gestión de transacciones y auditoría
@@ -95,7 +95,7 @@ server/
         └── context_case.ex  # Helpers para tests
 ```
 
-### 📌 Carpetas Clave
+###  Carpetas Clave
 
 #### `lib/azar_server/contexts/`
 Implementa la **lógica de negocio** mediante Context modules:
@@ -184,7 +184,7 @@ Tests unitarios:
 
 ## admin_client/
 
-### 📝 Propósito
+###  Propósito
 Aplicación **Phoenix** para administradores que permite:
 - Crear y gestionar sorteos
 - Configurar premios
@@ -220,7 +220,7 @@ admin_client/
 └── test/                   # Tests de admin
 ```
 
-### 📌 Carpetas Clave
+###  Carpetas Clave
 
 #### `lib/azar_admin/contexts/`
 
@@ -256,7 +256,7 @@ Interfaz gráfica:
 
 ## player_client/
 
-### 📝 Propósito
+###  Propósito
 Aplicación **Phoenix** para jugadores que permite:
 - Registrarse en el sistema
 - Ver sorteos disponibles
@@ -293,7 +293,7 @@ player_client/
 └── test/                   # Tests del cliente
 ```
 
-### 📌 Carpetas Clave
+###  Carpetas Clave
 
 #### `lib/azar_player/contexts/`
 
@@ -379,7 +379,7 @@ Interfaz de jugador:
 
 ## shared_code/
 
-### 📝 Propósito
+###  Propósito
 Librería Elixir reutilizable compartida entre todas las aplicaciones:
 - Constantes del sistema
 - Definiciones de errores
@@ -410,7 +410,7 @@ shared_code/
 └── test/                # Tests de código compartido
 ```
 
-### 📌 Contenido de Archivos
+###  Contenido de Archivos
 
 #### `constants.ex`
 **Qué se puede encontrar:**
@@ -491,7 +491,7 @@ shared_code/
 
 ## docs/
 
-### 📝 Propósito
+###  Propósito
 Documentación completa del proyecto
 
 ### 🗂️ Estructura
@@ -533,7 +533,7 @@ docs/
         └── README.md
 ```
 
-### 📌 Contenido de Documentos
+###  Contenido de Documentos
 
 | Archivo | Contenido |
 |---------|-----------|
@@ -543,7 +543,7 @@ docs/
 | `ESTRUCTURA_CARPETAS.md` | **Este archivo** |
 | `Structures/` | Diagramas y visualizaciones |
 
-### 📊 Diagramas Mermaid Disponibles
+###  Diagramas Mermaid Disponibles
 
 - **Arquitectura General**: Componentes del sistema
 - **Flujo de Registro**: Cómo se registra un jugador
@@ -555,7 +555,7 @@ docs/
 
 ## scripts/
 
-### 📝 Propósito
+###  Propósito
 Scripts de automatización y utilidades para desarrollo y despliegue
 
 ### 🗂️ Estructura
@@ -569,7 +569,7 @@ scripts/
 └── ...
 ```
 
-### 📌 Scripts Principales
+###  Scripts Principales
 
 #### `setup.sh`
 **Qué hace:**
@@ -596,7 +596,7 @@ scripts/
 
 ## assets/
 
-### 📝 Propósito
+###  Propósito
 Almacenamiento de recursos compartidos de frontend (si aplica)
 
 ### 🗂️ Estructura
@@ -616,7 +616,7 @@ assets/
 
 ---
 
-## 📊 Relación entre Módulos
+##  Relación entre Módulos
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -659,7 +659,7 @@ shared_code/ (Utilidades)
 
 ---
 
-## 🚀 Próximos Pasos para Desarrollo
+##  Próximos Pasos para Desarrollo
 
 1. **Revisar** `docs/Structures/00_START_HERE.md`
 2. **Leer** documentos de arquitectura

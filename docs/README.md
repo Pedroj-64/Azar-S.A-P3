@@ -1,116 +1,102 @@
-# 📚 Documentación - Azar S.A
+# Documentación - Azar S.A
 
-## 🎯 ¡COMIENZA AQUÍ!
-
-**Nuevo en el proyecto?** Mira esto primero:
-
-1. [**ESTRUCTURA_CARPETAS.md**](ESTRUCTURA_CARPETAS.md) - Dónde está cada cosa
-2. [**PATRON_CONTEXTS.md**](PATRON_CONTEXTS.md) - Cómo está organizado el código
-3. [**GUIA_PLAYER_CLIENT_CONTEXTS.md**](GUIA_PLAYER_CLIENT_CONTEXTS.md) - Cómo usar (con ejemplos)
-4. [**REFERENCIA_CONTEXTS.md**](REFERENCIA_CONTEXTS.md) - Referencia rápida
+Bienvenido a la documentación del proyecto Azar S.A. Este directorio contiene toda la información necesaria para entender, desarrollar y mantener el sistema.
 
 ---
 
-## � Estado de Documentación
+## Estructura de Documentación
 
-| Documento | Estado | Propósito |
-|-----------|--------|----------|
-| README.md | ✅ Actualizado | Índice maestro |
-| **ESTRUCTURA_CARPETAS.md** | ✅ NUEVO | Mapeo completo del proyecto |
-| **PATRON_CONTEXTS.md** | ✅ NUEVO | Patrón arquitectónico estándar |
-| **GUIA_PLAYER_CLIENT_CONTEXTS.md** | ✅ NUEVO | Guía práctica con ejemplos |
-| **REFERENCIA_CONTEXTS.md** | ✅ NUEVO + Consolidado | Referencia rápida + Migración |
-| **INTEGRACION_CONTROLLERS.md** | ✅ NUEVO | Controllers con endpoints |
-| ARQUITECTURA.md | ✅ Vigente | Arquitectura del sistema |
-| REQUISITOS.md | ✅ Vigente | Especificaciones funcionales |
-| GUIA_DESARROLLO.md | ✅ Vigente | Guía para desarrolladores |
+La documentación está organizada en las siguientes carpetas temáticas:
 
-**Total: 9 archivos bien estructurados (sin redundancias)**
+### 01-Inicio
+**Punto de partida para nuevos desarrolladores y revisiones generales**
 
----
+- **README.md** - Este archivo (índice general)
+- **DIAGNOSTICO.md** - Estado actual del código: problemas identificados, soluciones propuestas
+- **PLAN_ACCION.md** - Plan de 3 fases para reparaciones, checklist detallado
 
-## �📖 Documentación Arquitectónica
+### 02-Arquitectura
+**Documentación de diseño y estructura del sistema**
 
-### `ESTRUCTURA_CARPETAS.md` ✅ **NUEVO**
-Mapeo completo del proyecto carpeta por carpeta:
-- Estructura de directorios
-- Propósito de cada carpeta
-- Qué se encuentra en cada lugar
-- Explicación detallada de contexts
-- Relaciones entre módulos
+- **ARQUITECTURA.md** - Componentes principales, comunicación entre procesos, estructura OTP
+- **ESTRUCTURA_CARPETAS.md** - Mapeo carpeta por carpeta del proyecto
+- **PATRON_CONTEXTS.md** - Patrón arquitectónico estándar (entity.ex, operations.ex, schemas/)
 
-### `PATRON_CONTEXTS.md` ✅ **NUEVO**
-Explicación del patrón de arquitectura estándar:
-- Cómo se organizan los contexts
-- Estructura: entity.ex, operations.ex, operations/, schemas/
-- Por qué esta estructura
-- Checklist para crear nuevos contexts
-- Patrones y buenas prácticas
+### 03-Guias
+**Guías prácticas de desarrollo y uso**
 
-### `GUIA_PLAYER_CLIENT_CONTEXTS.md` ✅ **NUEVO**
-Guía práctica de uso con ejemplos reales:
-- Cómo usar Purchases context
-- Cómo usar Users context
-- Ejemplos de código completos
-- Integración en controllers
-- Manejo de errores
-- Casos de error comunes
+- **GUIA_DESARROLLO.md** - Configuración inicial, instalación, comandos útiles
+- **GUIA_PLAYER_CLIENT_CONTEXTS.md** - Cómo usar los contexts (con ejemplos reales)
+- **REFERENCIA_CONTEXTS.md** - Referencia rápida, diagramas, snippets de código
 
-### `REFERENCIA_CONTEXTS.md` ✅ **NUEVO**
-Referencia rápida visual:
-- Diagramas de estructura
-- Flujos de uso
-- Matriz de decisión
-- Snippets de código
-- Checklist de validación
-- **Apéndice: Migración de código antiguo**
+### 04-API
+**Documentación de endpoints HTTP**
 
-### `INTEGRACION_CONTROLLERS.md` ✅ **NUEVO**
-Guía de integración de controllers en Phoenix:
-- Controllers creados (UserController, PurchaseController, HealthController)
-- Todos los endpoints disponibles con ejemplos curl
-- Cómo integrar en router.ex
-- Middleware de autenticación
-- Ejemplos de testing
+- **INTEGRACION_CONTROLLERS.md** - Controllers del player_client (15 endpoints, ejemplos curl)
+- **SERVER_CONTROLLERS.md** - Controllers del server (23 endpoints, ejemplos curl)
 
-### `ARQUITECTURA.md` ✅
-Documentación de la arquitectura del sistema:
-- Componentes principales
-- Comunicación entre procesos
-- Flujos de datos
-- Estructura OTP (Supervisores, GenServers)
-- Estados de sorteo
-- Diagramas ASCII
+### 05-Requisitos
+**Especificaciones funcionales**
 
-### `REQUISITOS.md` ✅
-Especificación completa de requisitos:
-- Requisitos funcionales (RF) por aplicación
-- Requisitos no funcionales (RNF)
-- Casos de uso principales (CU)
-- Restricciones técnicas
-- Tablas de especificación
+- **REQUISITOS.md** - Requisitos funcionales y no funcionales del sistema
 
-### `GUIA_DESARROLLO.md` ✅
-Guía paso a paso para desarrolladores:
-- Configuración inicial
-- Instalación de dependencias
-- Estructura de contextos
-- Ejemplos de código
-- Patterns y buenas prácticas
-- Comandos útiles
-- Prerrequisitos del sistema
-- Instalación de Elixir
-- Instalación de dependencias
-- Configuración del entorno
-- Troubleshooting
+### 06-Diagrams
+**Diagramas y visualizaciones**
 
-### `DECISIONES_ARQUITECTURA.md` (A crear)
-Decisiones de diseño tomadas:
-- Por qué JSON en lugar de SQL
-- Por qué OTP para procesos
-- Por qué WebSocket para notificaciones
-- Alternativas consideradas
+- **Structures/** - Diagramas Mermaid de la arquitectura y flujos
 
 ---
 
-**Documentación completa del sistema** 📖
+## Por Dónde Empezar
+
+Depende de tu rol:
+
+### Si eres nuevo en el proyecto
+1. Lee [DIAGNOSTICO.md](01-Inicio/DIAGNOSTICO.md) para entender el estado actual
+2. Luego [ARQUITECTURA.md](02-Arquitectura/ARQUITECTURA.md) para entender el diseño
+3. Consulta [GUIA_DESARROLLO.md](03-Guias/GUIA_DESARROLLO.md) para configurar el ambiente
+
+### Si necesitas arreglar algo
+1. Abre [PLAN_ACCION.md](01-Inicio/PLAN_ACCION.md) para ver las tareas priorizadas
+2. Consulta [PATRON_CONTEXTS.md](02-Arquitectura/PATRON_CONTEXTS.md) para entender la estructura
+3. Usa [GUIA_PLAYER_CLIENT_CONTEXTS.md](03-Guias/GUIA_PLAYER_CLIENT_CONTEXTS.md) como referencia
+
+### Si necesitas entender los endpoints
+1. Abre [INTEGRACION_CONTROLLERS.md](04-API/INTEGRACION_CONTROLLERS.md) para player_client
+2. O [SERVER_CONTROLLERS.md](04-API/SERVER_CONTROLLERS.md) para server
+
+### Si necesitas ver diagramas
+1. Explora [06-Diagrams/Structures/](06-Diagrams/Structures/)
+
+---
+
+## Mapa de Documentación Rápido
+
+| Documento | Propósito | Audiencia |
+|-----------|----------|-----------|
+| DIAGNOSTICO.md | Estado actual | Todos |
+| PLAN_ACCION.md | Tareas a hacer | Desarrolladores |
+| ARQUITECTURA.md | Diseño del sistema | Arquitectos |
+| ESTRUCTURA_CARPETAS.md | Mapeo del proyecto | Nuevos |
+| PATRON_CONTEXTS.md | Cómo estructurar código | Desarrolladores |
+| GUIA_DESARROLLO.md | Setup y comandos | Nuevos |
+| GUIA_PLAYER_CLIENT_CONTEXTS.md | Ejemplos prácticos | Desarrolladores |
+| REFERENCIA_CONTEXTS.md | Referencia rápida | Todos |
+| INTEGRACION_CONTROLLERS.md | Endpoints player_client | API |
+| SERVER_CONTROLLERS.md | Endpoints server | API |
+| REQUISITOS.md | Especificaciones | Todos |
+| Diagrams/ | Visualizaciones | Todos |
+
+---
+
+## Estado del Proyecto
+
+**Última actualización:** 26 de abril de 2026
+
+Ver [DIAGNOSTICO.md](01-Inicio/DIAGNOSTICO.md) para detalles actualizados.
+
+---
+
+## Contacto y Soporte
+
+Para preguntas sobre la documentación o el proyecto, consulta con el equipo de desarrollo.

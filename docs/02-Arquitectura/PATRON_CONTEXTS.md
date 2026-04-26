@@ -1,4 +1,4 @@
-# 🏗️ Patrón de Arquitectura - Contexts
+#  Patrón de Arquitectura - Contexts
 
 ## 📋 Introducción
 
@@ -6,14 +6,14 @@ Este documento explica el **patrón estándar de organización** usado en el pro
 
 ---
 
-## 🎯 Objetivo del Patrón
+##  Objetivo del Patrón
 
 Organizar el código de negocio de manera que:
-- ✅ La lógica esté clara y separada por responsabilidades
-- ✅ Sea fácil de encontrar y modificar código
-- ✅ Se reutilicen estructuras de datos
-- ✅ La API del context sea clara y predecible
-- ✅ Los detalles de implementación estén ocultos
+- [OK] La lógica esté clara y separada por responsabilidades
+- [OK] Sea fácil de encontrar y modificar código
+- [OK] Se reutilicen estructuras de datos
+- [OK] La API del context sea clara y predecible
+- [OK] Los detalles de implementación estén ocultos
 
 ---
 
@@ -47,7 +47,7 @@ server/lib/azar_server/contexts/draws/
 
 ---
 
-## 🔍 Detalle de Cada Archivo
+##  Detalle de Cada Archivo
 
 ### 1. **[entity].ex** - Struct Principal
 
@@ -89,15 +89,15 @@ end
 ```
 
 **Responsabilidades**:
-- ✅ Definir campos del struct
-- ✅ Definir tipos con `@type`
-- ✅ Proveer función `new/1` para construcción básica
-- ✅ Documentar con `@moduledoc` qué representa
+- [OK] Definir campos del struct
+- [OK] Definir tipos con `@type`
+- [OK] Proveer función `new/1` para construcción básica
+- [OK] Documentar con `@moduledoc` qué representa
 
 **NO INCLUIR**:
-- ❌ Lógica de negocio compleja
-- ❌ Operaciones CRUD
-- ❌ Acceso a persistencia
+- [ERROR] Lógica de negocio compleja
+- [ERROR] Operaciones CRUD
+- [ERROR] Acceso a persistencia
 
 ---
 
@@ -176,11 +176,11 @@ end
 ```
 
 **Responsabilidades**:
-- ✅ Definir funciones públicas del context
-- ✅ Documentar con `@spec` y `@doc`
-- ✅ Manejar flujo de error (`with`)
-- ✅ Integrar múltiples servicios (validación, persistencia, auditoría)
-- ✅ Coordinar entre contextos si es necesario
+- [OK] Definir funciones públicas del context
+- [OK] Documentar con `@spec` y `@doc`
+- [OK] Manejar flujo de error (`with`)
+- [OK] Integrar múltiples servicios (validación, persistencia, auditoría)
+- [OK] Coordinar entre contextos si es necesario
 
 **Patrón**:
 - Funciones CRUD básicas: `create_*`, `list_*`, `get_*`, `update_*`, `delete_*`
@@ -188,9 +188,9 @@ end
 - Cada función retorna `{:ok, result}` o `{:error, reason}`
 
 **NO INCLUIR**:
-- ❌ Lógica compleja (va en `operations/operations.ex`)
-- ❌ Detalles de persistencia específicos
-- ❌ Funciones privadas extensas
+- [ERROR] Lógica compleja (va en `operations/operations.ex`)
+- [ERROR] Detalles de persistencia específicos
+- [ERROR] Funciones privadas extensas
 
 ---
 
@@ -257,10 +257,10 @@ end
 ```
 
 **Responsabilidades**:
-- ✅ Implementar lógica compleja y cálculos
-- ✅ Manejar persistencia (JSON, DB, etc.)
-- ✅ Operaciones internas que solo `operations.ex` llama
-- ✅ Funciones marcadas con `@doc false` para que no aparezcan en documentación
+- [OK] Implementar lógica compleja y cálculos
+- [OK] Manejar persistencia (JSON, DB, etc.)
+- [OK] Operaciones internas que solo `operations.ex` llama
+- [OK] Funciones marcadas con `@doc false` para que no aparezcan en documentación
 
 **Características**:
 - Todas las funciones son privadas o `@doc false`
@@ -326,7 +326,7 @@ schemas/
 
 ---
 
-## 📊 Diagrama de Relaciones
+##  Diagrama de Relaciones
 
 ```
 Otros Módulos (Controllers, Views)
@@ -387,7 +387,7 @@ Ejemplo: Crear un nuevo sorteo
 
 ---
 
-## ✅ Checklist para Crear un Context
+## [OK] Checklist para Crear un Context
 
 Al crear un nuevo context, asegúrate de:
 
@@ -403,7 +403,7 @@ Al crear un nuevo context, asegúrate de:
 
 ---
 
-## 📝 Ejemplo Completo: Purchase Context (player_client)
+##  Ejemplo Completo: Purchase Context (player_client)
 
 ```
 player_client/lib/azar_player/contexts/purchases/
@@ -434,7 +434,7 @@ player_client/lib/azar_player/contexts/purchases/
 
 ## 🚫 Errores Comunes a Evitar
 
-| ❌ MALO | ✅ BIEN |
+| [ERROR] MALO | [OK] BIEN |
 |---------|---------|
 | Todo en un archivo | Separar en operations.ex, operations/, schemas/ |
 | Llamar directamente `operations/operations.ex` desde controladores | Llamar `operations.ex` que delega a `operations/` |

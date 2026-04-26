@@ -1,6 +1,6 @@
-# 📊 Referencia Rápida - Estructura de Contexts
+#  Referencia Rápida - Estructura de Contexts
 
-## 🎯 Un Vistazo Rápido
+##  Un Vistazo Rápido
 
 Esta página te muestra de un vistazo cómo están organizados los contexts y cómo acceder a ellos.
 
@@ -103,7 +103,7 @@ users/
     │       ├── email
     │       └── verified_email
     │
-    ├── 📄 credentials.ex (⚠️ SENSIBLE)
+    ├── 📄 credentials.ex ([WARN] SENSIBLE)
     │   └── Struct: %Credentials{}
     │       ├── user_id
     │       ├── password_hash
@@ -168,7 +168,7 @@ Controller HTTP
 
 ---
 
-## 🎯 Matriz de Decisión
+##  Matriz de Decisión
 
 | Necesito... | Usar | Ejemplo |
 |-------------|------|---------|
@@ -183,7 +183,7 @@ Controller HTTP
 
 ---
 
-## 📝 Snippets de Código
+##  Snippets de Código
 
 ### Snippet 1: Compra Completa en Controller
 
@@ -309,7 +309,7 @@ end
 
 ---
 
-## 🚀 Próximos Pasos
+##  Próximos Pasos
 
 1. **Lee** [PATRON_CONTEXTS.md](PATRON_CONTEXTS.md) para entender la arquitectura
 2. **Explora** [GUIA_PLAYER_CLIENT_CONTEXTS.md](GUIA_PLAYER_CLIENT_CONTEXTS.md) para ejemplos detallados
@@ -329,13 +329,13 @@ Si tienes código que usa la estructura anterior, aquí cómo actualizar:
 
 ### Cambio 1: Actualizar Imports
 
-**❌ Antes (Antiguo):**
+**[ERROR] Antes (Antiguo):**
 ```elixir
 alias AzarPlayer.Contexts.Purchases.Purchase
 purchase = Purchase.create_purchase(attrs)
 ```
 
-**✅ Después (Nuevo):**
+**[OK] Después (Nuevo):**
 ```elixir
 alias AzarPlayer.Contexts.Purchases.Operations
 {:ok, purchase} = Operations.create_purchase(attrs)
@@ -343,14 +343,14 @@ alias AzarPlayer.Contexts.Purchases.Operations
 
 ### Cambio 2: Manejar Resultados
 
-**❌ Antes:**
+**[ERROR] Antes:**
 ```elixir
 result = Purchase.create_purchase(attrs)
 # ¿Qué es result? ¿Struct o error?
 IO.inspect(result)
 ```
 
-**✅ Después:**
+**[OK] Después:**
 ```elixir
 case Operations.create_purchase(attrs) do
   {:ok, purchase} -> IO.inspect(purchase)
@@ -360,12 +360,12 @@ end
 
 ### Cambio 3: Acceder a Structs Relacionados
 
-**❌ Antes:**
+**[ERROR] Antes:**
 ```elixir
 refund_data = purchase.refund_amount  # ¿Existe este campo?
 ```
 
-**✅ Después:**
+**[OK] Después:**
 ```elixir
 # Crear explícitamente un Refund
 refund = Refund.new(%{...})
@@ -374,7 +374,7 @@ refund = Refund.new(%{...})
 
 ### Cambio 4: Manejar Errores de Forma Consistente
 
-**❌ Antes:**
+**[ERROR] Antes:**
 ```elixir
 # Cada función retorna diferente
 if Purchase.validate_purchase(...) do
@@ -382,7 +382,7 @@ if Purchase.validate_purchase(...) do
 end
 ```
 
-**✅ Después:**
+**[OK] Después:**
 ```elixir
 # Todo es consistent {:ok, data} o {:error, reason}
 with {:ok, :available} <- Operations.validate_purchase(...),

@@ -1,11 +1,11 @@
 # 📚 Guía de Uso - Player Client Contexts
 
-## 🎯 Objetivo
+##  Objetivo
 Esta guía explica cómo usar los contexts reorganizados de `player_client/` siguiendo el patrón estándar del proyecto.
 
 ---
 
-## 🏗️ Estructura de Carpetas
+##  Estructura de Carpetas
 
 ### player_client/contexts/
 
@@ -35,18 +35,18 @@ lib/azar_player/contexts/
 
 ---
 
-## 📝 Cómo Usar los Contexts
+##  Cómo Usar los Contexts
 
 ### Regla de Oro ⭐
 
 **SIEMPRE usar `operations.ex`** - Nunca acceder directamente a `operations/operations.ex`
 
 ```elixir
-# ✅ CORRECTO
+# [OK] CORRECTO
 alias AzarPlayer.Contexts.Purchases.Operations
 Operations.create_purchase(attrs)
 
-# ❌ INCORRECTO - No hagas esto
+# [ERROR] INCORRECTO - No hagas esto
 alias AzarPlayer.Contexts.Purchases.Operations.Impl
 Impl.validate_purchase_attrs(attrs)
 ```
@@ -427,7 +427,7 @@ end
 
 ---
 
-## ⚠️ Casos de Error Comunes
+## [WARN] Casos de Error Comunes
 
 | Error | Significado | Solución |
 |-------|-------------|----------|
@@ -440,7 +440,7 @@ end
 
 ---
 
-## 📊 Patrón de Manejo de Errores
+##  Patrón de Manejo de Errores
 
 Siempre usa `with` para manejar múltiples operaciones:
 
@@ -466,42 +466,42 @@ end
 ## 🚫 NO Hagas Esto
 
 ```elixir
-# ❌ NUNCA accedas directo a operations/operations.ex
+# [ERROR] NUNCA accedas directo a operations/operations.ex
 alias AzarPlayer.Contexts.Purchases.Operations.Impl
 Impl.validate_purchase_attrs(attrs)
 
-# ❌ NUNCA accedas directo al struct sin usar operations
+# [ERROR] NUNCA accedas directo al struct sin usar operations
 import AzarPlayer.Contexts.Purchases.Purchase
 Purchase.new(attrs)  # Está bien, pero mejor usar Operations.create_purchase
 
-# ❌ NUNCA asumas estructura de datos sin documentación
+# [ERROR] NUNCA asumas estructura de datos sin documentación
 purchase.some_random_field  # ¿Existe realmente?
 
-# ❌ NUNCA mezcles contexts sin coordinar
+# [ERROR] NUNCA mezcles contexts sin coordinar
 Operations.debit_balance  # Desde otro contexto sin consistencia
 ```
 
 ---
 
-## ✅ Sí Haz Esto
+## [OK] Sí Haz Esto
 
 ```elixir
-# ✅ SIEMPRE usa operations para operaciones de negocio
+# [OK] SIEMPRE usa operations para operaciones de negocio
 Operations.create_purchase(attrs)
 
-# ✅ SIEMPRE maneja errores con pattern matching
+# [OK] SIEMPRE maneja errores con pattern matching
 case Operations.create_purchase(attrs) do
   {:ok, purchase} -> ...
   {:error, reason} -> ...
 end
 
-# ✅ SIEMPRE usa alias para importar
+# [OK] SIEMPRE usa alias para importar
 alias AzarPlayer.Contexts.Purchases.Operations
 
-# ✅ SIEMPRE verifica tipos de datos
+# [OK] SIEMPRE verifica tipos de datos
 %Purchase{} = purchase  # Pattern matching con struct
 
-# ✅ SIEMPRE usa with para operaciones complejas
+# [OK] SIEMPRE usa with para operaciones complejas
 with {:ok, user} <- ...,
      {:ok, balance} <- ... do
   ...
