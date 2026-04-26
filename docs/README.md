@@ -20,11 +20,12 @@
 | **PATRON_CONTEXTS.md** | ✅ NUEVO | Patrón arquitectónico estándar |
 | **GUIA_PLAYER_CLIENT_CONTEXTS.md** | ✅ NUEVO | Guía práctica con ejemplos |
 | **REFERENCIA_CONTEXTS.md** | ✅ NUEVO + Consolidado | Referencia rápida + Migración |
+| **INTEGRACION_CONTROLLERS.md** | ✅ NUEVO | Controllers con endpoints |
 | ARQUITECTURA.md | ✅ Vigente | Arquitectura del sistema |
 | REQUISITOS.md | ✅ Vigente | Especificaciones funcionales |
 | GUIA_DESARROLLO.md | ✅ Vigente | Guía para desarrolladores |
 
-**Total: 8 archivos bien estructurados (sin redundancias)**
+**Total: 9 archivos bien estructurados (sin redundancias)**
 
 ---
 
@@ -63,6 +64,14 @@ Referencia rápida visual:
 - Snippets de código
 - Checklist de validación
 - **Apéndice: Migración de código antiguo**
+
+### `INTEGRACION_CONTROLLERS.md` ✅ **NUEVO**
+Guía de integración de controllers en Phoenix:
+- Controllers creados (UserController, PurchaseController, HealthController)
+- Todos los endpoints disponibles con ejemplos curl
+- Cómo integrar en router.ex
+- Middleware de autenticación
+- Ejemplos de testing
 
 ### `ARQUITECTURA.md` ✅
 Documentación de la arquitectura del sistema:
