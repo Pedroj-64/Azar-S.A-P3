@@ -1,26 +1,26 @@
 defmodule AzarAdmin.Contexts.Users.AdminUser do
   @moduledoc """
-  Struct que representa un Usuario Administrador en el sistema.
+  Struct representing an Administrator user in the system.
 
-  Los administradores pueden:
-  - Crear y gestionar sorteos
-  - Crear y gestionar premios
-  - Ver reportes y estadísticas
-  - Gestionar usuarios
+  Administrators can:
+  - Create and manage draws
+  - Create and manage prizes
+  - View reports and statistics
+  - Manage users
   """
 
   @enforce_keys [:id, :name, :email, :password_hash]
   defstruct [
-    :id,                          # UUID único del administrador
-    :name,                        # Nombre completo
-    :email,                       # Email único
-    :password_hash,               # Contraseña hasheada con bcrypt
-    :role,                        # Rol: "admin", "supervisor"
-    :status,                      # Estado: "active", "inactive", "suspended"
-    :created_at,                  # Fecha de creación
-    :last_login,                  # Fecha del último login
-    :permissions,                 # Lista de permisos específicos
-    :remarks                       # Observaciones
+    :id,                          # Unique administrator UUID
+    :name,                        # Full name
+    :email,                       # Unique email
+    :password_hash,               # Password hashed with bcrypt
+    :role,                        # Role: "admin", "supervisor"
+    :status,                      # Status: "active", "inactive", "suspended"
+    :created_at,                  # Creation timestamp
+    :last_login,                  # Last login timestamp
+    :permissions,                 # List of specific permissions
+    :remarks                       # Remarks or notes
   ]
 
   @type t :: %__MODULE__{
@@ -37,12 +37,12 @@ defmodule AzarAdmin.Contexts.Users.AdminUser do
         }
 
   @doc """
-  Crea un nuevo usuario administrador.
+  Creates a new administrator user.
 
-  Parámetros:
-  - name: nombre completo
-  - email: email único
-  - password_hash: contraseña ya hasheada
+  Parameters:
+  - name: full name
+  - email: unique email
+  - password_hash: already hashed password
   """
   @spec new(map()) :: t()
   def new(attrs) do

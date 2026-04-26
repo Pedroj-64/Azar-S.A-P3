@@ -1,140 +1,157 @@
-# Cliente Administrador - Azar S.A
+# Admin Client - Azar S.A
 
-## 📋 Descripción
+Aplicación Phoenix para que administradores gestionen sorteos, usuarios y reportes.
 
-Aplicación Phoenix para que administradores gestionen:
-- Crear y eliminar sorteos
-- Gestionar premios
-- Ver reportes de ingresos
-- Calcular ganancias/pérdidas
-- Listar clientes por sorteo
+## Características
 
-## 🏗️ Estructura de Directorios
+- Gestión de sorteos (crear, editar, ejecutar, cancelar)
+- Reportes financieros y análisis
+- Autenticación con 3 roles granulares
+- Auditoría de operaciones
 
-```
-admin_client/
-├── config/                 # Configuración por entorno
-│   ├── config.exs
-│   ├── dev.exs
-│   ├── prod.exs
-│   └── test.exs
-│
-├── lib/azar_admin/
-│   ├── contexts/          # Lógica de negocio
-│   │   ├── sorteos/       # Gestión de sorteos
-│   │   ├── premios/       # Gestión de premios
-│   │   ├── reportes/      # Reportes y cálculos
-│   │   └── clientes/      # Consultas de clientes
-│   │
-│   ├── channels/          # WebSocket Channels
-│   │   ├── admin_channel.ex
-│   │   └── user_socket.ex
-│   │
-│   ├── controllers/       # Controladores HTTP
-│   │   ├── sorteo_controller.ex
-│   │   ├── premio_controller.ex
-│   │   ├── reporte_controller.ex
-│   │   └── auth_controller.ex
-│   │
-│   ├── live/              # LiveView (componentes interactivos)
-│   │   ├── sorteo_live/
-│   │   ├── premio_live/
-│   │   └── reporte_live/
-│   │
-│   ├── components/        # Componentes reutilizables
-│   │   ├── header.ex
-│   │   ├── sidebar.ex
-│   │   └── forms.ex
-│   │
-│   ├── application.ex
-│   ├── router.ex
-│   └── endpoint.ex
-│
-├── priv/
-│   ├── data/             # Datos de administradores
-│   │   └── admins.json
-│   └── static/
-│       ├── images/
-│       ├── css/
-│       └── js/
-│
-├── test/                  # Tests
-│   ├── contexts/
-│   ├── channels/
-│   ├── controllers/
-│   └── live/
-│
-├── assets/               # Assets frontend
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-├── mix.exs              # Dependencias
-└── README.md
-```
-
-## 🔧 Mix.exs
-
-Dependencias principales:
-- `phoenix`
-- `phoenix_live_view` (para UI interactiva)
-- `phoenix_html_helpers`
-- `plug_cowboy`
-- `jason`
-
-## 📦 Contextos a Implementar
-
-### `contexts/sorteos/`
-- `crear_sorteo/1`
-- `listar_sorteos/0`
-- `eliminar_sorteo/1`
-- `consultar_clientes/1`
-
-### `contexts/premios/`
-- `crear_premio/2`
-- `listar_premios/1`
-- `eliminar_premio/1`
-- `actualizar_fecha_sistema/1`
-
-### `contexts/reportes/`
-- `ingresos_por_sorteo/1`
-- `ganancias_perdidas/1`
-- `balance_total/0`
-- `premios_entregados/1`
-
-### `contexts/clientes/`
-- `listar_por_sorteo/1` (billetes completos)
-- `listar_fracciones/1` (compradores de fracciones)
-
-## 🎨 LiveView
-
-Implementar UI dinámica sin recargas:
-- Tablas de sorteos
-- Formularios de creación
-- Gráficos de reportes
-- Búsqueda en tiempo real
-
-## 🔐 Autenticación
-
-- Login de administrador
-- Sesiones
-- Protección de rutas
-
-## 📡 Comunicación
-
-- HTTP API al servidor central
-- WebSocket para notificaciones
-- Actualización en tiempo real
-
-## 🚀 Ejecución
+## Inicio Rápido
 
 ```bash
+cd admin_client
 mix deps.get
 mix compile
 mix phx.server
-# Admin en http://localhost:4001
 ```
 
----
+Aplicación disponible en `http://localhost:4000`
 
-**Interfaz para administradores** 👨‍💼
+Ver [QUICKSTART.md](QUICKSTART.md) para ejemplos de uso.
+
+## Estructura
+
+```
+lib/azar_admin/
+├── contexts/
+│   ├── users/          # Gestión de administradores
+│   ├── draws/          # Gestión de sorteos
+│   └── reports/        # Generación de reportes
+│
+└── controllers/
+    ├── health_controller.ex
+    ├── user_controller.ex
+    ├── draw_controller.ex
+    └── report_controller.ex
+
+priv/data/
+├── admin_users.json
+├── draws.json
+└── admin_reports.json
+```
+
+Total: 18+ endpoints HTTP, 21+ funciones operacionales.
+
+## Documentación
+
+- [QUICKSTART.md](QUICKSTART.md) - Guía de inicio rápido
+- Ver carpeta `/docs` en raíz del proyecto para documentación detallada
+
+## Contextos
+
+### Users Context
+
+Gestión de administradores con autenticación, roles y auditoría.
+
+Roles: `super_admin`, `admin`, `analyst`
+
+Operaciones:
+- register_admin/1
+- authenticate/2
+- validate_session/2
+- update_admin_role/3
+- suspend_admin/2
+- get_admin/1
+- list_admins/0
+
+### Draws Context
+
+Gestión del ciclo de vida de sorteos.
+
+Estados: `open`, `executed`, `cancelled`
+
+Operaciones:
+- create_draw/1
+- update_draw/3
+- execute_draw/3
+- cancel_draw/2
+- get_draw_statistics/1
+- get_draw/1
+- list_draws/0
+- list_draws_by_status/1
+
+### Reports Context
+
+Generación de reportes financieros y análisis.
+
+Tipos: `financial`, `draw_analysis`, `prize_summary`, `player_stats`
+
+Operaciones:
+- generate_financial_report/3
+- generate_draw_analysis/2
+- generate_prize_summary/3
+- get_report/1
+- list_reports/0
+- list_reports_by_type/1
+
+## Endpoints HTTP
+
+Autenticación:
+- POST `/admin/register`
+- POST `/admin/authenticate`
+- POST `/admin/validate-session`
+
+Administradores:
+- GET `/admin`
+- GET `/admin/:id`
+- PUT `/admin/:id/role`
+- PUT `/admin/:id/suspend`
+
+Sorteos:
+- POST `/draws`
+- PUT `/draws/:id`
+- GET `/draws`
+- GET `/draws/:id`
+- GET `/draws/status/:status`
+- POST `/draws/:id/execute`
+- POST `/draws/:id/cancel`
+- GET `/draws/:id/statistics`
+
+Reportes:
+- POST `/reports/financial`
+- POST `/reports/draw-analysis`
+- POST `/reports/prize-summary`
+- GET `/reports`
+- GET `/reports/:id`
+- GET `/reports/type/:type`
+
+Health:
+- GET `/health`
+
+## Seguridad
+
+- Hash bcrypt para contraseñas
+- Tokens de sesión
+- Permisos granulares por rol
+- Validación de entrada
+- Auditoría de operaciones
+
+## Persistencia
+
+JSON con `AzarShared.JsonHelper`:
+- `priv/data/admin_users.json`
+- `priv/data/draws.json`
+- `priv/data/admin_reports.json`
+
+## Dependencias
+
+- phoenix
+- bcrypt_elixir
+- jason
+- plug_cowboy
+- AzarShared (librería compartida)
+
+Última actualización: 26 de abril de 2026
