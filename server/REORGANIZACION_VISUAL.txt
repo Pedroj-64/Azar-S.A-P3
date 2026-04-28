@@ -1,0 +1,106 @@
+REORGANIZACIÓN COMPLETADA - CENTRALIZADO EN assets/
+
+═══════════════════════════════════════════════════════════════════════════
+
+ANTES (Con Duplicación):
+────────────────────────
+server/
+├── assets/
+│   ├── css/app.css                    ← FUENTE
+│   ├── js/i18n-theme.js               ← FUENTE
+│   └── locales/
+│       ├── es.json                    ← FUENTE
+│       └── en.json                    ← FUENTE
+│
+└── priv/static/
+    ├── css/app.css                    ❌ DUPLICADO
+    ├── js/i18n-theme.js               ❌ DUPLICADO
+    └── locales/
+        ├── es.json                    ❌ DUPLICADO
+        └── en.json                    ❌ DUPLICADO
+
+❌ Problema: Editas en un lado, tenía que actualizar el otro
+
+
+AHORA (Centralizado):
+─────────────────────
+server/
+├── assets/                            ← UNICO LUGAR DE EDICION
+│   ├── css/
+│   │   └── app.css                    ✓ Edita AQUI
+│   ├── js/
+│   │   └── i18n-theme.js              ✓ Edita AQUI
+│   ├── locales/
+│   │   ├── es.json                    ✓ Edita AQUI
+│   │   └── en.json                    ✓ Edita AQUI
+│   └── images/
+│
+├── priv/static/                       ← AUTO (generado)
+│   ├── css/.gitkeep                   (vacío, se llena con setup.sh)
+│   ├── js/.gitkeep                    (vacío, se llena con setup.sh)
+│   ├── locales/.gitkeep               (vacío, se llena con setup.sh)
+│   └── images/
+│
+└── setup.sh                           ← Ejecuta esto para copiar
+                                       (assets/ → priv/static/)
+
+✓ Flujo claro: assets/ → setup.sh → priv/static/ → Cliente
+✓ Sin duplicación
+✓ Centralizado en UN SOLO LUGAR
+
+
+═══════════════════════════════════════════════════════════════════════════
+
+CAMBIOS REALIZADOS:
+──────────────────
+
+✓ ELIMINADO:
+  ├─ Duplicados en priv/static/css/
+  ├─ Duplicados en priv/static/js/
+  ├─ Duplicados en priv/static/locales/
+  └─ Reemplazados con .gitkeep
+
+✓ CREADO:
+  ├─ setup.sh (copia assets/ → priv/static/)
+  ├─ server/docs/VISUAL_ORGANIZATION.md (documentación visual)
+  └─ server/docs/README.md (índice documentación)
+
+✓ ACTUALIZADO:
+  ├─ endpoint.ex (comentarios clarificados)
+  └─ Documentación
+
+═══════════════════════════════════════════════════════════════════════════
+
+COMO USAR:
+──────────
+
+1️⃣ PRIMERA VEZ (Setup inicial):
+   cd server
+   ./setup.sh
+   mix setup
+   mix phx.server
+
+2️⃣ DURANTE DESARROLLO (Editar):
+   cd server/assets/
+   # Edita: css/app.css, js/i18n-theme.js, locales/
+   # Cambios se aplican automáticamente
+
+3️⃣ CAMBIOS DESPUÉS DE EDITAR:
+   cd server
+   ./setup.sh                 # Copia a priv/static/
+   # Recarga el navegador
+
+═══════════════════════════════════════════════════════════════════════════
+
+ORGANIZACIÓN FINAL:
+───────────────────
+
+✓ TODO LO VISUAL EN: server/assets/
+✓ EDITAR SIEMPRE EN: server/assets/
+✓ NUNCA edites en: priv/static/
+✓ SE SIRVE DESDE: priv/static/ (después de setup.sh)
+✓ SCRIPT AUTOMATICO: ./setup.sh (una sola vez, o cuando cambies assets/)
+
+═══════════════════════════════════════════════════════════════════════════
+
+LISTO PARA TRABAJAR ✓

@@ -1,53 +1,99 @@
-# Sistema de Sorteos Azar S.A
+# Azar S.A - Proyecto Final P3 - Programación III
 
-Sistema distribuido para gestión de sorteos, clientes y apuestas usando Elixir y Phoenix.
-
-## 📋 Descripción
-
-**Azar S.A** es un sistema compuesto por múltiples aplicaciones que permite:
-- Gestionar sorteos, premios y clientes
-- Procesar compras de billetes y fracciones
-- Notificar ganadores
-- Generar reportes financieros
+Sistema distribuido para gestión de sorteos usando Elixir y Phoenix.
 
 ## 🏗️ Estructura del Proyecto
 
 ```
 Azar S.A/
-├── server/                 # Aplicación servidor central
-│   ├── config/            # Configuraciones de entorno
+├── README.md                         ← Estás aquí
+├── docs/                             ← Documentación general
+│   ├── PLAN_TRABAJO_ARQUITECTURA.md
+│   ├── JSON_SCHEMAS.md
+│   └── ...
+│
+├── shared_code/                      ← Código compartido (Elixir)
+│   └── lib/azar_shared/
+│
+├── server/                           ← App: Panel Administrativo Central
+│   ├── docs/                         ← Documentación específica
 │   ├── lib/azar_server/
-│   │   ├── contexts/      # Lógica de negocio (Sorteos, Clientes, Apuestas)
-│   │   ├── channels/      # WebSockets para comunicación en tiempo real
-│   │   ├── controllers/   # Controladores HTTP
-│   │   └── views/         # Renderización de vistas
+│   │   ├── contexts/                 ← Draws, Audit, Notifications
+│   │   ├── controllers/              ← API endpoints
+│   │   ├── views/                    ← HEEx templates
+│   │   └── ...
 │   ├── priv/
-│   │   ├── data/          # Archivos JSON con datos de sorteos
-│   │   └── static/        # Archivos estáticos
-│   └── test/              # Tests unitarios
+│   │   ├── data/                     ← Datos persistentes (JSON)
+│   │   └── static/                   ← Assets compilados
+│   ├── assets/                       ← Assets fuente (CSS, JS, i18n)
+│   └── config/                       ← Configuraciones
 │
-├── admin_client/          # Aplicación cliente para administrador
-│   ├── config/
+├── admin_client/                     ← App: Cliente Admin (Opcional)
 │   ├── lib/azar_admin/
-│   │   ├── contexts/      # Gestión de sorteos y premios
-│   │   ├── channels/
-│   │   ├── controllers/
-│   │   └── views/
 │   ├── priv/
-│   └── test/
+│   ├── assets/
+│   └── ...
 │
-├── player_client/         # Aplicación cliente para jugadores
-│   ├── config/
-│   ├── lib/azar_player/
-│   │   ├── contexts/      # Gestión de usuarios y compras
-│   │   ├── channels/
-│   │   ├── controllers/
-│   │   └── views/
-│   ├── priv/
-│   └── test/
-│
-├── shared_code/           # Código compartido entre aplicaciones
-│   ├── lib/               # Módulos reutilizables
+└── player_client/                    ← App: Cliente Jugadores (Opcional)
+    ├── lib/azar_player/
+    ├── priv/
+    ├── assets/
+    └── ...
+```
+
+## 🚀 Quick Start
+
+### Server (Panel Admin)
+
+```bash
+cd server
+mix setup
+mix phx.server
+# Acceso: http://localhost:4000
+```
+
+### Estructura de Datos (JSON)
+
+```
+server/priv/data/
+├── draws.json              # Sorteos
+├── purchases.json          # Compras/billetes
+├── users.json              # Jugadores
+├── admin_users.json        # Administradores
+├── audit_logs.json         # Logs de auditoría
+├── notifications.json      # Notificaciones
+└── admin_reports.json      # Reportes
+```
+
+## 📚 Documentación
+
+- **Proyecto General:** [docs/](./docs/)
+- **Server:** [server/docs/](./server/docs/)
+- **Arquitectura:** [docs/PLAN_TRABAJO_ARQUITECTURA.md](./docs/PLAN_TRABAJO_ARQUITECTURA.md)
+- **Schemas:** [docs/JSON_SCHEMAS.md](./docs/JSON_SCHEMAS.md)
+
+## ✨ Características
+
+- ✓ Internacionalización (ES/EN)
+- ✓ Tema claro/oscuro
+- ✓ Panel administrativo responsivo
+- ✓ Gestión de sorteos y premios
+- ✓ Auditoría de operaciones
+- ✓ Reportes financieros
+- ✓ Notificaciones
+
+## 📋 Estado
+
+- ✓ **server/** - Estructura completa, lista para usar
+- ⏳ **admin_client/** - Estructura lista, pendiente contenido
+- ⏳ **player_client/** - Estructura lista, pendiente contenido
+- ✓ **shared_code/** - Módulos Elixir listos
+
+---
+
+**Proyecto:** Programación III  
+**Versión:** 1.0  
+**Última actualización:** 28/04/2026
 │   └── test/
 │
 ├── docs/                  # Documentación del proyecto

@@ -1,0 +1,86 @@
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+  <h1 class="page-title">Reportes Financieros</h1>
+  <button class="btn btn-primary">Generar Reporte</button>
+</div>
+
+<div class="card" style="margin-bottom: 24px;">
+  <h3 class="card-title">Resumen Financiero</h3>
+  <div class="grid grid-4">
+    <div class="stat-box">
+      <div class="stat-value">125,450</div>
+      <div class="stat-label">Ingresos Totales</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">68,230</div>
+      <div class="stat-label">Premios Pagados</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">12,340</div>
+      <div class="stat-label">Gastos Operacionales</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-value">44,880</div>
+      <div class="stat-label">Margen Neto</div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-2">
+  <div class="card">
+    <h3 class="card-title">Filtros</h3>
+    <div class="form-group">
+      <label class="form-label">Período</label>
+      <select class="form-select">
+        <option>Este Mes</option>
+        <option>Mes Anterior</option>
+        <option>Últimos 3 Meses</option>
+        <option>Este Año</option>
+        <option>Personalizado</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Desde</label>
+      <input type="date" class="form-input">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Hasta</label>
+      <input type="date" class="form-input">
+    </div>
+    <button type="button" class="btn btn-primary">Aplicar Filtros</button>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Por Sorteo</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Sorteo</th>
+          <th>Ingresos</th>
+          <th>Gastos</th>
+          <th>Margen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sorteo Especial</td>
+          <td>45,000</td>
+          <td>24,500</td>
+          <td>20,500</td>
+        </tr>
+        <tr>
+          <td>Sorteo Primavera</td>
+          <td>37,500</td>
+          <td>21,200</td>
+          <td>16,300</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" style="margin-top: 24px;">
+  <h3 class="card-title">Gráfico de Ingresos</h3>
+  <div class="image-placeholder" style="aspect-ratio: 3/1;">
+    Espacio para gráfico de ingresos (Chart.js, D3.js, etc.)
+  </div>
+</div>

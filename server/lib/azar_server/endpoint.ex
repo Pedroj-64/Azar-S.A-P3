@@ -26,15 +26,19 @@ defmodule AzarServer.Endpoint do
     websocket: [timeout: 45_000],
     longpoll: false
 
-  # Serve at "/" the static files from "priv/static" directory.
+  # Serve static files from "priv/static" directory.
   #
-  # You should set gzip to true if you are running phx.digest
-  # when deploying your static files in production.
+  # FLUJO VISUAL:
+  # 1. Edita archivos en: assets/ (CSS, JS, locales)
+  # 2. Ejecuta: ./setup.sh (copia assets/ → priv/static/)
+  # 3. Phoenix sirve desde: priv/static/ (a cliente)
+  #
+  # Archivos permitidos: css, js, locales, images, fonts, favicon, robots.txt
   plug Plug.Static,
     at: "/",
     from: :azar_server,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts images js locales favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
