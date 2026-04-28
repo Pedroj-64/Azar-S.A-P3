@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Controllers.UserController do
+defmodule AzarAdminClient.Controllers.UserController do
   @moduledoc """
   Controller para gestión de administradores.
 
@@ -13,7 +13,7 @@ defmodule AzarAdmin.Controllers.UserController do
 
   use Phoenix.Controller
 
-  alias AzarAdmin.Contexts.Users.Operations, as: UserOps
+  alias AzarAdminClient.Contexts.Users.Operations, as: UserOps
   alias AzarShared.Errors
 
   @doc """

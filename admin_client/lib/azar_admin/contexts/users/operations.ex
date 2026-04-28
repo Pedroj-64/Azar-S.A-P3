@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Users.Operations do
+defmodule AzarAdminClient.Contexts.Users.Operations do
   @moduledoc """
   Public business operations for Administrator users.
 
@@ -17,8 +17,8 @@ defmodule AzarAdmin.Contexts.Users.Operations do
   - Records audit log
   """
 
-  alias AzarAdmin.Contexts.Users.AdminUser
-  alias AzarAdmin.Contexts.Users.Schemas.{Credentials, AuditLog}
+  alias AzarAdminClient.Contexts.Users.AdminUser
+  alias AzarAdminClient.Contexts.Users.Schemas.{Credentials, AuditLog}
   alias AzarShared.{Validations, CryptoHelper, JsonHelper}
 
   @users_file "priv/data/admin_users.json"

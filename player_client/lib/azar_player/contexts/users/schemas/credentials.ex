@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.Schemas.Credentials do
+defmodule AzarPlayerClient.Contexts.Users.Schemas.Credentials do
   @moduledoc """
   Struct que representa las Credenciales de un Jugador.
 

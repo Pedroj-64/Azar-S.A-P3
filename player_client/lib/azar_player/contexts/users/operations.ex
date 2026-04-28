@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.Operations do
+defmodule AzarPlayerClient.Contexts.Users.Operations do
   @moduledoc """
   Operaciones públicas de negocio para Usuarios Jugadores.
 
@@ -19,8 +19,8 @@ defmodule AzarPlayer.Contexts.Users.Operations do
   - Registra auditoría vía Audit.Operations
   """
 
-  alias AzarPlayer.Contexts.Users.PlayerUser
-  alias AzarPlayer.Contexts.Users.Schemas.{Profile, Credentials, BalanceRecord}
+  alias AzarPlayerClient.Contexts.Users.PlayerUser
+  alias AzarPlayerClient.Contexts.Users.Schemas.{Profile, Credentials, BalanceRecord}
   alias AzarShared.{Validations, CryptoHelper, JsonHelper}
 
   # ============================================================================

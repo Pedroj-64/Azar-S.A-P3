@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Reports.AdminReport do
+defmodule AzarAdminClient.Contexts.Reports.AdminReport do
   @moduledoc """
   Struct que representa un Reporte de análisis del sistema.
 

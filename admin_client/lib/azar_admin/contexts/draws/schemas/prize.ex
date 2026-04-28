@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Draws.Schemas.Prize do
+defmodule AzarAdminClient.Contexts.Draws.Schemas.Prize do
   @moduledoc """
   Schema que representa un Premio en un Sorteo.
 

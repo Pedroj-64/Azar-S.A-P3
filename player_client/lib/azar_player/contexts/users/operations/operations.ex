@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.Operations.Impl do
+defmodule AzarPlayerClient.Contexts.Users.Operations.Impl do
   @moduledoc """
   Implementación interna de operaciones de usuarios jugadores.
 
@@ -14,8 +14,8 @@ defmodule AzarPlayer.Contexts.Users.Operations.Impl do
   - Auditoría de cambios
   """
 
-  alias AzarPlayer.Contexts.Users.PlayerUser
-  alias AzarPlayer.Contexts.Users.Schemas.{Profile, Credentials, BalanceRecord}
+  alias AzarPlayerClient.Contexts.Users.PlayerUser
+  alias AzarPlayerClient.Contexts.Users.Schemas.{Profile, Credentials, BalanceRecord}
   alias AzarShared.{Validations, CryptoHelper, JsonHelper, DateHelpers}
 
   @users_file "priv/data/players.json"

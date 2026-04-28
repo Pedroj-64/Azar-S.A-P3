@@ -172,4 +172,86 @@ defmodule AzarShared.Utils.JsonHelper do
   end
 
   def append_to_array(_, _, _), do: {:error, "Parámetros inválidos"}
+
+  @doc """
+  Agrega un elemento a un archivo JSON de array.
+
+  Asume que el archivo contiene un objeto con llave "items" que es un array.
+  
+  Retorna: :ok o {:error, String.t()}
+
+  Ejemplo:
+    JsonHelper.append_to_json_array("priv/data/draws.json", draw_map)
+  """
+  @spec append_to_json_array(String.t(), map()) :: :ok | {:error, String.t()}
+  def append_to_json_array(file_path, element) when is_binary(file_path) and is_map(element) do
+    append_to_array(file_path, ["items"], element)
+  end
+
+  def append_to_json_array(_, _), do: {:error, "Parámetros inválidos"}
+
+  @doc """
+  Lee el array de items de un archivo JSON.
+
+  Retorna: {:ok, array} o {:error, String.t()}
+
+  Ejemplo:
+    JsonHelper.read_json_array("priv/data/draws.json")
+  """
+  @spec read_json_array(String.t()) :: {:ok, list(any())} | {:error, String.t()}
+  def read_json_array(file_path) when is_binary(file_path) do
+    case read_key_from_file(file_path, ["items"]) do
+      {:ok, array} when is_list(array) -> {:ok, array}
+      {:ok, _} -> {:error, "El valor en 'items' no es un array"}
+      error -> error
+    end
+  end
+
+  def read_json_array(_), do: {:error, "La ruta debe ser un texto"}
+
+  @doc """
+  Actualiza un elemento dentro del array de un archivo JSON por su ID.
+
+  Retorna: :ok o {:error, String.t()}
+
+  Ejemplo:
+    JsonHelper.update_in_json_array("priv/data/draws.json", "draw-123", updated_draw)
+  """
+  @spec update_in_json_array(String.t(), String.t(), map()) :: :ok | {:error, String.t()}
+  def update_in_json_array(file_path, element_id, updated_element) when is_binary(file_path) and is_binary(element_id) and is_map(updated_element) do
+    case read_json_array(file_path) do
+      {:ok, array} ->
+        updated_array = Enum.map(array, fn item ->
+          if is_map(item) and item["id"] == element_id, do: updated_element, else: item
+        end)
+        write_key_to_file(file_path, ["items"], updated_array)
+
+      error -> error
+    end
+  end
+
+  def update_in_json_array(_, _, _), do: {:error, "Parámetros inválidos"}
+
+  @doc """
+  Elimina un elemento del array de un archivo JSON por su ID.
+
+  Retorna: :ok o {:error, String.t()}
+
+  Ejemplo:
+    JsonHelper.delete_from_json_array("priv/data/draws.json", "draw-123")
+  """
+  @spec delete_from_json_array(String.t(), String.t()) :: :ok | {:error, String.t()}
+  def delete_from_json_array(file_path, element_id) when is_binary(file_path) and is_binary(element_id) do
+    case read_json_array(file_path) do
+      {:ok, array} ->
+        updated_array = Enum.filter(array, fn item ->
+          not (is_map(item) and item["id"] == element_id)
+        end)
+        write_key_to_file(file_path, ["items"], updated_array)
+
+      error -> error
+    end
+  end
+
+  def delete_from_json_array(_, _), do: {:error, "Parámetros inválidos"}
 end

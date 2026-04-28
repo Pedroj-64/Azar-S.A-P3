@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Users.Schemas.Credentials do
+defmodule AzarAdminClient.Contexts.Users.Schemas.Credentials do
   @moduledoc """
   Schema que contiene información de credenciales de un administrador.
 

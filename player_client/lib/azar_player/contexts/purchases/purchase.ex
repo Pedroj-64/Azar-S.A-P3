@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Purchase do
+defmodule AzarPlayerClient.Contexts.Purchases.Purchase do
   @moduledoc """
   Struct que representa una Compra de billete realizada por un jugador.
 

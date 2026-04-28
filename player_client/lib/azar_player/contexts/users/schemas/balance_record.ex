@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.Schemas.BalanceRecord do
+defmodule AzarPlayerClient.Contexts.Users.Schemas.BalanceRecord do
   @moduledoc """
   Struct que representa un Registro de Movimiento de Saldo.
 

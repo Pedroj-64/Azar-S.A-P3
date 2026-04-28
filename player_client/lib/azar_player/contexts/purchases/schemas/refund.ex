@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Schemas.Refund do
+defmodule AzarPlayerClient.Contexts.Purchases.Schemas.Refund do
   @moduledoc """
   Struct que representa un Reembolso de compra.
 

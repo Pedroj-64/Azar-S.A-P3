@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Users.Schemas.AuditLog do
+defmodule AzarAdminClient.Contexts.Users.Schemas.AuditLog do
   @moduledoc """
   Schema que registra auditoría de acciones de administradores.
 

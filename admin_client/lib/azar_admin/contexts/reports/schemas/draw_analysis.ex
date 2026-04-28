@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Reports.Schemas.DrawAnalysis do
+defmodule AzarAdminClient.Contexts.Reports.Schemas.DrawAnalysis do
   @moduledoc """
   Schema para análisis detallado de un sorteo.
   """

@@ -26,7 +26,7 @@ defmodule AzarServer.Contexts.Audit.Operations do
   """
 
   alias AzarServer.Contexts.Audit.AuditLog
-  alias AzarShared.JsonHelper
+  alias AzarShared.Utils.JsonHelper
 
   @audit_file "priv/data/audit_logs.json"
 

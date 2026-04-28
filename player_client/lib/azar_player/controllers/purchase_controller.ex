@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Controllers.PurchaseController do
+defmodule AzarPlayerClient.Controllers.PurchaseController do
   @moduledoc """
   Controller para gestión de compras de billetes.
 
@@ -15,8 +15,8 @@ defmodule AzarPlayer.Controllers.PurchaseController do
 
   use Phoenix.Controller
 
-  alias AzarPlayer.Contexts.Purchases.Operations, as: PurchaseOps
-  alias AzarPlayer.Contexts.Users.Operations, as: UserOps
+  alias AzarPlayerClient.Contexts.Purchases.Operations, as: PurchaseOps
+  alias AzarPlayerClient.Contexts.Users.Operations, as: UserOps
   alias AzarShared.Errors
 
   @doc """

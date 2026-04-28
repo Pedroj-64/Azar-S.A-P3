@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Reports.Schemas.FinancialSummary do
+defmodule AzarAdminClient.Contexts.Reports.Schemas.FinancialSummary do
   @moduledoc """
   Schema para resumen financiero.
   """

@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Draws.Schemas.DrawStatistics do
+defmodule AzarAdminClient.Contexts.Draws.Schemas.DrawStatistics do
   @moduledoc """
   Schema que contiene estadísticas de un sorteo.
 

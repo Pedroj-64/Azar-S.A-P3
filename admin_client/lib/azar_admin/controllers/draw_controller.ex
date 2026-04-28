@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Controllers.DrawController do
+defmodule AzarAdminClient.Controllers.DrawController do
   @moduledoc """
   Controller para gestión de sorteos.
 
@@ -14,7 +14,7 @@ defmodule AzarAdmin.Controllers.DrawController do
 
   use Phoenix.Controller
 
-  alias AzarAdmin.Contexts.Draws.Operations, as: DrawOps
+  alias AzarAdminClient.Contexts.Draws.Operations, as: DrawOps
   alias AzarShared.Errors
 
   @doc """

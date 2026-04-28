@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Operations do
+defmodule AzarPlayerClient.Contexts.Purchases.Operations do
   @moduledoc """
   Operaciones públicas de negocio para Compras de jugadores.
 
@@ -18,8 +18,8 @@ defmodule AzarPlayer.Contexts.Purchases.Operations do
   - Integra con Draws.Operations para validar sorteos
   """
 
-  alias AzarPlayer.Contexts.Purchases.Purchase
-  alias AzarPlayer.Contexts.Purchases.Schemas.{Refund, Transaction, PriceBreakdown}
+  alias AzarPlayerClient.Contexts.Purchases.Purchase
+  alias AzarPlayerClient.Contexts.Purchases.Schemas.{Refund, Transaction, PriceBreakdown}
   alias AzarShared.{Validations, Calculations, JsonHelper, Constants}
 
   # ============================================================================

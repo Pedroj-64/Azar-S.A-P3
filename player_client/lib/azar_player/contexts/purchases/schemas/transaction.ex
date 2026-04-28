@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Schemas.Transaction do
+defmodule AzarPlayerClient.Contexts.Purchases.Schemas.Transaction do
   @moduledoc """
   Struct que representa una Transacción asociada a una compra.
 

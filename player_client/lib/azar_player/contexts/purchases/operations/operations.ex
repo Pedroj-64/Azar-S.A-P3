@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Operations.Impl do
+defmodule AzarPlayerClient.Contexts.Purchases.Operations.Impl do
   @moduledoc """
   Implementación interna de operaciones de compras.
 
@@ -14,9 +14,9 @@ defmodule AzarPlayer.Contexts.Purchases.Operations.Impl do
   - Coordinación con otros contextos
   """
 
-  alias AzarPlayer.Contexts.Purchases.Purchase
-  alias AzarPlayer.Contexts.Purchases.Schemas.{Refund, Transaction, PriceBreakdown}
-  alias AzarPlayer.Contexts.Users.PlayerUser
+  alias AzarPlayerClient.Contexts.Purchases.Purchase
+  alias AzarPlayerClient.Contexts.Purchases.Schemas.{Refund, Transaction, PriceBreakdown}
+  alias AzarPlayerClient.Contexts.Users.PlayerUser
   alias AzarShared.{Validations, Calculations, JsonHelper, Constants, DateHelpers}
 
   @purchases_file "priv/data/purchases.json"

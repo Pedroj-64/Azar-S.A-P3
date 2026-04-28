@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Draws.AdminDraw do
+defmodule AzarAdminClient.Contexts.Draws.AdminDraw do
   @moduledoc """
   Struct que representa un Sorteo desde la perspectiva del Administrador.
 

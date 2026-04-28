@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Purchases.Schemas.PriceBreakdown do
+defmodule AzarPlayerClient.Contexts.Purchases.Schemas.PriceBreakdown do
   @moduledoc """
   Struct que representa el Desglose de Precio de una compra.
 

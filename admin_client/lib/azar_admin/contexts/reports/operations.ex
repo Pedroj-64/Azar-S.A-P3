@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Reports.Operations do
+defmodule AzarAdminClient.Contexts.Reports.Operations do
   @moduledoc """
   Operaciones públicas de negocio para Reportes.
 
@@ -15,9 +15,9 @@ defmodule AzarAdmin.Contexts.Reports.Operations do
   - Persiste reportes generados
   """
 
-  alias AzarAdmin.Contexts.Reports.AdminReport
-  alias AzarAdmin.Contexts.Reports.Schemas.{FinancialSummary, DrawAnalysis}
-  alias AzarShared.JsonHelper
+  alias AzarAdminClient.Contexts.Reports.AdminReport
+  alias AzarAdminClient.Contexts.Reports.Schemas.{FinancialSummary, DrawAnalysis}
+  alias AzarShared.Utils.JsonHelper
 
   @draws_file "priv/data/draws.json"
   @tickets_file "priv/data/tickets.json"

@@ -25,7 +25,7 @@ defmodule AzarServer.Contexts.Notifications.Operations do
   """
 
   alias AzarShared.Schemas.Notification
-  alias AzarShared.JsonHelper
+  alias AzarShared.Utils.JsonHelper
   require Logger
 
   @notifications_file "priv/data/notifications.json"

@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Controllers.ReportController do
+defmodule AzarAdminClient.Controllers.ReportController do
   @moduledoc """
   Controller para generación y consulta de reportes.
 
@@ -12,7 +12,7 @@ defmodule AzarAdmin.Controllers.ReportController do
 
   use Phoenix.Controller
 
-  alias AzarAdmin.Contexts.Reports.Operations, as: ReportOps
+  alias AzarAdminClient.Contexts.Reports.Operations, as: ReportOps
   alias AzarShared.Errors
 
   @doc """

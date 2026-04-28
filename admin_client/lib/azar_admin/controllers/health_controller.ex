@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Controllers.HealthController do
+defmodule AzarAdminClient.Controllers.HealthController do
   @moduledoc """
   Controller para verificar el estado de la aplicación.
 

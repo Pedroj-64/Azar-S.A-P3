@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Draws.Operations do
+defmodule AzarAdminClient.Contexts.Draws.Operations do
   @moduledoc """
   Public business operations for Draws (Admin view).
 
@@ -18,8 +18,8 @@ defmodule AzarAdmin.Contexts.Draws.Operations do
   - Uses randomization with AzarShared.RandomHelper
   """
 
-  alias AzarAdmin.Contexts.Draws.AdminDraw
-  alias AzarAdmin.Contexts.Draws.Schemas.{Prize, DrawStatistics}
+  alias AzarAdminClient.Contexts.Draws.AdminDraw
+  alias AzarAdminClient.Contexts.Draws.Schemas.{Prize, DrawStatistics}
   alias AzarShared.{Validations, Calculations, JsonHelper, RandomHelper, Constants}
 
   @draws_file "priv/data/draws.json"

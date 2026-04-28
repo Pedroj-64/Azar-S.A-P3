@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.Schemas.Profile do
+defmodule AzarPlayerClient.Contexts.Users.Schemas.Profile do
   @moduledoc """
   Struct que representa el Perfil público de un Jugador.
 

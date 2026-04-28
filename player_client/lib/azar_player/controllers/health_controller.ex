@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Controllers.HealthController do
+defmodule AzarPlayerClient.Controllers.HealthController do
   @moduledoc """
   Health check controller para el cliente jugador.
 

@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Contexts.Users.PlayerUser do
+defmodule AzarPlayerClient.Contexts.Users.PlayerUser do
   @moduledoc """
   Struct que representa un Usuario Jugador en el sistema.
 

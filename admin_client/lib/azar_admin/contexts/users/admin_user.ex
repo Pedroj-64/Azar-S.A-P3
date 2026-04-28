@@ -1,4 +1,4 @@
-defmodule AzarAdmin.Contexts.Users.AdminUser do
+defmodule AzarAdminClient.Contexts.Users.AdminUser do
   @moduledoc """
   Struct representing an Administrator user in the system.
 

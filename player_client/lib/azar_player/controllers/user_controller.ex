@@ -1,4 +1,4 @@
-defmodule AzarPlayer.Controllers.UserController do
+defmodule AzarPlayerClient.Controllers.UserController do
   @moduledoc """
   Controller para gestión de usuarios del cliente jugador.
 
@@ -15,7 +15,7 @@ defmodule AzarPlayer.Controllers.UserController do
 
   use Phoenix.Controller
 
-  alias AzarPlayer.Contexts.Users.Operations, as: UserOps
+  alias AzarPlayerClient.Contexts.Users.Operations, as: UserOps
   alias AzarShared.Errors
 
   @doc """
