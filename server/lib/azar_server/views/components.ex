@@ -42,7 +42,7 @@ defmodule AzarServer.Views.Components do
     ~H"""
     <div class="form-group">
       <label class="form-label"><%= @label %></label>
-      <input 
+      <input
         type={@type}
         class="form-input"
         name={@name}
@@ -64,7 +64,7 @@ defmodule AzarServer.Views.Components do
     ~H"""
     <div class="form-group">
       <label class="form-label"><%= @label %></label>
-      <textarea 
+      <textarea
         class="form-textarea"
         name={@name}
         rows={@rows}
