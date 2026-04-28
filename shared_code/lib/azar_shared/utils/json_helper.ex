@@ -177,7 +177,7 @@ defmodule AzarShared.Utils.JsonHelper do
   Agrega un elemento a un archivo JSON de array.
 
   Asume que el archivo contiene un objeto con llave "items" que es un array.
-  
+
   Retorna: :ok o {:error, String.t()}
 
   Ejemplo:
