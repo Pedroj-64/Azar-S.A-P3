@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Language: en\n"
+
+msgid "client_not_found"
+msgstr "Client not found"
+
+msgid "invalid_password"
+msgstr "Invalid password"
+
+msgid "document_exists"
+msgstr "Document already exists in the system"
+
+msgid "admin_not_found"
+msgstr "Administrator not found"
+
+msgid "admin_exists"
+msgstr "Administrator username already exists"
+
+msgid "number_taken"
+msgstr "This number is already taken"
+
+msgid "fraction_taken"
+msgstr "This fraction is already sold"
+
+msgid "invalid_number"
+msgstr "Invalid ticket number (must be between 0 and the draw limit)"
+
+msgid "draw_not_found"
+msgstr "Draw not found"
+
+msgid "draw_already_exists"
+msgstr "Draw already exists"
+
+msgid "draw_already_executed"
+msgstr "This draw has already been executed"
+
+msgid "draw_not_found_or_crashed"
+msgstr "Draw not found or process crashed"
+
+msgid "draw_has_prizes"
+msgstr "Cannot delete draw: it has prizes associated"
+
+msgid "draw_has_tickets"
+msgstr "Cannot delete prize: the draw already has tickets sold"
+
+msgid "no_tickets_sold"
+msgstr "No tickets sold — cannot run the draw"
+
+msgid "ticket_not_owned"
+msgstr "You do not own this ticket"
+
+msgid "prize_not_found"
+msgstr "Prize not found"
+
+msgid "invalid_date"
+msgstr "Invalid date format (use YYYY-MM-DD)"
+
+msgid "date_in_the_past"
+msgstr "Cannot set a date earlier than the current system date"
+
+msgid "unknown_error"
+msgstr "An unexpected error occurred"

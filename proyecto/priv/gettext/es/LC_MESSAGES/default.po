@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Language: es\n"
+
+msgid "client_not_found"
+msgstr "Cliente no encontrado"
+
+msgid "invalid_password"
+msgstr "Contraseña inválida"
+
+msgid "document_exists"
+msgstr "El documento ya está registrado en el sistema"
+
+msgid "admin_not_found"
+msgstr "Administrador no encontrado"
+
+msgid "admin_exists"
+msgstr "El nombre de usuario del administrador ya existe"
+
+msgid "number_taken"
+msgstr "Este número ya está ocupado"
+
+msgid "fraction_taken"
+msgstr "Esta fracción ya fue vendida"
+
+msgid "invalid_number"
+msgstr "Número de billete inválido (debe estar dentro del rango del sorteo)"
+
+msgid "draw_not_found"
+msgstr "Sorteo no encontrado"
+
+msgid "draw_already_exists"
+msgstr "El sorteo ya existe"
+
+msgid "draw_already_executed"
+msgstr "Este sorteo ya ha sido ejecutado"
+
+msgid "draw_not_found_or_crashed"
+msgstr "Sorteo no encontrado o proceso caído"
+
+msgid "draw_has_prizes"
+msgstr "No se puede eliminar el sorteo: tiene premios asociados"
+
+msgid "draw_has_tickets"
+msgstr "No se puede eliminar el premio: el sorteo ya tiene boletos vendidos"
+
+msgid "no_tickets_sold"
+msgstr "No se han vendido boletos — no se puede ejecutar el sorteo"
+
+msgid "ticket_not_owned"
+msgstr "No eres propietario de este boleto"
+
+msgid "prize_not_found"
+msgstr "Premio no encontrado"
+
+msgid "invalid_date"
+msgstr "Formato de fecha inválido (usa AAAA-MM-DD)"
+
+msgid "date_in_the_past"
+msgstr "No puedes establecer una fecha anterior a la fecha actual del sistema"
+
+msgid "unknown_error"
+msgstr "Ocurrió un error inesperado"
