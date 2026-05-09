@@ -1,0 +1,18 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a120a"/><stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="20" fill="url(#bBg)"/>
+  <rect x="2" y="2" width="396" height="296" rx="18" fill="none" stroke="#b45309" stroke-width="1.5" opacity="0.3"/>
+  <!-- Clover icon -->
+  <g transform="translate(170, 55)" fill="#b45309" opacity="0.6">
+    <circle cx="30" cy="15" r="18"/><circle cx="15" cy="35" r="18"/><circle cx="45" cy="35" r="18"/>
+    <rect x="27" y="40" width="6" height="30" rx="2"/>
+  </g>
+  <text x="200" y="170" font-family="Inter, sans-serif" font-size="22" font-weight="800" fill="#d97706" text-anchor="middle">SORTEO BRONCE</text>
+  <text x="200" y="193" font-family="Inter, sans-serif" font-size="13" fill="#78716c" text-anchor="middle">Premio Estándar · Para Todos</text>
+  <rect x="140" y="210" width="120" height="30" rx="8" fill="#b45309" opacity="0.1" stroke="#b45309" stroke-width="1" opacity="0.2"/>
+  <text x="200" y="231" font-family="monospace" font-size="13" fill="#b45309" text-anchor="middle" opacity="0.6">Desde $1</text>
+</svg>

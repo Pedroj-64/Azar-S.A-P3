@@ -1,0 +1,19 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="200" rx="16" fill="url(#fBg)"/>
+  <rect x="3" y="3" width="294" height="194" rx="14" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.3"/>
+  <!-- Fraction grid -->
+  <g transform="translate(50, 40)" opacity="0.6">
+    <rect width="50" height="50" rx="6" fill="#10b981" opacity="0.3"/><rect x="55" width="50" height="50" rx="6" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect y="55" width="50" height="50" rx="6" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <rect x="55" y="55" width="50" height="50" rx="6" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4,3"/>
+  </g>
+  <text x="220" y="70" font-family="Inter, sans-serif" font-size="16" font-weight="800" fill="white" text-anchor="middle">FRACCIÓN</text>
+  <text x="220" y="92" font-family="Inter, sans-serif" font-size="11" fill="#64748b" text-anchor="middle">Parte del billete</text>
+  <rect x="175" y="108" width="90" height="28" rx="6" fill="#10b981" opacity="0.15"/>
+  <text x="220" y="127" font-family="monospace" font-size="14" fill="#10b981" text-anchor="middle" font-weight="bold">1/N</text>
+</svg>

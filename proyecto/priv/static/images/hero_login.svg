@@ -1,0 +1,60 @@
+<svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="30%" cy="40%"><stop offset="0%" stop-color="#fbbf24" stop-opacity="0.15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    <radialGradient id="glow2" cx="70%" cy="60%"><stop offset="0%" stop-color="#10b981" stop-opacity="0.12"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    <linearGradient id="cardG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow1)"/>
+  <rect width="1200" height="800" fill="url(#glow2)"/>
+  <!-- Grid pattern -->
+  <g opacity="0.03" stroke="white" stroke-width="1">
+    <line x1="0" y1="0" x2="0" y2="800"/><line x1="100" y1="0" x2="100" y2="800"/><line x1="200" y1="0" x2="200" y2="800"/>
+    <line x1="300" y1="0" x2="300" y2="800"/><line x1="400" y1="0" x2="400" y2="800"/><line x1="500" y1="0" x2="500" y2="800"/>
+    <line x1="600" y1="0" x2="600" y2="800"/><line x1="700" y1="0" x2="700" y2="800"/><line x1="800" y1="0" x2="800" y2="800"/>
+    <line x1="900" y1="0" x2="900" y2="800"/><line x1="1000" y1="0" x2="1000" y2="800"/><line x1="1100" y1="0" x2="1100" y2="800"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/><line x1="0" y1="200" x2="1200" y2="200"/><line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/><line x1="0" y1="500" x2="1200" y2="500"/><line x1="0" y1="600" x2="1200" y2="600"/>
+    <line x1="0" y1="700" x2="1200" y2="700"/>
+  </g>
+  <!-- Large dice -->
+  <g transform="translate(200, 150) rotate(-15)">
+    <rect width="200" height="200" rx="30" fill="#1e293b" stroke="#fbbf24" stroke-width="2" opacity="0.6"/>
+    <circle cx="60" cy="60" r="16" fill="#fbbf24" opacity="0.7"/><circle cx="140" cy="60" r="16" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="60" cy="140" r="16" fill="#fbbf24" opacity="0.7"/><circle cx="140" cy="140" r="16" fill="#fbbf24" opacity="0.7"/>
+    <circle cx="100" cy="100" r="16" fill="#fbbf24" opacity="0.7"/>
+  </g>
+  <!-- Ticket shape -->
+  <g transform="translate(700, 400) rotate(8)">
+    <rect width="300" height="120" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2" opacity="0.5"/>
+    <line x1="80" y1="0" x2="80" y2="120" stroke="#10b981" stroke-width="1" stroke-dasharray="8,6" opacity="0.4"/>
+    <text x="180" y="55" font-family="monospace" font-size="24" fill="#10b981" opacity="0.6" text-anchor="middle">#0742</text>
+    <text x="180" y="85" font-family="sans-serif" font-size="12" fill="white" opacity="0.3" text-anchor="middle">BILLETE GANADOR</text>
+    <text x="40" y="70" font-family="sans-serif" font-size="28" fill="#fbbf24" opacity="0.5" text-anchor="middle">★</text>
+  </g>
+  <!-- Coins -->
+  <g opacity="0.4">
+    <circle cx="900" cy="200" r="35" fill="none" stroke="#fbbf24" stroke-width="3"/>
+    <text x="900" y="208" font-family="serif" font-size="28" fill="#fbbf24" text-anchor="middle" font-weight="bold">$</text>
+    <circle cx="950" cy="250" r="25" fill="none" stroke="#fbbf24" stroke-width="2" opacity="0.6"/>
+    <text x="950" y="256" font-family="serif" font-size="20" fill="#fbbf24" opacity="0.6" text-anchor="middle">$</text>
+  </g>
+  <!-- Sparkles scattered -->
+  <path d="M150 600 L153 610 L163 613 L153 616 L150 626 L147 616 L137 613 L147 610Z" fill="#fbbf24" opacity="0.3"/>
+  <path d="M500 100 L502 106 L508 108 L502 110 L500 116 L498 110 L492 108 L498 106Z" fill="#fbbf24" opacity="0.25"/>
+  <path d="M1050 500 L1053 510 L1063 513 L1053 516 L1050 526 L1047 516 L1037 513 L1047 510Z" fill="#10b981" opacity="0.3"/>
+  <path d="M800 120 L802 126 L808 128 L802 130 L800 136 L798 130 L792 128 L798 126Z" fill="#10b981" opacity="0.2"/>
+  <!-- Trophy -->
+  <g transform="translate(550, 500)" opacity="0.3">
+    <path d="M0 0 L60 0 L50 40 L40 50 L20 50 L10 40Z" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    <rect x="20" y="50" width="20" height="10" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    <rect x="10" y="60" width="40" height="6" rx="2" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    <path d="M0 0 Q-15 15 0 35" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    <path d="M60 0 Q75 15 60 35" fill="none" stroke="#fbbf24" stroke-width="2"/>
+  </g>
+</svg>

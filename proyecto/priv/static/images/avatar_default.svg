@@ -1,0 +1,21 @@
+<svg width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="avBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="avAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+  <rect width="150" height="150" rx="20" fill="url(#avBg)"/>
+  <!-- Head -->
+  <circle cx="75" cy="55" r="28" fill="url(#avAccent)" opacity="0.8"/>
+  <!-- Body -->
+  <path d="M30 130 Q30 95 75 90 Q120 95 120 130" fill="url(#avAccent)" opacity="0.6"/>
+  <!-- Eyes -->
+  <circle cx="65" cy="50" r="3" fill="#0f172a"/><circle cx="85" cy="50" r="3" fill="#0f172a"/>
+  <!-- Smile -->
+  <path d="M65 62 Q75 72 85 62" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

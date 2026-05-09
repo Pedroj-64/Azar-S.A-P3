@@ -1,0 +1,26 @@
+<svg width="600" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="tGold" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#fbbf24"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient>
+  </defs>
+  <rect width="600" height="200" rx="16" fill="url(#tBg)"/>
+  <!-- Border -->
+  <rect x="3" y="3" width="594" height="194" rx="14" fill="none" stroke="#fbbf24" stroke-width="1.5" opacity="0.3"/>
+  <rect x="8" y="8" width="584" height="184" rx="11" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.15"/>
+  <!-- Perforation line -->
+  <line x1="150" y1="15" x2="150" y2="185" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,8" opacity="0.3"/>
+  <!-- Left: Star + number -->
+  <g transform="translate(75, 100)" text-anchor="middle">
+    <path d="M0,-30 L7,-10 L28,-10 L11,3 L18,24 L0,12 L-18,24 L-11,3 L-28,-10 L-7,-10Z" fill="url(#tGold)" opacity="0.7"/>
+    <text y="55" font-family="monospace" font-size="12" fill="#94a3b8">ENTERO</text>
+  </g>
+  <!-- Right: Ticket info -->
+  <text x="350" y="70" font-family="Inter, sans-serif" font-size="28" font-weight="800" fill="white" text-anchor="middle">BILLETE COMPLETO</text>
+  <text x="350" y="100" font-family="Inter, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Todas las fracciones incluidas</text>
+  <rect x="280" y="120" width="140" height="35" rx="8" fill="url(#tGold)" opacity="0.15"/>
+  <text x="350" y="143" font-family="monospace" font-size="16" fill="#fbbf24" text-anchor="middle" font-weight="bold">100%</text>
+  <!-- Corner decorations -->
+  <path d="M570 30 L572 24 L578 22 L572 20 L570 14 L568 20 L562 22 L568 24Z" fill="#fbbf24" opacity="0.4"/>
+</svg>
