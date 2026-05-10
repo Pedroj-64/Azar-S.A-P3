@@ -8,6 +8,7 @@ defmodule ProyectoWeb.Router do
 
   Define:
   - Pipelines (browser, api)
+  - Rutas de sesión HTTP (login/logout vía controller)
   - Rutas LiveView organizadas por contexto (default, admin, player)
   - Hooks de inicialización (locale, autenticación)
   - Rutas de desarrollo (LiveDashboard, mailbox preview)
@@ -16,52 +17,45 @@ defmodule ProyectoWeb.Router do
   # PIPELINES
 
   pipeline :browser do
-    # Acepta únicamente HTML
     plug(:accepts, ["html"])
-
-    # Manejo de sesión y flash messages
     plug(:fetch_session)
     plug(:fetch_live_flash)
-
-    # Layout raíz para LiveView y controllers
     plug(:put_root_layout, html: {ProyectoWeb.Layouts, :root})
-
-    # Seguridad
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
-
-    # Internacionalización (locale desde params o sesión)
     plug(ProyectoWeb.Plugs.Locale)
   end
 
   pipeline :api do
-    # Pipeline preparado para endpoints JSON
     plug(:accepts, ["json"])
   end
 
-  # RUTAS PRINCIPALES
+  # RUTAS DE SESIÓN (HTTP clásico para manejar cookies)
+  scope "/session", ProyectoWeb do
+    pipe_through(:browser)
 
+    post("/player", SessionController, :create_player)
+    post("/admin", SessionController, :create_admin)
+    post("/register", SessionController, :create_register)
+    delete("/logout", SessionController, :delete)
+  end
+
+  # RUTAS PRINCIPALES
   scope "/", ProyectoWeb do
     pipe_through(:browser)
 
-    # SESIÓN GENERAL
-    # Rutas públicas o sin autenticación fuerte
-    # Se aplica únicamente el hook de locale
+    # SESIÓN PÚBLICA
     live_session :default,
       on_mount: [ProyectoWeb.Hooks.LocaleHook] do
-      # Página principal (implementada con LiveView)
       live("/", PageLive.Home)
-
-      # Autenticación
       live("/login", Player.LoginLive)
+      live("/register", Player.RegisterLive)
       live("/admin/login", Admin.LoginLive)
     end
 
     # SESIÓN ADMIN
-
-    # Requiere autenticación de administrador
-    # El hook AdminAuth valida acceso antes de montar el LiveView
     live_session :admin,
+      layout: {ProyectoWeb.Layouts, :admin_app},
       on_mount: [
         ProyectoWeb.Hooks.LocaleHook,
         ProyectoWeb.Plugs.AdminAuth
@@ -74,8 +68,8 @@ defmodule ProyectoWeb.Router do
     end
 
     # SESIÓN PLAYER
-    # Requiere autenticación de usuario jugador
     live_session :player,
+      layout: {ProyectoWeb.Layouts, :player_app},
       on_mount: [
         ProyectoWeb.Hooks.LocaleHook,
         ProyectoWeb.Plugs.PlayerAuth
@@ -89,18 +83,12 @@ defmodule ProyectoWeb.Router do
   end
 
   # RUTAS DE DESARROLLO
-  # Solo disponibles si :dev_routes está habilitado
-  # No deben exponerse sin protección en producción
   if Application.compile_env(:proyecto, :dev_routes) do
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do
       pipe_through(:browser)
-
-      # Dashboard de métricas y telemetría
       live_dashboard("/dashboard", metrics: ProyectoWeb.Telemetry)
-
-      # Vista previa de correos enviados
       forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end

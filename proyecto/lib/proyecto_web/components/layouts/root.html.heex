@@ -1,36 +1,448 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="Proyecto" suffix=" · Phoenix Framework">
+    <meta name="description" content="Azar S.A. — Lotería. La suerte tiene su propio sabor." />
+    <.live_title default="Azar S.A." suffix=" · Lotería">
       {assigns[:page_title]}
     </.live_title>
+
+    <%!-- Fuentes retro: Cooper Black lookalike + monospace vintage --%>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet" />
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
-    </script>
-    <script>
-      (() => {
-        const setTheme = (theme) => {
-          if (theme === "system") {
-            localStorage.removeItem("phx:theme");
-            document.documentElement.removeAttribute("data-theme");
-          } else {
-            localStorage.setItem("phx:theme", theme);
-            document.documentElement.setAttribute("data-theme", theme);
-          }
-        };
-        if (!document.documentElement.hasAttribute("data-theme")) {
-          setTheme(localStorage.getItem("phx:theme") || "system");
-        }
-        window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
-        
-        window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
-      })();
-    </script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}></script>
+
+    <style>
+      /* ── SISTEMA DE COLORES VINTAGE VEGAS ─────────────── */
+      :root {
+        --mostaza:      #d4a017;
+        --naranja:      #c2521a;
+        --chocolate:    #3d1f0d;
+        --chocolate-md: #5a2e10;
+        --chocolate-lt: #7a3f18;
+        --teal:         #2a6b6b;
+        --teal-lt:      #3a8a8a;
+        --crema:        #f0e6c8;
+        --crema-oscura: #c8b48a;
+        --humo:         rgba(212, 160, 23, 0.06);
+        --neon-orange:  #ff6b1a;
+        --neon-gold:    #ffd700;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        font-family: 'Spectral', Georgia, serif;
+        background-color: var(--chocolate);
+        color: var(--crema);
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      /* ── TIPOGRAFÍA ───────────────────────────────────── */
+      .font-display  { font-family: 'Alfa Slab One', serif; }
+      .font-serif    { font-family: 'Playfair Display', Georgia, serif; }
+      .font-mono     { font-family: 'DM Mono', monospace; }
+      .font-body     { font-family: 'Spectral', Georgia, serif; }
+
+      /* ── GRANO VHS (Canvas JS lo pinta encima) ────────── */
+      #vhs-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw; height: 100vh;
+        pointer-events: none;
+        z-index: 9998;
+        opacity: 0.045;
+        mix-blend-mode: screen;
+      }
+
+      /* ── PATRÓN DE ALFOMBRA ───────────────────────────── */
+      .carpet-bg {
+        background-color: var(--chocolate);
+        background-image:
+          /* Rombo grande */
+          repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 18px,
+            rgba(212,160,23,0.07) 18px,
+            rgba(212,160,23,0.07) 20px
+          ),
+          repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 18px,
+            rgba(42,107,107,0.07) 18px,
+            rgba(42,107,107,0.07) 20px
+          ),
+          /* Cuadrícula fina */
+          repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 39px,
+            rgba(212,160,23,0.04) 39px,
+            rgba(212,160,23,0.04) 40px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 39px,
+            rgba(212,160,23,0.04) 39px,
+            rgba(212,160,23,0.04) 40px
+          );
+      }
+
+      /* ── NEÓN DE GAS (no LED) ─────────────────────────── */
+      .neon-gas {
+        text-shadow:
+          0 0 4px  rgba(255, 107, 26, 0.9),
+          0 0 12px rgba(255, 107, 26, 0.6),
+          0 0 28px rgba(255, 107, 26, 0.3),
+          0 0 60px rgba(212, 160, 23, 0.15);
+        animation: neon-flicker 8s infinite;
+      }
+      .neon-gold {
+        text-shadow:
+          0 0 4px  rgba(255, 215, 0, 0.95),
+          0 0 14px rgba(255, 215, 0, 0.65),
+          0 0 32px rgba(255, 215, 0, 0.3),
+          0 0 70px rgba(212, 160, 23, 0.2);
+        animation: neon-flicker 6s infinite 2s;
+      }
+      .neon-teal {
+        text-shadow:
+          0 0 4px  rgba(42, 200, 200, 0.9),
+          0 0 14px rgba(42, 200, 200, 0.55),
+          0 0 30px rgba(42, 107, 107, 0.3);
+        animation: neon-flicker 10s infinite 4s;
+      }
+
+      /* Parpadeo de neón de gas (irregular, no sinusoidal) */
+      @keyframes neon-flicker {
+        0%, 95%, 100%    { opacity: 1; }
+        96%              { opacity: 0.85; }
+        97%              { opacity: 1; }
+        98%              { opacity: 0.7; }
+        99%              { opacity: 1; }
+      }
+
+      /* ── HALO ALREDEDOR DE ELEMENTOS ─────────────────── */
+      .halo {
+        box-shadow:
+          0 0 8px  rgba(212, 160, 23, 0.25),
+          0 0 24px rgba(212, 160, 23, 0.12),
+          0 0 60px rgba(212, 160, 23, 0.06);
+      }
+      .halo-teal {
+        box-shadow:
+          0 0 8px  rgba(42, 107, 107, 0.35),
+          0 0 24px rgba(42, 107, 107, 0.18),
+          0 0 60px rgba(42, 107, 107, 0.08);
+      }
+      .halo-orange {
+        box-shadow:
+          0 0 8px  rgba(194, 82, 26, 0.4),
+          0 0 24px rgba(194, 82, 26, 0.2),
+          0 0 60px rgba(194, 82, 26, 0.08);
+      }
+
+      /* ── TARJETA VINTAGE ──────────────────────────────── */
+      .vintage-card {
+        background: linear-gradient(135deg, var(--chocolate-md) 0%, #4a2412 100%);
+        border: 1px solid rgba(212, 160, 23, 0.3);
+        border-radius: 4px;
+        position: relative;
+        overflow: hidden;
+      }
+      .vintage-card::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 3px,
+          rgba(212,160,23,0.015) 3px,
+          rgba(212,160,23,0.015) 4px
+        );
+        pointer-events: none;
+      }
+      /* Borde interior dorado fino */
+      .vintage-card::after {
+        content: '';
+        position: absolute;
+        inset: 4px;
+        border: 1px solid rgba(212, 160, 23, 0.15);
+        border-radius: 2px;
+        pointer-events: none;
+      }
+
+      /* ── INPUT VINTAGE ────────────────────────────────── */
+      .vintage-input {
+        background: var(--chocolate);
+        border: 1px solid rgba(212, 160, 23, 0.35);
+        border-radius: 2px;
+        color: var(--crema);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.875rem;
+        padding: 0.75rem 1rem;
+        width: 100%;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        outline: none;
+      }
+      .vintage-input::placeholder {
+        color: var(--crema-oscura);
+        opacity: 0.5;
+        font-style: italic;
+      }
+      .vintage-input:focus {
+        border-color: var(--mostaza);
+        box-shadow: 0 0 0 2px rgba(212,160,23,0.15), 0 0 12px rgba(212,160,23,0.1);
+      }
+
+      /* ── BOTÓN PALANCA / INTERRUPTOR ─────────────────── */
+      .btn-lever {
+        position: relative;
+        background: linear-gradient(180deg, var(--naranja) 0%, #9c3e12 100%);
+        color: var(--crema);
+        font-family: 'Alfa Slab One', serif;
+        font-size: 0.85rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 0.8rem 2rem;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: transform 0.1s, box-shadow 0.2s;
+        box-shadow:
+          0 4px 0 #6b2a0a,
+          0 6px 12px rgba(0,0,0,0.4),
+          inset 0 1px 0 rgba(255,255,255,0.15);
+        transform: translateY(0);
+      }
+      .btn-lever:hover {
+        background: linear-gradient(180deg, #d4601e 0%, #a84215 100%);
+        box-shadow:
+          0 4px 0 #6b2a0a,
+          0 8px 16px rgba(194,82,26,0.3),
+          inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      .btn-lever:active {
+        transform: translateY(3px);
+        box-shadow:
+          0 1px 0 #6b2a0a,
+          0 2px 8px rgba(0,0,0,0.3),
+          inset 0 1px 0 rgba(255,255,255,0.1);
+      }
+
+      .btn-lever-teal {
+        background: linear-gradient(180deg, var(--teal-lt) 0%, #1d4d4d 100%);
+        box-shadow:
+          0 4px 0 #112e2e,
+          0 6px 12px rgba(0,0,0,0.4),
+          inset 0 1px 0 rgba(255,255,255,0.12);
+      }
+      .btn-lever-teal:hover {
+        background: linear-gradient(180deg, #469090 0%, #235858 100%);
+      }
+      .btn-lever-ghost {
+        background: transparent;
+        border: 1px solid rgba(212,160,23,0.4);
+        box-shadow: none;
+        color: var(--mostaza);
+      }
+      .btn-lever-ghost:hover {
+        background: rgba(212,160,23,0.08);
+        box-shadow: 0 0 12px rgba(212,160,23,0.15);
+      }
+      .btn-lever-ghost:active { transform: translateY(1px); }
+
+      /* ── TRANSICIÓN PROYECTOR ─────────────────────────── */
+      .page-enter {
+        animation: projector-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes projector-in {
+        0%   { opacity: 0; filter: brightness(1.8) blur(3px); transform: scale(1.015); }
+        30%  { opacity: 1; filter: brightness(1.1) blur(0px); }
+        100% { opacity: 1; filter: brightness(1)   blur(0px); transform: scale(1); }
+      }
+
+      /* ── BADGE / ETIQUETA VINTAGE ─────────────────────── */
+      .vintage-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: rgba(212,160,23,0.12);
+        border: 1px solid rgba(212,160,23,0.3);
+        border-radius: 2px;
+        padding: 0.25rem 0.75rem;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--mostaza);
+      }
+
+      /* ── DIVISOR ORNAMENTAL ───────────────────────────── */
+      .divider-ornament {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: rgba(212,160,23,0.4);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+      }
+      .divider-ornament::before,
+      .divider-ornament::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(212,160,23,0.4), transparent);
+      }
+
+      /* ── LENS FLARE DECORATIVO ────────────────────────── */
+      .lens-flare {
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+      .lens-flare-1 {
+        width: 300px; height: 300px;
+        background: radial-gradient(circle,
+          rgba(212,160,23,0.12) 0%,
+          rgba(194,82,26,0.06) 40%,
+          transparent 70%
+        );
+        filter: blur(20px);
+      }
+      .lens-flare-2 {
+        width: 500px; height: 200px;
+        background: radial-gradient(ellipse,
+          rgba(255,200,50,0.06) 0%,
+          transparent 70%
+        );
+        filter: blur(30px);
+      }
+
+      /* ── SCROLLBAR VINTAGE ────────────────────────────── */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: var(--chocolate); }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, var(--naranja), var(--chocolate-lt));
+        border-radius: 0;
+      }
+
+      /* ── STATUS BADGE ─────────────────────────────────── */
+      .badge-pending {
+        background: rgba(212,160,23,0.15);
+        border: 1px solid rgba(212,160,23,0.3);
+        color: var(--mostaza);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.6rem;
+        border-radius: 1px;
+      }
+      .badge-done {
+        background: rgba(42,107,107,0.2);
+        border: 1px solid rgba(42,107,107,0.4);
+        color: var(--teal-lt);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.2rem 0.6rem;
+        border-radius: 1px;
+      }
+
+      /* ── SIDEBAR LINK HOVER ───────────────────────────── */
+      .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.65rem 1rem;
+        border-radius: 2px;
+        color: var(--crema-oscura);
+        font-family: 'DM Mono', monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        border-left: 2px solid transparent;
+        text-decoration: none;
+      }
+      .sidebar-link:hover {
+        background: rgba(212,160,23,0.08);
+        color: var(--mostaza);
+        border-left-color: var(--mostaza);
+        box-shadow: inset 0 0 20px rgba(212,160,23,0.04);
+      }
+    </style>
   </head>
-  <body>
-    {@inner_content}
+  <body class="carpet-bg">
+    <%!-- Canvas para grano VHS --%>
+    <canvas id="vhs-overlay" aria-hidden="true"></canvas>
+
+    <div class="page-enter" id="page-root">
+      {@inner_content}
+    </div>
+
+    <script>
+      // ── GRANO VHS ─────────────────────────────────────────────────
+      (function() {
+        const canvas = document.getElementById('vhs-overlay');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let animId;
+
+        function resize() {
+          canvas.width  = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        function drawGrain() {
+          const { width, height } = canvas;
+          const imgData = ctx.createImageData(width, height);
+          const data = imgData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            const v = Math.random() * 255 | 0;
+            data[i]     = v;   // R
+            data[i + 1] = v;   // G
+            data[i + 2] = v * 0.7 | 0; // B (calidez sepia)
+            data[i + 3] = Math.random() > 0.5 ? 40 : 0; // opacidad aleatoria
+          }
+          ctx.putImageData(imgData, 0, 0);
+          animId = requestAnimationFrame(drawGrain);
+        }
+        drawGrain();
+      })();
+
+      // ── TRANSICIÓN PROYECTOR entre páginas LiveView ───────────────
+      window.addEventListener('phx:page-loading-start', () => {
+        const el = document.getElementById('page-root');
+        if (el) el.style.opacity = '0';
+      });
+      window.addEventListener('phx:page-loading-stop', () => {
+        const el = document.getElementById('page-root');
+        if (!el) return;
+        el.style.opacity = '';
+        el.classList.remove('page-enter');
+        void el.offsetWidth; // reflow
+        el.classList.add('page-enter');
+      });
+    </script>
   </body>
 </html>

@@ -88,7 +88,8 @@ defmodule ProyectoWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components
-      import ProyectoWeb.CoreComponents
+      import ProyectoWeb.CoreComponents, except: [translate_error: 1]
+      import ProyectoWeb.UIComponents
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS

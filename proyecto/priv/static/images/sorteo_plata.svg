@@ -1,0 +1,21 @@
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111827"/><stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" rx="20" fill="url(#sBg)"/>
+  <rect x="2" y="2" width="396" height="296" rx="18" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.3"/>
+  <!-- Diamond icon -->
+  <g transform="translate(160, 50)" opacity="0.7">
+    <polygon points="40,0 80,35 40,90 0,35" fill="none" stroke="#cbd5e1" stroke-width="2.5"/>
+    <line x1="0" y1="35" x2="80" y2="35" stroke="#cbd5e1" stroke-width="1.5"/>
+    <line x1="40" y1="0" x2="20" y2="35" stroke="#cbd5e1" stroke-width="1"/><line x1="40" y1="0" x2="60" y2="35" stroke="#cbd5e1" stroke-width="1"/>
+    <line x1="20" y1="35" x2="40" y2="90" stroke="#cbd5e1" stroke-width="1"/><line x1="60" y1="35" x2="40" y2="90" stroke="#cbd5e1" stroke-width="1"/>
+  </g>
+  <text x="200" y="175" font-family="Inter, sans-serif" font-size="22" font-weight="800" fill="#cbd5e1" text-anchor="middle">SORTEO PLATA</text>
+  <text x="200" y="198" font-family="Inter, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">Premio Intermedio · Edición Clásica</text>
+  <rect x="140" y="215" width="120" height="30" rx="8" fill="#94a3b8" opacity="0.1" stroke="#94a3b8" stroke-width="1" opacity="0.2"/>
+  <text x="200" y="236" font-family="monospace" font-size="13" fill="#94a3b8" text-anchor="middle" opacity="0.6">$20.000+</text>
+  <circle cx="80" cy="250" r="3" fill="#94a3b8" opacity="0.3"/><circle cx="320" cy="250" r="3" fill="#94a3b8" opacity="0.3"/>
+</svg>

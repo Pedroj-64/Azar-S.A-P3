@@ -1,9 +1,13 @@
 defmodule ProyectoWeb.Plugs.PlayerAuth do
+  @moduledoc """
+  Hook on_mount que protege las rutas de jugador.
+  Verifica que exista :client_id en la sesión HTTP.
+  """
   import Phoenix.LiveView
   import Phoenix.Component
 
-  def on_mount(_params, _session, socket) do
-    case get_session(socket, :client_id) do
+  def on_mount(:default, _params, session, socket) do
+    case session["client_id"] do
       nil ->
         {:halt,
          socket
@@ -11,7 +15,10 @@ defmodule ProyectoWeb.Plugs.PlayerAuth do
          |> redirect(to: "/login")}
 
       client_id ->
-        {:cont, assign(socket, :client_id, client_id)}
+        {:cont,
+         socket
+         |> assign(:client_id, client_id)
+         |> assign(:client_name, session["client_name"])}
     end
   end
 end

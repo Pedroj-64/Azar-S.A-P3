@@ -1,9 +1,13 @@
 defmodule ProyectoWeb.Plugs.AdminAuth do
+  @moduledoc """
+  Hook on_mount que protege las rutas de administrador.
+  Verifica que exista :admin_id en la sesión HTTP.
+  """
   import Phoenix.LiveView
   import Phoenix.Component
 
-  def on_mount(_params, _session, socket) do
-    case get_session(socket, :admin_id) do
+  def on_mount(:default, _params, session, socket) do
+    case session["admin_id"] do
       nil ->
         {:halt,
          socket
@@ -11,7 +15,10 @@ defmodule ProyectoWeb.Plugs.AdminAuth do
          |> redirect(to: "/admin/login")}
 
       admin_id ->
-        {:cont, assign(socket, :admin_id, admin_id)}
+        {:cont,
+         socket
+         |> assign(:admin_id, admin_id)
+         |> assign(:admin_username, session["admin_username"])}
     end
   end
 end
