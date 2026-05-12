@@ -128,10 +128,10 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         </.gold_button>
       </div>
 
-      <!-- Create Form -->
-      <div :if={@show_create} class="mb-8 animate-fade-in-up">
+      <%!-- Create Form --%>
+      <div :if={@show_create} class="mb-8 page-enter">
         <.glass_card>
-          <h3 class="text-lg font-bold text-white mb-4">Crear Nuevo Sorteo</h3>
+          <h3 class="font-display text-lg text-[var(--crema)] mb-4">Crear Nuevo Sorteo</h3>
           <form phx-submit="create_draw" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <.glass_input name="name" label="Nombre" placeholder="Sorteo de Navidad" required={true} />
             <.glass_input name="date" type="date" label="Fecha del Sorteo" required={true} />
@@ -145,7 +145,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         </.glass_card>
       </div>
 
-      <!-- Draws List -->
+      <%!-- Draws List --%>
       <div :if={@draws == []}>
         <.glass_card>
           <.empty_state icon_name="hero-ticket" message="No hay sorteos creados. ¡Crea el primero!" />
@@ -156,26 +156,26 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         <div :for={draw <- @draws}>
           <.glass_card>
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-              <!-- Draw Info -->
+              <%!-- Draw Info --%>
               <div class="flex items-center gap-4 flex-1">
-                <img src={draw_image(draw)} class="w-16 h-16 rounded-xl object-cover" />
+                <img src={draw_img(draw)} class="w-16 h-16 rounded object-cover" style="border: 1px solid rgba(212,160,23,0.2);" />
                 <div>
-                  <h3 class="text-lg font-bold text-white">{draw["name"]}</h3>
+                  <h3 class="font-display text-lg text-[var(--crema)]">{draw["name"]}</h3>
                   <div class="flex items-center gap-3 mt-1">
-                    <span class="text-slate-400 text-sm">
+                    <span class="font-mono text-xs text-[var(--crema-oscura)]">
                       <.icon name="hero-calendar" class="w-4 h-4 inline mr-1" />{draw["date"] || "Sin fecha"}
                     </span>
-                    <span class="text-slate-400 text-sm">
-                      <.icon name="hero-banknotes" class="w-4 h-4 inline mr-1" />${format_number(draw["ticket_price"] || 0)}
+                    <span class="font-mono text-xs text-[var(--crema-oscura)]">
+                      <.icon name="hero-banknotes" class="w-4 h-4 inline mr-1" />${fmt(draw["ticket_price"] || 0)}
                     </span>
-                    <span class="text-slate-400 text-sm">
+                    <span class="font-mono text-xs text-[var(--crema-oscura)]">
                       <.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-1" />{map_size(draw["tickets"] || %{})} vendidos
                     </span>
                   </div>
                 </div>
               </div>
 
-              <!-- Actions -->
+              <%!-- Actions --%>
               <div class="flex items-center gap-2">
                 <.status_badge status={to_string(draw["status"] || "pending")} />
 
@@ -207,49 +207,48 @@ defmodule ProyectoWeb.Admin.DrawsLive do
               </div>
             </div>
 
-            <!-- Result (if done) -->
-            <div :if={draw["result"]} class="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-400/20">
-              <p class="text-emerald-400 font-semibold">
+            <%!-- Result (if done) --%>
+            <div :if={draw["result"]} class="mt-4 p-4" style="border-radius: 2px; background: rgba(42,107,107,0.1); border: 1px solid rgba(42,107,107,0.25);">
+              <p class="font-mono text-sm text-[var(--teal-lt)]">
                 <.icon name="hero-trophy" class="w-5 h-5 inline mr-2" />
                 Número ganador: #{draw["result"]["winner_number"]}
-                — Premio total: ${format_number(draw["result"]["total_prize"] || 0)}
+                — Premio total: ${fmt(draw["result"]["total_prize"] || 0)}
               </p>
             </div>
 
-            <!-- Prizes Panel -->
-            <div :if={@show_prizes == draw["id"]} class="mt-4 animate-fade-in-up">
-              <div class="border-t border-white/10 pt-4">
-                <h4 class="text-sm font-bold text-white mb-3">
+            <%!-- Prizes Panel --%>
+            <div :if={@show_prizes == draw["id"]} class="mt-4 page-enter">
+              <div style="border-top: 1px solid rgba(212,160,23,0.15); padding-top: 1rem;">
+                <h4 class="font-mono text-xs uppercase tracking-widest text-[var(--crema)] mb-3">
                   <.icon name="hero-gift" class="w-4 h-4 inline mr-1" /> Premios ({length(draw["prizes"] || [])})
                 </h4>
 
                 <div :for={prize <- draw["prizes"] || []}
-                  class="flex items-center justify-between p-3 rounded-lg bg-slate-700/30 mb-2">
+                  class="flex items-center justify-between p-3 mb-2"
+                  style="border-radius: 2px; background: rgba(90,46,16,0.2); border: 1px solid rgba(212,160,23,0.08);">
                   <div>
-                    <span class="text-white text-sm">{prize["name"]}</span>
-                    <span class="text-yellow-400 text-sm ml-2">${format_number(prize["amount"] || 0)}</span>
+                    <span class="text-[var(--crema)] text-sm">{prize["name"]}</span>
+                    <span class="text-[var(--mostaza)] text-sm ml-2">${fmt(prize["amount"] || 0)}</span>
                   </div>
                   <button
                     :if={to_string(draw["status"]) == "pending"}
                     phx-click="delete_prize"
                     phx-value-draw_id={draw["id"]}
                     phx-value-prize_id={prize["id"]}
-                    class="text-red-400 hover:text-red-300 cursor-pointer"
+                    class="text-[var(--naranja)] hover:text-red-400 cursor-pointer transition-colors"
                   >
                     <.icon name="hero-x-mark" class="w-4 h-4" />
                   </button>
                 </div>
 
-                <!-- Add Prize Form -->
+                <%!-- Add Prize Form --%>
                 <form :if={to_string(draw["status"]) == "pending"}
                   phx-submit="add_prize" class="flex gap-2 mt-3">
                   <input type="hidden" name="draw_id" value={draw["id"]} />
                   <input name="name" placeholder="Nombre del premio" required
-                    class="flex-1 bg-slate-700/50 border border-white/10 text-white text-sm
-                           rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400/50 focus:outline-none" />
+                    class="vintage-input flex-1" />
                   <input name="amount" type="number" placeholder="Monto" required
-                    class="w-32 bg-slate-700/50 border border-white/10 text-white text-sm
-                           rounded-lg px-3 py-2 focus:ring-2 focus:ring-yellow-400/50 focus:outline-none" />
+                    class="vintage-input w-32" />
                   <.gold_button type="submit" class="px-4 py-2 text-sm">Agregar</.gold_button>
                 </form>
               </div>
@@ -260,19 +259,4 @@ defmodule ProyectoWeb.Admin.DrawsLive do
     </div>
     """
   end
-
-  defp draw_image(draw) do
-    price = draw["ticket_price"] || 0
-    cond do
-      price >= 50_000 -> "/images/sorteo_oro.svg"
-      price >= 20_000 -> "/images/sorteo_plata.svg"
-      true -> "/images/sorteo_bronce.svg"
-    end
-  end
-
-  defp format_number(n) when is_integer(n) do
-    n |> Integer.to_string() |> String.reverse()
-    |> String.replace(~r/(\d{3})(?=\d)/, "\\1.") |> String.reverse()
-  end
-  defp format_number(_), do: "0"
 end

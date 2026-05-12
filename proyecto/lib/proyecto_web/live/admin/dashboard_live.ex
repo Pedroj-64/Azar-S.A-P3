@@ -37,23 +37,23 @@ defmodule ProyectoWeb.Admin.DashboardLive do
         subtitle={"Fecha del sistema: #{@system_date}"}
       />
 
-      <!-- Stats Grid -->
+      <%!-- Stats Grid --%>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <.stat_card
           title="Ingresos Totales"
-          value={"$#{format_number(@balance.summary.total_revenue)}"}
+          value={"$#{fmt(@balance.summary.total_revenue)}"}
           icon_name="hero-banknotes"
           color="emerald"
         />
         <.stat_card
           title="Premios Entregados"
-          value={"$#{format_number(@balance.summary.total_prizes)}"}
+          value={"$#{fmt(@balance.summary.total_prizes)}"}
           icon_name="hero-gift"
           color="yellow"
         />
         <.stat_card
           title="Ganancia Neta"
-          value={"$#{format_number(@balance.summary.total_profit)}"}
+          value={"$#{fmt(@balance.summary.total_profit)}"}
           icon_name="hero-arrow-trending-up"
           color={if @balance.summary.total_profit >= 0, do: "emerald", else: "red"}
         />
@@ -65,11 +65,11 @@ defmodule ProyectoWeb.Admin.DashboardLive do
         />
       </div>
 
-      <!-- Recent Draws -->
+      <%!-- Recent Draws --%>
       <.glass_card>
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-white">Sorteos Recientes</h2>
-          <.link navigate={~p"/admin/draws"} class="text-sm text-yellow-400 hover:text-yellow-300 transition-colors">
+          <h2 class="font-display text-xl text-[var(--crema)]">Sorteos Recientes</h2>
+          <.link navigate={~p"/admin/draws"} class="font-mono text-xs uppercase tracking-widest text-[var(--mostaza)] hover:neon-gold transition-all">
             Ver todos →
           </.link>
         </div>
@@ -80,19 +80,19 @@ defmodule ProyectoWeb.Admin.DashboardLive do
 
         <div :if={@recent_draws != []} class="space-y-3">
           <div :for={draw <- @recent_draws}
-            class="flex items-center justify-between p-4 rounded-xl bg-slate-700/30 border border-white/5
-                   hover:border-white/10 transition-all">
+            class="flex items-center justify-between p-4"
+            style="border-radius: 2px; background: rgba(90,46,16,0.25); border: 1px solid rgba(212,160,23,0.1);">
             <div class="flex items-center gap-4">
-              <div class="bg-yellow-400/10 p-2 rounded-lg">
-                <.icon name="hero-ticket" class="w-5 h-5 text-yellow-400" />
+              <div class="p-2" style="background: rgba(212,160,23,0.1); border-radius: 2px;">
+                <.icon name="hero-ticket" class="w-5 h-5 text-[var(--mostaza)]" />
               </div>
               <div>
-                <p class="text-white font-medium">{draw["name"]}</p>
-                <p class="text-slate-400 text-xs">{draw["date"] || "Sin fecha"}</p>
+                <p class="text-[var(--crema)] font-semibold">{draw["name"]}</p>
+                <p class="font-mono text-xs text-[var(--crema-oscura)]">{draw["date"] || "Sin fecha"}</p>
               </div>
             </div>
             <div class="flex items-center gap-4">
-              <span class="text-slate-300 text-sm">${format_number(draw["ticket_price"] || 0)}</span>
+              <span class="font-mono text-sm text-[var(--crema-oscura)]">${fmt(draw["ticket_price"] || 0)}</span>
               <.status_badge status={to_string(draw["status"] || "pending")} />
             </div>
           </div>
@@ -101,14 +101,4 @@ defmodule ProyectoWeb.Admin.DashboardLive do
     </div>
     """
   end
-
-  defp format_number(n) when is_integer(n) do
-    n
-    |> Integer.to_string()
-    |> String.reverse()
-    |> String.replace(~r/(\d{3})(?=\d)/, "\\1.")
-    |> String.reverse()
-  end
-
-  defp format_number(_), do: "0"
 end

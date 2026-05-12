@@ -27,32 +27,20 @@ defmodule ProyectoWeb.Player.DashboardLive do
 
       <.glass_card>
         <div class="flex items-center justify-between mb-6">
-          <h2 class="text-xl font-bold text-white">Sorteos Disponibles</h2>
-          <.link navigate={~p"/player/draws"} class="text-sm text-emerald-400 hover:text-emerald-300">Ver todos →</.link>
+          <h2 class="font-display text-xl text-[var(--crema)]">Sorteos Disponibles</h2>
+          <.link navigate={~p"/player/draws"} class="font-mono text-xs uppercase tracking-widest text-[var(--teal-lt)] hover:neon-teal transition-all">Ver todos →</.link>
         </div>
         <div :if={@pending_draws == []}><.empty_state icon_name="hero-ticket" message="No hay sorteos disponibles" /></div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <.link :for={draw <- @pending_draws} navigate={~p"/player/draws/#{draw["id"]}"}
-            class="group p-4 rounded-xl bg-slate-700/30 border border-white/5 hover:border-emerald-400/30 transition-all">
-            <img src={draw_img(draw)} class="w-full h-24 object-cover rounded-lg mb-3 opacity-70 group-hover:opacity-100 transition" />
-            <h3 class="text-white font-semibold">{draw["name"]}</h3>
-            <p class="text-slate-400 text-xs mt-1">{draw["date"]} — ${fmt(draw["ticket_price"] || 0)}</p>
+            class="group p-4 vintage-card hover:halo transition-all duration-300">
+            <img src={draw_img(draw)} class="w-full h-24 object-cover mb-3 opacity-70 group-hover:opacity-100 transition" style="border-radius: 2px;" />
+            <h3 class="text-[var(--crema)] font-semibold group-hover:text-[var(--mostaza)] transition-colors">{draw["name"]}</h3>
+            <p class="font-mono text-xs text-[var(--crema-oscura)] mt-1">{draw["date"]} — ${fmt(draw["ticket_price"] || 0)}</p>
           </.link>
         </div>
       </.glass_card>
     </div>
     """
   end
-
-  defp draw_img(d) do
-    p = d["ticket_price"] || 0
-    cond do
-      p >= 50_000 -> "/images/sorteo_oro.svg"
-      p >= 20_000 -> "/images/sorteo_plata.svg"
-      true -> "/images/sorteo_bronce.svg"
-    end
-  end
-
-  defp fmt(n) when is_integer(n), do: n |> Integer.to_string() |> String.reverse() |> String.replace(~r/(\d{3})(?=\d)/, "\\1.") |> String.reverse()
-  defp fmt(_), do: "0"
 end

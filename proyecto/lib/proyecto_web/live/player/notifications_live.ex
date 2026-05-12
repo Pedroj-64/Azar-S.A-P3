@@ -36,17 +36,18 @@ defmodule ProyectoWeb.Player.NotificationsLive do
 
         <div class="space-y-3">
           <div :for={notif <- @notifications}
-            class="p-4 rounded-xl bg-slate-700/30 border border-white/5 hover:border-white/10 transition-all animate-fade-in-up">
+            class="p-4 page-enter"
+            style="border-radius: 2px; background: rgba(90,46,16,0.2); border: 1px solid rgba(212,160,23,0.08);">
             <div class="flex items-start gap-3">
               <div class={[
-                "p-2 rounded-lg mt-0.5",
+                "p-2 mt-0.5",
                 notification_icon_bg(notif.message)
-              ]}>
+              ]} style="border-radius: 2px;">
                 <.icon name={notification_icon(notif.message)} class="w-5 h-5" />
               </div>
               <div class="flex-1">
-                <p class="text-white text-sm">{format_message(notif.message)}</p>
-                <p class="text-slate-500 text-xs mt-1">{notif.date}</p>
+                <p class="text-[var(--crema)] text-sm">{format_message(notif.message)}</p>
+                <p class="font-mono text-[0.6rem] text-[var(--crema-oscura)] mt-1 uppercase tracking-widest">{notif.date}</p>
               </div>
             </div>
           </div>
@@ -59,8 +60,8 @@ defmodule ProyectoWeb.Player.NotificationsLive do
   defp notification_icon(%{event: :draw_winner}), do: "hero-trophy"
   defp notification_icon(_), do: "hero-bell"
 
-  defp notification_icon_bg(%{event: :draw_winner}), do: "bg-yellow-400/20 text-yellow-400"
-  defp notification_icon_bg(_), do: "bg-blue-400/20 text-blue-400"
+  defp notification_icon_bg(%{event: :draw_winner}), do: "bg-[rgba(212,160,23,0.15)] text-[var(--mostaza)]"
+  defp notification_icon_bg(_), do: "bg-[rgba(42,107,107,0.15)] text-[var(--teal-lt)]"
 
   defp format_message(%{event: :draw_winner, draw_name: name, number: num, prize: prize}) do
     "🎉 ¡Ganaste en #{name}! Número #{num} — Premio: $#{fmt(prize)}"
@@ -68,7 +69,4 @@ defmodule ProyectoWeb.Player.NotificationsLive do
   defp format_message(%{event: event}), do: "Evento: #{event}"
   defp format_message(msg) when is_binary(msg), do: msg
   defp format_message(msg), do: inspect(msg)
-
-  defp fmt(n) when is_integer(n), do: n |> Integer.to_string() |> String.reverse() |> String.replace(~r/(\d{3})(?=\d)/, "\\1.") |> String.reverse()
-  defp fmt(_), do: "0"
 end

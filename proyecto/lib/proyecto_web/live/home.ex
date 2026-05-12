@@ -26,6 +26,11 @@ defmodule ProyectoWeb.PageLive.Home do
         <div class="absolute inset-0" style="background: linear-gradient(135deg, rgba(61,31,13,0.85) 0%, rgba(42,21,8,0.7) 50%, rgba(26,13,4,0.9) 100%);"></div>
       </div>
 
+      <%!-- ── SELECTOR DE IDIOMA (Esquina superior derecha) ───── --%>
+      <div class="absolute top-6 right-6 z-20">
+        <.language_selector locale={@locale || "es"} />
+      </div>
+
       <%!-- ── CONTENIDO PRINCIPAL ────────────────────────────── --%>
       <div class="relative z-10 max-w-5xl w-full mx-auto px-6 py-12 flex flex-col lg:flex-row items-center gap-16">
 

@@ -26,14 +26,14 @@ defmodule ProyectoWeb.Admin.DateLive do
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <.glass_card>
           <div class="text-center">
-            <img src={~p"/images/admin_system.svg"} class="w-48 h-32 mx-auto mb-6 rounded-xl opacity-60" />
-            <p class="text-slate-400 text-sm mb-2">Fecha actual</p>
-            <p class="text-5xl font-black text-white mb-2">{@current_date}</p>
+            <img src={~p"/images/admin_system.svg"} class="w-48 h-32 mx-auto mb-6 opacity-60" style="border-radius: 2px;" />
+            <p class="font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)] mb-2">Fecha actual</p>
+            <p class="font-display text-5xl text-[var(--crema)] neon-gold mb-2">{@current_date}</p>
           </div>
         </.glass_card>
         <.glass_card>
-          <h3 class="text-xl font-bold text-white mb-6">
-            <.icon name="hero-forward" class="w-6 h-6 inline mr-2 text-yellow-400" /> Avanzar
+          <h3 class="font-display text-xl text-[var(--crema)] mb-6">
+            <.icon name="hero-forward" class="w-6 h-6 inline mr-2 text-[var(--mostaza)]" /> Avanzar
           </h3>
           <form phx-submit="advance_date" class="space-y-6">
             <.glass_input name="new_date" type="date" label="Nueva fecha" required={true} />
@@ -41,14 +41,15 @@ defmodule ProyectoWeb.Admin.DateLive do
           </form>
         </.glass_card>
       </div>
-      <div :if={@executed_draws} class="mt-8 animate-fade-in-up">
+      <div :if={@executed_draws} class="mt-8 page-enter">
         <.glass_card>
-          <h3 class="text-lg font-bold text-white mb-4">Sorteos Ejecutados</h3>
-          <div :if={@executed_draws == []} class="text-slate-400 text-sm">Ningún sorteo pendiente.</div>
-          <div :for={{draw_id, result} <- @executed_draws} class="p-3 rounded-xl bg-slate-700/30 mb-2 flex justify-between">
-            <span class="text-white">{draw_id}</span>
-            <span :if={match?({:ok, _}, result)} class="text-emerald-400 text-sm">✓ OK</span>
-            <span :if={match?({:error, _}, result)} class="text-red-400 text-sm">✗ Error</span>
+          <h3 class="font-display text-lg text-[var(--crema)] mb-4">Sorteos Ejecutados</h3>
+          <div :if={@executed_draws == []} class="font-mono text-xs text-[var(--crema-oscura)]">Ningún sorteo pendiente.</div>
+          <div :for={{draw_id, result} <- @executed_draws} class="p-3 mb-2 flex justify-between"
+            style="border-radius: 2px; background: rgba(90,46,16,0.2); border: 1px solid rgba(212,160,23,0.08);">
+            <span class="text-[var(--crema)] font-mono text-sm">{draw_id}</span>
+            <span :if={match?({:ok, _}, result)} class="font-mono text-xs text-[var(--teal-lt)]">✓ OK</span>
+            <span :if={match?({:error, _}, result)} class="font-mono text-xs text-[var(--naranja)]">✗ Error</span>
           </div>
         </.glass_card>
       </div>

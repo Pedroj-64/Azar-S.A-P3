@@ -85,6 +85,9 @@ defmodule ProyectoWeb do
       # i18n helpers: translate_error/1 available in all LiveViews & HTML
       import ProyectoWeb.ErrorHelpers
 
+      # Formato de números y utilidades compartidas
+      import ProyectoWeb.FormatHelpers
+
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components

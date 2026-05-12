@@ -176,4 +176,39 @@ defmodule ProyectoWeb.UIComponents do
     </div>
     """
   end
+
+  # ── Selector de Idioma ─────────────────────────────────────
+  attr :locale, :string, default: "es"
+
+  def language_selector(assigns) do
+    ~H"""
+    <div class="flex items-center gap-1">
+      <.link
+        href={"?locale=es"}
+        class={[
+          "px-2 py-1 font-mono text-[0.6rem] uppercase tracking-widest transition-all duration-200 border",
+          if(@locale == "es",
+            do: "text-[var(--mostaza)] border-[rgba(212,160,23,0.5)] bg-[rgba(212,160,23,0.12)]",
+            else: "text-[var(--crema-oscura)] border-transparent hover:text-[var(--mostaza)] hover:border-[rgba(212,160,23,0.2)]"
+          )
+        ]}
+      >
+        ES
+      </.link>
+      <span class="text-[rgba(212,160,23,0.2)] text-[0.5rem]">│</span>
+      <.link
+        href={"?locale=en"}
+        class={[
+          "px-2 py-1 font-mono text-[0.6rem] uppercase tracking-widest transition-all duration-200 border",
+          if(@locale == "en",
+            do: "text-[var(--mostaza)] border-[rgba(212,160,23,0.5)] bg-[rgba(212,160,23,0.12)]",
+            else: "text-[var(--crema-oscura)] border-transparent hover:text-[var(--mostaza)] hover:border-[rgba(212,160,23,0.2)]"
+          )
+        ]}
+      >
+        EN
+      </.link>
+    </div>
+    """
+  end
 end

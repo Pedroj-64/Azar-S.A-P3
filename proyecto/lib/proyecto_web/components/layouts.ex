@@ -66,12 +66,13 @@ defmodule ProyectoWeb.Layouts do
           <.sidebar_link href={~p"/admin/reports"} icon="hero-document-chart-bar" label="Reportes" />
         </nav>
 
-        <%!-- Logout --%>
-        <div class="p-4" style="border-top: 1px solid rgba(212,160,23,0.1);">
+        <%!-- Idioma + Logout --%>
+        <div class="px-4 py-3 flex items-center justify-between" style="border-top: 1px solid rgba(212,160,23,0.1);">
+          <.language_selector locale={assigns[:locale] || "es"} />
           <.link href={~p"/session/logout"} method="delete"
-            class="sidebar-link text-red-800 hover:text-red-500 hover:!border-l-red-600">
+            class="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase tracking-widest text-red-800 hover:text-red-500 transition-colors">
             <.icon name="hero-arrow-right-on-rectangle" class="w-4 h-4" />
-            <span>Salir del Sistema</span>
+            <span>Salir</span>
           </.link>
         </div>
       </aside>
@@ -123,9 +124,11 @@ defmodule ProyectoWeb.Layouts do
           <.sidebar_link href={~p"/player/notifications"} icon="hero-bell" label="Notificaciones" />
         </nav>
 
-        <div class="p-4" style="border-top: 1px solid rgba(212,160,23,0.1);">
+        <%!-- Idioma + Logout --%>
+        <div class="px-4 py-3 flex items-center justify-between" style="border-top: 1px solid rgba(212,160,23,0.1);">
+          <.language_selector locale={assigns[:locale] || "es"} />
           <.link href={~p"/session/logout"} method="delete"
-            class="sidebar-link text-red-800 hover:text-red-500">
+            class="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase tracking-widest text-red-800 hover:text-red-500 transition-colors">
             <.icon name="hero-arrow-right-on-rectangle" class="w-4 h-4" />
             <span>Salir</span>
           </.link>

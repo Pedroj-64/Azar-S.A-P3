@@ -67,62 +67,71 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
   def render(assigns) do
     ~H"""
     <div>
-      <.link navigate={~p"/player/draws"} class="inline-flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors">
+      <.link navigate={~p"/player/draws"} class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)] hover:text-[var(--mostaza)] mb-6 transition-colors">
         <.icon name="hero-arrow-left" class="w-4 h-4" /> Volver a sorteos
       </.link>
 
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <!-- Draw Info -->
+        <%!-- Draw Info --%>
         <div class="lg:col-span-1">
           <.glass_card>
-            <img src={draw_img(@draw)} class="w-full h-40 object-cover rounded-xl mb-4" />
-            <h2 class="text-2xl font-bold text-white">{@draw.name}</h2>
-            <div class="space-y-2 mt-4 text-sm">
-              <p class="text-slate-400"><.icon name="hero-calendar" class="w-4 h-4 inline mr-2" />{@draw.date}</p>
-              <p class="text-slate-400"><.icon name="hero-banknotes" class="w-4 h-4 inline mr-2" />Billete: ${fmt(@draw.ticket_price)}</p>
-              <p class="text-slate-400"><.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-2" />{@draw.fractions} fracciones</p>
-              <p class="text-slate-400"><.icon name="hero-ticket" class="w-4 h-4 inline mr-2" />{@draw.total_tickets} billetes</p>
+            <img src={draw_img(@draw)} class="w-full h-40 object-cover mb-4" style="border-radius: 2px; border: 1px solid rgba(212,160,23,0.2);" />
+            <h2 class="font-display text-2xl text-[var(--crema)]">{@draw.name}</h2>
+            <div class="space-y-2 mt-4 font-mono text-xs text-[var(--crema-oscura)]">
+              <p><.icon name="hero-calendar" class="w-4 h-4 inline mr-2" />{@draw.date}</p>
+              <p><.icon name="hero-banknotes" class="w-4 h-4 inline mr-2" />Billete: ${fmt(@draw.ticket_price)}</p>
+              <p><.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-2" />{@draw.fractions} fracciones</p>
+              <p><.icon name="hero-ticket" class="w-4 h-4 inline mr-2" />{@draw.total_tickets} billetes</p>
             </div>
-            <!-- Prizes -->
-            <div :if={@draw.prizes != []} class="mt-4 border-t border-white/10 pt-4">
-              <h4 class="text-sm font-bold text-yellow-400 mb-2">Premios</h4>
-              <div :for={p <- @draw.prizes} class="flex justify-between text-sm py-1">
-                <span class="text-slate-300">{p["name"]}</span>
-                <span class="text-yellow-400">${fmt(p["amount"] || 0)}</span>
+            <%!-- Prizes --%>
+            <div :if={@draw.prizes != []} class="mt-4 pt-4" style="border-top: 1px solid rgba(212,160,23,0.15);">
+              <h4 class="font-mono text-xs uppercase tracking-widest text-[var(--mostaza)] mb-2">Premios</h4>
+              <div :for={p <- @draw.prizes} class="flex justify-between font-mono text-sm py-1">
+                <span class="text-[var(--crema-oscura)]">{p["name"]}</span>
+                <span class="text-[var(--mostaza)]">${fmt(p["amount"] || 0)}</span>
               </div>
             </div>
           </.glass_card>
 
-          <!-- My Tickets -->
+          <%!-- My Tickets --%>
           <.glass_card class="mt-4">
-            <h3 class="text-lg font-bold text-white mb-3">Mis Billetes ({length(@my_tickets)})</h3>
-            <div :if={@my_tickets == []} class="text-slate-400 text-sm">Aún no has comprado billetes.</div>
-            <div :for={t <- @my_tickets} class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg mb-2">
+            <h3 class="font-display text-lg text-[var(--crema)] mb-3">Mis Billetes ({length(@my_tickets)})</h3>
+            <div :if={@my_tickets == []} class="font-mono text-xs text-[var(--crema-oscura)]">Aún no has comprado billetes.</div>
+            <div :for={t <- @my_tickets} class="flex items-center justify-between p-3 mb-2"
+              style="background: rgba(90,46,16,0.2); border-radius: 2px; border: 1px solid rgba(212,160,23,0.08);">
               <div class="flex items-center gap-2">
-                <img src={if t["fraction"] == "full", do: ~p"/images/billete_entero.svg", else: ~p"/images/billete_fraccion.svg"} class="w-8 h-5 rounded" />
-                <span class="text-white font-mono">#{t["number"]}</span>
-                <span class="text-xs text-slate-400">({t["fraction"]})</span>
+                <img src={if t["fraction"] == "full", do: ~p"/images/billete_entero.svg", else: ~p"/images/billete_fraccion.svg"} class="w-8 h-5" style="border-radius: 1px;" />
+                <span class="text-[var(--crema)] font-mono">#{t["number"]}</span>
+                <span class="font-mono text-[0.6rem] text-[var(--crema-oscura)]">({t["fraction"]})</span>
               </div>
               <button phx-click="return" phx-value-number={t["number"]}
-                class="text-red-400 hover:text-red-300 text-xs cursor-pointer" data-confirm="¿Devolver este billete?">
+                class="font-mono text-[0.65rem] uppercase tracking-widest text-[var(--naranja)] hover:text-red-400 cursor-pointer transition-colors" data-confirm="¿Devolver este billete?">
                 Devolver
               </button>
             </div>
           </.glass_card>
         </div>
 
-        <!-- Number Grid -->
+        <%!-- Number Grid --%>
         <div class="lg:col-span-2">
           <.glass_card>
             <div class="flex items-center justify-between mb-4">
-              <h3 class="text-lg font-bold text-white">Selecciona un Número</h3>
+              <h3 class="font-display text-lg text-[var(--crema)]">Selecciona un Número</h3>
               <div class="flex gap-2">
                 <button phx-click="set_mode" phx-value-mode="full"
-                  class={["px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer transition", @buy_mode == "full" && "bg-emerald-500 text-white" || "bg-slate-700 text-slate-400"]}>
+                  class={["px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest cursor-pointer transition-all border",
+                    if(@buy_mode == "full",
+                      do: "text-[var(--teal-lt)] border-[rgba(42,107,107,0.5)] bg-[rgba(42,107,107,0.15)]",
+                      else: "text-[var(--crema-oscura)] border-[rgba(212,160,23,0.15)] bg-transparent hover:text-[var(--mostaza)]"
+                    )]}>
                   Entero
                 </button>
                 <button :if={@draw.fractions > 1} phx-click="set_mode" phx-value-mode="fraction"
-                  class={["px-3 py-1 rounded-lg text-xs font-semibold cursor-pointer transition", @buy_mode == "fraction" && "bg-emerald-500 text-white" || "bg-slate-700 text-slate-400"]}>
+                  class={["px-3 py-1 font-mono text-[0.65rem] uppercase tracking-widest cursor-pointer transition-all border",
+                    if(@buy_mode == "fraction",
+                      do: "text-[var(--teal-lt)] border-[rgba(42,107,107,0.5)] bg-[rgba(42,107,107,0.15)]",
+                      else: "text-[var(--crema-oscura)] border-[rgba(212,160,23,0.15)] bg-transparent hover:text-[var(--mostaza)]"
+                    )]}>
                   Fracción
                 </button>
               </div>
@@ -134,22 +143,23 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
                 phx-value-number={num}
                 phx-value-fraction="full"
                 data-confirm={if @buy_mode == "full", do: "¿Comprar billete ##{num} completo?"}
-                class="aspect-square flex items-center justify-center rounded-lg text-xs font-mono cursor-pointer
-                       bg-slate-700/50 border border-white/5 text-slate-300
-                       hover:bg-emerald-500/20 hover:border-emerald-400/30 hover:text-emerald-400 transition-all">
+                class="aspect-square flex items-center justify-center text-xs font-mono cursor-pointer transition-all
+                       text-[var(--crema-oscura)] hover:text-[var(--mostaza)] hover:halo"
+                style="background: rgba(90,46,16,0.25); border: 1px solid rgba(212,160,23,0.1); border-radius: 2px;">
                 {num}
               </button>
             </div>
 
-            <!-- Fraction selector (when mode=fraction and number selected) -->
-            <div :if={@buy_mode == "fraction" && @selected_number} class="mt-4 p-4 bg-slate-700/30 rounded-xl animate-fade-in-up">
-              <p class="text-white text-sm mb-3">Fracciones del número <span class="font-bold text-emerald-400">#{@selected_number}</span>:</p>
+            <%!-- Fraction selector (when mode=fraction and number selected) --%>
+            <div :if={@buy_mode == "fraction" && @selected_number} class="mt-4 p-4 page-enter"
+              style="background: rgba(90,46,16,0.2); border-radius: 2px; border: 1px solid rgba(212,160,23,0.12);">
+              <p class="text-[var(--crema)] text-sm mb-3">Fracciones del número <span class="font-display text-[var(--teal-lt)]">#{@selected_number}</span>:</p>
               <div class="flex gap-2 flex-wrap">
                 <button :for={frac <- Map.get(@available.fractions, @selected_number, [])}
                   phx-click="buy" phx-value-number={@selected_number} phx-value-fraction={to_string(frac)}
                   data-confirm={"¿Comprar fracción #{frac} del ##{@selected_number}?"}
-                  class="px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-400/20 text-emerald-400
-                         hover:bg-emerald-500/30 cursor-pointer text-sm font-semibold transition">
+                  class="px-4 py-2 font-mono text-sm cursor-pointer transition-all text-[var(--teal-lt)]"
+                  style="background: rgba(42,107,107,0.12); border: 1px solid rgba(42,107,107,0.3); border-radius: 2px;">
                   Fracción {frac}
                 </button>
               </div>
@@ -160,16 +170,4 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
     </div>
     """
   end
-
-  defp draw_img(d) do
-    p = d.ticket_price || 0
-    cond do
-      p >= 50_000 -> "/images/sorteo_oro.svg"
-      p >= 20_000 -> "/images/sorteo_plata.svg"
-      true -> "/images/sorteo_bronce.svg"
-    end
-  end
-
-  defp fmt(n) when is_integer(n), do: n |> Integer.to_string() |> String.reverse() |> String.replace(~r/(\d{3})(?=\d)/, "\\1.") |> String.reverse()
-  defp fmt(_), do: "0"
 end
