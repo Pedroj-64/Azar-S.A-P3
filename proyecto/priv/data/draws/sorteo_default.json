@@ -1,0 +1,64 @@
+{
+  "created_at": "2026-05-13 01:07:17.940781Z",
+  "date": "2026-05-31",
+  "fractions": 10,
+  "id": "sorteo_default",
+  "name": "Gran Sorteo Mayo 2026",
+  "prizes": [
+    {
+      "amount": 5000000,
+      "created_at": "2026-05-13 01:07:18.091991Z",
+      "id": "86F05ADE",
+      "name": "Tercer Premio"
+    },
+    {
+      "amount": 10000000,
+      "created_at": "2026-05-13 01:07:18.091215Z",
+      "id": "987E5F4E",
+      "name": "Segundo Premio"
+    },
+    {
+      "amount": 30000000,
+      "created_at": "2026-05-13 01:07:18.090237Z",
+      "id": "064DE20D",
+      "name": "Premio Mayor"
+    }
+  ],
+  "result": null,
+  "status": "pending",
+  "ticket_price": 50000,
+  "tickets": {
+    "0_full": {
+      "bought_at": "2026-05-13 01:07:18.195355Z",
+      "client_id": "client_02883A2E",
+      "fraction": "full",
+      "number": "0"
+    },
+    "10_full": {
+      "bought_at": "2026-05-13 01:07:18.202350Z",
+      "client_id": "client_02883A2E",
+      "fraction": "full",
+      "number": "10"
+    },
+    "1_1": {
+      "bought_at": "2026-05-13 01:07:18.199767Z",
+      "client_id": "client_02883A2E",
+      "fraction": "1",
+      "number": "1"
+    },
+    "2_2": {
+      "bought_at": "2026-05-13 01:07:18.201203Z",
+      "client_id": "client_02883A2E",
+      "fraction": "2",
+      "number": "2"
+    },
+    "5_full": {
+      "bought_at": "2026-05-13 01:07:18.201890Z",
+      "client_id": "client_02883A2E",
+      "fraction": "full",
+      "number": "5"
+    }
+  },
+  "total_tickets": 100,
+  "winning_numbers": []
+}

@@ -2,6 +2,8 @@ msgid ""
 msgstr ""
 "Language: es\n"
 
+# ── Errores del backend ────────────────────────────────────
+
 msgid "client_not_found"
 msgstr "Cliente no encontrado"
 
@@ -61,3 +63,595 @@ msgstr "No puedes establecer una fecha anterior a la fecha actual del sistema"
 
 msgid "unknown_error"
 msgstr "Ocurrió un error inesperado"
+
+# ── Autenticación / Sesión ─────────────────────────────────
+
+msgid "session_login_failed"
+msgstr "Documento o contraseña inválidos"
+
+msgid "session_admin_login_failed"
+msgstr "Usuario o contraseña inválidos"
+
+msgid "session_register_success"
+msgstr "¡Registro exitoso! Bienvenido a Azar S.A."
+
+msgid "session_register_failed"
+msgstr "El documento ya está registrado"
+
+msgid "session_logout_success"
+msgstr "Sesión cerrada correctamente"
+
+msgid "auth_admin_required"
+msgstr "Debes iniciar sesión como administrador"
+
+msgid "auth_player_required"
+msgstr "Debes iniciar sesión"
+
+# ── Navegación / Sidebar ───────────────────────────────────
+
+msgid "nav_dashboard"
+msgstr "Dashboard"
+
+msgid "nav_draws"
+msgstr "Sorteos"
+
+msgid "nav_clients"
+msgstr "Clientes"
+
+msgid "nav_date"
+msgstr "Fecha Sistema"
+
+msgid "nav_reports"
+msgstr "Reportes"
+
+msgid "nav_home"
+msgstr "Inicio"
+
+msgid "nav_my_draws"
+msgstr "Mis Sorteos"
+
+msgid "nav_notifications"
+msgstr "Notificaciones"
+
+msgid "nav_logout"
+msgstr "Salir"
+
+msgid "sidebar_admin_subtitle"
+msgstr "Consola Admin"
+
+msgid "sidebar_player_subtitle"
+msgstr "Portal Jugador"
+
+# ── Home / Landing ─────────────────────────────────────────
+
+msgid "home_badge"
+msgstr "Sistema de Lotería · Est. 2024"
+
+msgid "home_hero_line1"
+msgstr "Tu"
+
+msgid "home_hero_line2"
+msgstr "suerte"
+
+msgid "home_hero_line3"
+msgstr "comienza"
+
+msgid "home_hero_line4"
+msgstr "aquí"
+
+msgid "home_description"
+msgstr "Participa en sorteos exclusivos. Compra tu billete, espera el número ganador y vive la emoción del azar."
+
+msgid "home_access_title"
+msgstr "◈ Acceso al Sistema ◈"
+
+msgid "home_role_title"
+msgstr "Selecciona tu rol"
+
+msgid "home_role_player"
+msgstr "Jugador"
+
+msgid "home_role_player_sub"
+msgstr "Comprar billetes y ganar"
+
+msgid "home_role_admin"
+msgstr "Administrador"
+
+msgid "home_role_admin_sub"
+msgstr "Gestión del sistema"
+
+msgid "home_divider"
+msgstr "o bien"
+
+msgid "home_register_link"
+msgstr "¿Primera vez? Regístrate aquí →"
+
+msgid "home_copyright"
+msgstr "© Azar S.A. · Todos los derechos reservados"
+
+# ── Login Admin ────────────────────────────────────────────
+
+msgid "admin_login_back"
+msgstr "← Volver al inicio"
+
+msgid "admin_login_badge"
+msgstr "◈ Acceso Restringido ◈"
+
+msgid "admin_login_title"
+msgstr "Consola Admin"
+
+msgid "admin_login_label_user"
+msgstr "Usuario"
+
+msgid "admin_login_label_pass"
+msgstr "Contraseña"
+
+msgid "admin_login_submit"
+msgstr "Activar Sistema"
+
+# ── Login Player ───────────────────────────────────────────
+
+msgid "player_login_back"
+msgstr "← Volver al inicio"
+
+msgid "player_login_badge"
+msgstr "◈ Portal del Jugador ◈"
+
+msgid "player_login_title"
+msgstr "Bienvenido"
+
+msgid "player_login_label_doc"
+msgstr "Documento de Identidad"
+
+msgid "player_login_label_pass"
+msgstr "Contraseña"
+
+msgid "player_login_submit"
+msgstr "Jalar la Palanca"
+
+msgid "player_login_divider"
+msgstr "primera vez"
+
+msgid "player_login_register"
+msgstr "Registrarse aquí →"
+
+# ── Registro Player ────────────────────────────────────────
+
+msgid "register_back"
+msgstr "← Ya tengo cuenta"
+
+msgid "register_badge"
+msgstr "◈ Nueva cuenta ◈"
+
+msgid "register_title"
+msgstr "Únete al juego"
+
+msgid "register_label_name"
+msgstr "Nombre Completo"
+
+msgid "register_label_doc"
+msgstr "Documento de Identidad"
+
+msgid "register_label_pass"
+msgstr "Contraseña"
+
+msgid "register_label_pass_hint"
+msgstr "Mínimo 6 caracteres"
+
+msgid "register_label_card"
+msgstr "Tarjeta (Simulada)"
+
+msgid "register_submit"
+msgstr "Conseguir mi Boleto"
+
+# ── Admin Dashboard ────────────────────────────────────────
+
+msgid "dashboard_title"
+msgstr "Dashboard"
+
+msgid "dashboard_system_date"
+msgstr "Fecha del sistema: %{date}"
+
+msgid "stat_total_revenue"
+msgstr "Ingresos Totales"
+
+msgid "stat_total_prizes"
+msgstr "Premios Entregados"
+
+msgid "stat_net_profit"
+msgstr "Ganancia Neta"
+
+msgid "stat_pending_draws"
+msgstr "Sorteos Pendientes"
+
+msgid "recent_draws_title"
+msgstr "Sorteos Recientes"
+
+msgid "recent_draws_see_all"
+msgstr "Ver todos →"
+
+msgid "draw_no_date"
+msgstr "Sin fecha"
+
+msgid "no_draws_created"
+msgstr "No hay sorteos creados aún"
+
+# ── Admin Sorteos ──────────────────────────────────────────
+
+msgid "draws_title"
+msgstr "Sorteos"
+
+msgid "draws_subtitle"
+msgstr "Crea, gestiona y ejecuta sorteos"
+
+msgid "draws_new_btn"
+msgstr "Nuevo Sorteo"
+
+msgid "create_draw_title"
+msgstr "Crear Nuevo Sorteo"
+
+msgid "draw_field_name"
+msgstr "Nombre"
+
+msgid "draw_field_name_placeholder"
+msgstr "Sorteo de Navidad"
+
+msgid "draw_field_date"
+msgstr "Fecha del Sorteo"
+
+msgid "draw_field_price"
+msgstr "Precio del Billete ($)"
+
+msgid "draw_field_fractions"
+msgstr "Fracciones"
+
+msgid "draw_field_total"
+msgstr "Total de Billetes"
+
+msgid "draw_create_btn"
+msgstr "Crear Sorteo"
+
+msgid "draw_empty"
+msgstr "No hay sorteos creados. ¡Crea el primero!"
+
+msgid "draw_tickets_sold"
+msgstr "%{count} vendidos"
+
+msgid "draw_run_btn"
+msgstr "Ejecutar"
+
+msgid "draw_run_confirm"
+msgstr "¿Ejecutar este sorteo?"
+
+msgid "draw_delete_confirm"
+msgstr "¿Eliminar este sorteo?"
+
+msgid "draw_winner_result"
+msgstr "Número ganador: #%{number} — Premio total: $%{prize}"
+
+msgid "prizes_panel_title"
+msgstr "Premios (%{count})"
+
+msgid "prize_name_placeholder"
+msgstr "Nombre del premio"
+
+msgid "prize_amount_placeholder"
+msgstr "Monto"
+
+msgid "prize_add_btn"
+msgstr "Agregar"
+
+# ── Admin Clientes de Sorteo ──────────────────────────────
+
+msgid "draw_clients_title"
+msgstr "Clientes del Sorteo"
+
+msgid "draw_clients_full_buyers"
+msgstr "Compradores de Billete Completo"
+
+msgid "draw_clients_fraction_buyers"
+msgstr "Compradores por Fracción"
+
+msgid "draw_clients_none"
+msgstr "Ninguno"
+
+# ── Flash messages (acciones del admin) ────────────────────
+
+msgid "flash_draw_created"
+msgstr "Sorteo creado exitosamente"
+
+msgid "flash_draw_run"
+msgstr "¡Sorteo ejecutado! Ganador: #%{number}"
+
+msgid "flash_draw_deleted"
+msgstr "Sorteo eliminado"
+
+msgid "flash_prize_added"
+msgstr "Premio agregado"
+
+msgid "flash_prize_deleted"
+msgstr "Premio eliminado"
+
+msgid "flash_date_advanced"
+msgstr "Fecha avanzada. %{count} sorteo(s) ejecutado(s)."
+
+msgid "flash_ticket_bought"
+msgstr "¡Billete #%{number} comprado!"
+
+msgid "flash_ticket_returned"
+msgstr "Billete devuelto"
+
+# ── Admin Clientes ─────────────────────────────────────────
+
+msgid "clients_title"
+msgstr "Clientes"
+
+msgid "clients_subtitle"
+msgstr "%{count} jugadores registrados"
+
+msgid "clients_empty"
+msgstr "No hay clientes registrados aún"
+
+msgid "client_doc_label"
+msgstr "Doc:"
+
+msgid "client_spent_label"
+msgstr "Gastado"
+
+msgid "client_won_label"
+msgstr "Ganado"
+
+msgid "client_balance_label"
+msgstr "Balance"
+
+msgid "client_registered_at"
+msgstr "Registrado:"
+
+# ── Admin Reportes ─────────────────────────────────────────
+
+msgid "reports_title"
+msgstr "Reportes"
+
+msgid "reports_subtitle"
+msgstr "Balance financiero y premios entregados"
+
+msgid "stat_revenue"
+msgstr "Ingresos"
+
+msgid "stat_prizes"
+msgstr "Premios"
+
+msgid "stat_profit"
+msgstr "Ganancia"
+
+msgid "reports_balance_title"
+msgstr "Balance por Sorteo"
+
+msgid "reports_balance_empty"
+msgstr "Sin sorteos ejecutados"
+
+msgid "reports_col_draw"
+msgstr "Sorteo"
+
+msgid "reports_col_date"
+msgstr "Fecha"
+
+msgid "reports_col_revenue"
+msgstr "Ingresos"
+
+msgid "reports_col_prizes"
+msgstr "Premios"
+
+msgid "reports_col_profit"
+msgstr "Ganancia"
+
+msgid "reports_delivered_title"
+msgstr "Premios Entregados"
+
+msgid "reports_delivered_empty"
+msgstr "Sin premios entregados"
+
+msgid "reports_col_prize_name"
+msgstr "Premio"
+
+msgid "reports_col_winner"
+msgstr "Ganador"
+
+msgid "reports_col_winning_number"
+msgstr "Número"
+
+msgid "reports_col_amount"
+msgstr "Monto"
+
+msgid "reports_col_per_fraction"
+msgstr "Por Fracción"
+
+# ── Admin Fecha ────────────────────────────────────────────
+
+msgid "date_title"
+msgstr "Fecha del Sistema"
+
+msgid "date_subtitle"
+msgstr "Simula el paso del tiempo"
+
+msgid "date_current_label"
+msgstr "Fecha actual"
+
+msgid "date_advance_title"
+msgstr "Avanzar"
+
+msgid "date_field_label"
+msgstr "Nueva fecha"
+
+msgid "date_advance_btn"
+msgstr "Avanzar Fecha"
+
+msgid "date_executed_title"
+msgstr "Sorteos Ejecutados"
+
+msgid "date_executed_empty"
+msgstr "Ningún sorteo pendiente."
+
+# ── Player Dashboard ───────────────────────────────────────
+
+msgid "player_dashboard_greeting"
+msgstr "¡Hola, %{name}!"
+
+msgid "player_dashboard_default_name"
+msgstr "Jugador"
+
+msgid "player_dashboard_subtitle"
+msgstr "Tu resumen personal"
+
+msgid "stat_total_spent"
+msgstr "Total Gastado"
+
+msgid "stat_total_won"
+msgstr "Total Ganado"
+
+msgid "stat_net_balance"
+msgstr "Balance Neto"
+
+msgid "player_available_draws"
+msgstr "Sorteos Disponibles"
+
+msgid "player_see_all"
+msgstr "Ver todos →"
+
+msgid "player_no_draws"
+msgstr "No hay sorteos disponibles"
+
+# ── Player Sorteos ─────────────────────────────────────────
+
+msgid "player_draws_title"
+msgstr "Sorteos Disponibles"
+
+msgid "player_draws_subtitle"
+msgstr "Elige un sorteo y compra tu billete"
+
+msgid "player_draws_empty"
+msgstr "No hay sorteos disponibles en este momento"
+
+msgid "draw_fractions_tickets"
+msgstr "%{fractions} fracciones · %{tickets} billetes"
+
+msgid "draw_play_btn"
+msgstr "Jugar →"
+
+# ── Player Mis Sorteos ─────────────────────────────────────
+
+msgid "my_draws_title"
+msgstr "Mis Sorteos"
+
+msgid "my_draws_subtitle"
+msgstr "Historial de participación y premios ganados"
+
+msgid "prizes_won_title"
+msgstr "¡Premios Ganados!"
+
+msgid "participated_draws_title"
+msgstr "Sorteos en los que Participé"
+
+msgid "participated_draws_empty"
+msgstr "Aún no has participado en ningún sorteo"
+
+msgid "my_draws_spent_in_draw"
+msgstr "$%{amount} gastados"
+
+msgid "my_draws_tickets_count"
+msgstr "%{count} billete(s) comprado(s)"
+
+msgid "ticket_type_full"
+msgstr "Billete completo"
+
+msgid "ticket_type_fraction"
+msgstr "Fracción %{frac}"
+
+# ── Player Notificaciones ──────────────────────────────────
+
+msgid "notifications_title"
+msgstr "Notificaciones"
+
+msgid "notifications_subtitle"
+msgstr "Mensajes y alertas del sistema"
+
+msgid "notifications_empty"
+msgstr "No tienes notificaciones"
+
+msgid "notification_winner"
+msgstr "🎉 ¡Ganaste en %{draw}! Número %{number} — Premio: $%{prize}"
+
+msgid "notification_event"
+msgstr "Evento: %{event}"
+
+# ── Comprar Billete ────────────────────────────────────────
+
+msgid "buy_back"
+msgstr "← Volver a sorteos"
+
+msgid "buy_ticket_label"
+msgstr "Billete:"
+
+msgid "buy_fractions_label"
+msgstr "%{count} fracciones"
+
+msgid "buy_total_tickets_label"
+msgstr "%{count} billetes"
+
+msgid "buy_prizes_section"
+msgstr "Premios"
+
+msgid "my_tickets_title"
+msgstr "Mis Billetes (%{count})"
+
+msgid "my_tickets_empty"
+msgstr "Aún no has comprado billetes."
+
+msgid "ticket_return_btn"
+msgstr "Devolver"
+
+msgid "ticket_return_confirm"
+msgstr "¿Devolver este billete?"
+
+msgid "select_number_title"
+msgstr "Selecciona un Número"
+
+msgid "buy_mode_full"
+msgstr "Entero"
+
+msgid "buy_mode_fraction"
+msgstr "Fracción"
+
+msgid "buy_full_confirm"
+msgstr "¿Comprar billete #%{number} completo?"
+
+msgid "buy_fraction_confirm"
+msgstr "¿Comprar fracción %{frac} del #%{number}?"
+
+msgid "fraction_of_number"
+msgstr "Fracciones del número"
+
+msgid "fraction_btn"
+msgstr "Fracción %{frac}"
+
+# ── Status Badge ───────────────────────────────────────────
+
+msgid "status_pending"
+msgstr "◈ Pendiente"
+
+msgid "status_done"
+msgstr "✓ Ejecutado"
+
+# ── Flash / Error genérico (Phoenix) ──────────────────────
+
+msgid "We can't find the internet"
+msgstr "No encontramos internet"
+
+msgid "Attempting to reconnect"
+msgstr "Intentando reconectarse"
+
+msgid "close"
+msgstr "Cerrar"
+
+msgid "Actions"
+msgstr "Acciones"

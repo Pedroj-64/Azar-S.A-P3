@@ -7,7 +7,7 @@ defmodule ProyectoWeb.PageLive.Home do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Bienvenido")}
+    {:ok, assign(socket, page_title: gettext("home_role_title"))}
   end
 
   @impl true
@@ -39,7 +39,7 @@ defmodule ProyectoWeb.PageLive.Home do
           <%!-- Badge ornamental --%>
           <div class="vintage-badge mb-6 inline-flex">
             <span>◈</span>
-            <span>Sistema de Lotería · Est. 2024</span>
+            <span>{gettext("home_badge")}</span>
             <span>◈</span>
           </div>
 
@@ -48,20 +48,19 @@ defmodule ProyectoWeb.PageLive.Home do
 
           <%!-- Título con neón --%>
           <h1 class="font-display text-6xl lg:text-7xl leading-none mb-4">
-            <span class="neon-gold text-[var(--mostaza)]">Tu</span>
-            <span class="text-[var(--crema)]"> suerte</span>
+            <span class="neon-gold text-[var(--mostaza)]">{gettext("home_hero_line1")}</span>
+            <span class="text-[var(--crema)]"> {gettext("home_hero_line2")}</span>
             <br />
-            <span class="neon-gas text-[var(--naranja)]">comienza</span>
+            <span class="neon-gas text-[var(--naranja)]">{gettext("home_hero_line3")}</span>
             <br />
-            <span class="text-[var(--crema)]">aquí</span>
+            <span class="text-[var(--crema)]">{gettext("home_hero_line4")}</span>
           </h1>
 
           <%!-- Divisor ornamental --%>
           <div class="divider-ornament my-6 max-w-xs mx-auto lg:mx-0">◈</div>
 
           <p class="font-body text-[var(--crema-oscura)] text-base leading-relaxed max-w-sm mx-auto lg:mx-0">
-            Participa en sorteos exclusivos. Compra tu billete,
-            espera el número ganador y vive la emoción del azar.
+            {gettext("home_description")}
           </p>
         </div>
 
@@ -72,9 +71,9 @@ defmodule ProyectoWeb.PageLive.Home do
             <%!-- Cabecera ornamental --%>
             <div class="text-center mb-8">
               <div class="font-mono text-[0.6rem] uppercase tracking-[0.4em] text-[var(--mostaza)] mb-2">
-                ◈ Acceso al Sistema ◈
+                {gettext("home_access_title")}
               </div>
-              <h2 class="font-display text-2xl text-[var(--crema)]">Selecciona tu rol</h2>
+              <h2 class="font-display text-2xl text-[var(--crema)]">{gettext("home_role_title")}</h2>
             </div>
 
             <%!-- Opción Jugador --%>
@@ -85,9 +84,9 @@ defmodule ProyectoWeb.PageLive.Home do
                 <.icon name="hero-user" class="w-6 h-6" />
               </div>
               <div class="flex-1">
-                <div class="font-display text-[var(--crema)] text-base">Jugador</div>
+                <div class="font-display text-[var(--crema)] text-base">{gettext("home_role_player")}</div>
                 <div class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">
-                  Comprar billetes y ganar
+                  {gettext("home_role_player_sub")}
                 </div>
               </div>
               <div class="text-[var(--teal-lt)] opacity-0 group-hover:opacity-100 transition-opacity">→</div>
@@ -101,21 +100,21 @@ defmodule ProyectoWeb.PageLive.Home do
                 <.icon name="hero-shield-check" class="w-6 h-6" />
               </div>
               <div class="flex-1">
-                <div class="font-display text-[var(--crema)] text-base">Administrador</div>
+                <div class="font-display text-[var(--crema)] text-base">{gettext("home_role_admin")}</div>
                 <div class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">
-                  Gestión del sistema
+                  {gettext("home_role_admin_sub")}
                 </div>
               </div>
               <div class="text-[var(--mostaza)] opacity-0 group-hover:opacity-100 transition-opacity">→</div>
             </.link>
 
             <%!-- Divisor ornamental --%>
-            <div class="divider-ornament text-[0.6rem] mb-5">o bien</div>
+            <div class="divider-ornament text-[0.6rem] mb-5">{gettext("home_divider")}</div>
 
             <%!-- Registro --%>
             <.link navigate={~p"/register"}
               class="block text-center font-mono text-xs uppercase tracking-widest text-[var(--naranja)] hover:neon-gas transition-all duration-300">
-              ¿Primera vez? Regístrate aquí →
+              {gettext("home_register_link")}
             </.link>
 
           </div>
@@ -123,7 +122,7 @@ defmodule ProyectoWeb.PageLive.Home do
           <%!-- Etiqueta inferior --%>
           <div class="text-center mt-4">
             <span class="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-[rgba(212,160,23,0.3)]">
-              © Azar S.A. · Todos los derechos reservados
+              {gettext("home_copyright")}
             </span>
           </div>
         </div>

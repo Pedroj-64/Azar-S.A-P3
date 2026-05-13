@@ -1,0 +1,139 @@
+[2026-05-12 20:43:18] OK | register_client(1001234567)
+[2026-05-12 20:43:18] OK | register_client(1009876543)
+[2026-05-12 20:43:18] OK | register_client(1005551234)
+[2026-05-12 20:43:18] OK | register_client(1007778888)
+[2026-05-12 20:43:18] OK | create_draw(sorteo_default)
+[2026-05-12 20:43:18] OK | create_draw(sorteo_junio_2026)
+[2026-05-12 20:43:18] OK | create_draw(sorteo_pasado)
+[2026-05-12 20:43:18] OK | add_prize(sorteo_default, Premio Mayor)
+[2026-05-12 20:43:18] OK | add_prize(sorteo_default, Segundo Premio)
+[2026-05-12 20:43:18] OK | add_prize(sorteo_default, Tercer Premio)
+[2026-05-12 20:43:18] OK | add_prize(sorteo_junio_2026, Premio Único)
+[2026-05-12 20:43:18] OK | add_prize(sorteo_pasado, Gran Premio)
+[2026-05-13 00:53:50] ERROR | authenticate_client(user) | razón: client_not_found
+[2026-05-13 00:54:02] OK | authenticate_admin(admin)
+[2026-05-13 00:54:02] OK | get_draws_balance
+[2026-05-13 00:54:02] OK | list_draws
+[2026-05-13 01:07:17] ERROR | register_client(1001234567) | razón: document_exists
+[2026-05-13 01:07:17] ERROR | register_client(1009876543) | razón: document_exists
+[2026-05-13 01:07:17] ERROR | register_client(1005551234) | razón: document_exists
+[2026-05-13 01:07:17] ERROR | register_client(1007778888) | razón: document_exists
+[2026-05-13 01:07:17] OK | create_draw(sorteo_default)
+[2026-05-13 01:07:17] OK | create_draw(sorteo_junio_2026)
+[2026-05-13 01:07:17] OK | create_draw(sorteo_pasado)
+[2026-05-13 01:07:18] OK | add_prize(sorteo_default, Premio Mayor)
+[2026-05-13 01:07:18] OK | add_prize(sorteo_default, Segundo Premio)
+[2026-05-13 01:07:18] OK | add_prize(sorteo_default, Tercer Premio)
+[2026-05-13 01:07:18] OK | add_prize(sorteo_junio_2026, Premio Único)
+[2026-05-13 01:07:18] OK | add_prize(sorteo_pasado, Gran Premio)
+[2026-05-13 01:07:18] OK | buy_ticket(sorteo_default, client_02883A2E, 0)
+[2026-05-13 01:07:18] OK | buy_ticket(sorteo_default, client_02883A2E, 1)
+[2026-05-13 01:07:18] OK | buy_ticket(sorteo_default, client_02883A2E, 2)
+[2026-05-13 01:07:18] OK | buy_ticket(sorteo_default, client_02883A2E, 5)
+[2026-05-13 01:07:18] OK | buy_ticket(sorteo_default, client_02883A2E, 10)
+[2026-05-13 01:07:18] ERROR | run_draw(sorteo_pasado) | razón: no_tickets_sold
+[2026-05-13 01:11:19] OK | authenticate_admin(admin)
+[2026-05-13 01:11:19] OK | get_draws_balance
+[2026-05-13 01:11:19] OK | list_draws
+[2026-05-13 01:12:06] OK | list_draws
+[2026-05-13 01:13:47] OK | register_client(1111111111)
+[2026-05-13 01:13:47] OK | get_client_balance(client_771C3E81)
+[2026-05-13 01:13:47] OK | list_draws
+[2026-05-13 01:17:02] OK | authenticate_admin(admin)
+[2026-05-13 01:17:02] OK | get_draws_balance
+[2026-05-13 01:17:02] OK | list_draws
+[2026-05-13 01:17:21] OK | list_draws
+[2026-05-13 01:17:56] OK | get_draws_balance
+[2026-05-13 01:17:56] OK | get_delivered_prizes
+[2026-05-13 01:19:34] OK | authenticate_client(1001234567)
+[2026-05-13 01:19:34] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:19:34] OK | list_draws
+[2026-05-13 01:20:54] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:20:54] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:20:54] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:26:54] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:26:54] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:26:54] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:26:55] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:27:01] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:27:18] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:28:46] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:28:46] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:28:46] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:28:47] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:28:47] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:28:47] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:31:12] OK | authenticate_admin(admin)
+[2026-05-13 01:31:12] OK | get_draws_balance
+[2026-05-13 01:31:12] OK | list_draws
+[2026-05-13 01:33:41] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:33:41] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:36:46] OK | authenticate_admin(admin)
+[2026-05-13 01:36:46] OK | get_draws_balance
+[2026-05-13 01:36:46] OK | list_draws
+[2026-05-13 01:36:46] OK | get_draws_balance
+[2026-05-13 01:36:46] OK | list_draws
+[2026-05-13 01:37:33] OK | list_draws
+[2026-05-13 01:38:27] OK | list_clients
+[2026-05-13 01:38:27] OK | get_client_balance(client_771C3E81)
+[2026-05-13 01:38:27] OK | get_client_balance(client_9F386DB9)
+[2026-05-13 01:38:27] OK | get_client_balance(client_AE4B07D1)
+[2026-05-13 01:38:27] OK | get_client_balance(client_96815E1F)
+[2026-05-13 01:38:27] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:39:26] OK | get_draws_balance
+[2026-05-13 01:39:26] OK | get_delivered_prizes
+[2026-05-13 01:42:11] ERROR | authenticate_client(admin1001234567) | razón: client_not_found
+[2026-05-13 01:43:05] OK | authenticate_client(1001234567)
+[2026-05-13 01:43:05] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:43:05] OK | list_draws
+[2026-05-13 01:43:05] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:43:05] OK | list_draws
+[2026-05-13 01:43:36] OK | list_draws
+[2026-05-13 01:44:05] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:44:05] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:44:05] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:45:17] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:45:17] OK | list_draws
+[2026-05-13 01:47:18] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:18] OK | list_draws
+[2026-05-13 01:47:21] OK | list_draws
+[2026-05-13 01:47:23] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:23] OK | list_draws
+[2026-05-13 01:47:29] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:29] OK | list_draws
+[2026-05-13 01:47:29] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:29] OK | list_draws
+[2026-05-13 01:47:34] OK | get_client_draws(client_02883A2E)
+[2026-05-13 01:47:34] OK | get_client_prizes(client_02883A2E)
+[2026-05-13 01:47:34] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:34] OK | list_draws
+[2026-05-13 01:47:35] OK | get_client_balance(client_02883A2E)
+[2026-05-13 01:47:35] OK | list_draws

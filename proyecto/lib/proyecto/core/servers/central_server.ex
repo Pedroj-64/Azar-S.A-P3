@@ -92,6 +92,18 @@ defmodule AzarSa.Core.Servers.CentralServer do
     result
   end
 
+  def get_draw_clients_with_names(draw_id) do
+    case get_draw_clients(draw_id) do
+      {:ok, %{full_buyers: full_ids, fraction_buyers: frac_ids}} ->
+        full_with_names = DrawService.resolve_client_names(full_ids)
+        frac_with_names = DrawService.resolve_client_names(frac_ids)
+        {:ok, %{full_buyers: full_with_names, fraction_buyers: frac_with_names}}
+
+      error ->
+        error
+    end
+  end
+
   def get_draw_revenue(draw_id) do
     result = try_call(draw_id, fn -> DrawServer.get_revenue(draw_id) end)
     log_op("get_draw_revenue(#{draw_id})", result)

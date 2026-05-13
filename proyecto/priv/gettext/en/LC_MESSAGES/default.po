@@ -2,6 +2,8 @@ msgid ""
 msgstr ""
 "Language: en\n"
 
+# ── Backend errors ─────────────────────────────────────────
+
 msgid "client_not_found"
 msgstr "Client not found"
 
@@ -61,3 +63,595 @@ msgstr "Cannot set a date earlier than the current system date"
 
 msgid "unknown_error"
 msgstr "An unexpected error occurred"
+
+# ── Authentication / Session ──────────────────────────────
+
+msgid "session_login_failed"
+msgstr "Invalid document or password"
+
+msgid "session_admin_login_failed"
+msgstr "Invalid username or password"
+
+msgid "session_register_success"
+msgstr "Registration successful! Welcome to Azar S.A."
+
+msgid "session_register_failed"
+msgstr "Document already registered"
+
+msgid "session_logout_success"
+msgstr "Logged out successfully"
+
+msgid "auth_admin_required"
+msgstr "You must log in as an administrator"
+
+msgid "auth_player_required"
+msgstr "You must log in"
+
+# ── Navigation / Sidebar ───────────────────────────────────
+
+msgid "nav_dashboard"
+msgstr "Dashboard"
+
+msgid "nav_draws"
+msgstr "Draws"
+
+msgid "nav_clients"
+msgstr "Clients"
+
+msgid "nav_date"
+msgstr "System Date"
+
+msgid "nav_reports"
+msgstr "Reports"
+
+msgid "nav_home"
+msgstr "Home"
+
+msgid "nav_my_draws"
+msgstr "My Draws"
+
+msgid "nav_notifications"
+msgstr "Notifications"
+
+msgid "nav_logout"
+msgstr "Logout"
+
+msgid "sidebar_admin_subtitle"
+msgstr "Admin Console"
+
+msgid "sidebar_player_subtitle"
+msgstr "Player Portal"
+
+# ── Home / Landing ─────────────────────────────────────────
+
+msgid "home_badge"
+msgstr "Lottery System · Est. 2024"
+
+msgid "home_hero_line1"
+msgstr "Your"
+
+msgid "home_hero_line2"
+msgstr "luck"
+
+msgid "home_hero_line3"
+msgstr "starts"
+
+msgid "home_hero_line4"
+msgstr "here"
+
+msgid "home_description"
+msgstr "Participate in exclusive draws. Buy your ticket, wait for the winning number, and feel the thrill of chance."
+
+msgid "home_access_title"
+msgstr "◈ System Access ◈"
+
+msgid "home_role_title"
+msgstr "Select your role"
+
+msgid "home_role_player"
+msgstr "Player"
+
+msgid "home_role_player_sub"
+msgstr "Buy tickets and win"
+
+msgid "home_role_admin"
+msgstr "Administrator"
+
+msgid "home_role_admin_sub"
+msgstr "System management"
+
+msgid "home_divider"
+msgstr "or"
+
+msgid "home_register_link"
+msgstr "First time? Register here →"
+
+msgid "home_copyright"
+msgstr "© Azar S.A. · All rights reserved"
+
+# ── Admin Login ────────────────────────────────────────────
+
+msgid "admin_login_back"
+msgstr "← Back to home"
+
+msgid "admin_login_badge"
+msgstr "◈ Restricted Access ◈"
+
+msgid "admin_login_title"
+msgstr "Admin Console"
+
+msgid "admin_login_label_user"
+msgstr "Username"
+
+msgid "admin_login_label_pass"
+msgstr "Password"
+
+msgid "admin_login_submit"
+msgstr "Activate System"
+
+# ── Player Login ───────────────────────────────────────────
+
+msgid "player_login_back"
+msgstr "← Back to home"
+
+msgid "player_login_badge"
+msgstr "◈ Player Portal ◈"
+
+msgid "player_login_title"
+msgstr "Welcome"
+
+msgid "player_login_label_doc"
+msgstr "Identity Document"
+
+msgid "player_login_label_pass"
+msgstr "Password"
+
+msgid "player_login_submit"
+msgstr "Pull the Lever"
+
+msgid "player_login_divider"
+msgstr "first time?"
+
+msgid "player_login_register"
+msgstr "Register here →"
+
+# ── Player Register ────────────────────────────────────────
+
+msgid "register_back"
+msgstr "← I already have an account"
+
+msgid "register_badge"
+msgstr "◈ New account ◈"
+
+msgid "register_title"
+msgstr "Join the game"
+
+msgid "register_label_name"
+msgstr "Full Name"
+
+msgid "register_label_doc"
+msgstr "Identity Document"
+
+msgid "register_label_pass"
+msgstr "Password"
+
+msgid "register_label_pass_hint"
+msgstr "Minimum 6 characters"
+
+msgid "register_label_card"
+msgstr "Card (Simulated)"
+
+msgid "register_submit"
+msgstr "Get my Ticket"
+
+# ── Admin Dashboard ────────────────────────────────────────
+
+msgid "dashboard_title"
+msgstr "Dashboard"
+
+msgid "dashboard_system_date"
+msgstr "System date: %{date}"
+
+msgid "stat_total_revenue"
+msgstr "Total Revenue"
+
+msgid "stat_total_prizes"
+msgstr "Prizes Delivered"
+
+msgid "stat_net_profit"
+msgstr "Net Profit"
+
+msgid "stat_pending_draws"
+msgstr "Pending Draws"
+
+msgid "recent_draws_title"
+msgstr "Recent Draws"
+
+msgid "recent_draws_see_all"
+msgstr "See all →"
+
+msgid "draw_no_date"
+msgstr "No date"
+
+msgid "no_draws_created"
+msgstr "No draws created yet"
+
+# ── Admin Draws ────────────────────────────────────────────
+
+msgid "draws_title"
+msgstr "Draws"
+
+msgid "draws_subtitle"
+msgstr "Create, manage and run draws"
+
+msgid "draws_new_btn"
+msgstr "New Draw"
+
+msgid "create_draw_title"
+msgstr "Create New Draw"
+
+msgid "draw_field_name"
+msgstr "Name"
+
+msgid "draw_field_name_placeholder"
+msgstr "Christmas Draw"
+
+msgid "draw_field_date"
+msgstr "Draw Date"
+
+msgid "draw_field_price"
+msgstr "Ticket Price ($)"
+
+msgid "draw_field_fractions"
+msgstr "Fractions"
+
+msgid "draw_field_total"
+msgstr "Total Tickets"
+
+msgid "draw_create_btn"
+msgstr "Create Draw"
+
+msgid "draw_empty"
+msgstr "No draws created. Create the first one!"
+
+msgid "draw_tickets_sold"
+msgstr "%{count} sold"
+
+msgid "draw_run_btn"
+msgstr "Run"
+
+msgid "draw_run_confirm"
+msgstr "Run this draw?"
+
+msgid "draw_delete_confirm"
+msgstr "Delete this draw?"
+
+msgid "draw_winner_result"
+msgstr "Winning number: #%{number} — Total prize: $%{prize}"
+
+msgid "prizes_panel_title"
+msgstr "Prizes (%{count})"
+
+msgid "prize_name_placeholder"
+msgstr "Prize name"
+
+msgid "prize_amount_placeholder"
+msgstr "Amount"
+
+msgid "prize_add_btn"
+msgstr "Add"
+
+# ── Admin Draw Clients ────────────────────────────────────
+
+msgid "draw_clients_title"
+msgstr "Draw Clients"
+
+msgid "draw_clients_full_buyers"
+msgstr "Full Ticket Buyers"
+
+msgid "draw_clients_fraction_buyers"
+msgstr "Fraction Buyers"
+
+msgid "draw_clients_none"
+msgstr "None"
+
+# ── Flash messages ─────────────────────────────────────────
+
+msgid "flash_draw_created"
+msgstr "Draw created successfully"
+
+msgid "flash_draw_run"
+msgstr "Draw executed! Winner: #%{number}"
+
+msgid "flash_draw_deleted"
+msgstr "Draw deleted"
+
+msgid "flash_prize_added"
+msgstr "Prize added"
+
+msgid "flash_prize_deleted"
+msgstr "Prize deleted"
+
+msgid "flash_date_advanced"
+msgstr "Date advanced. %{count} draw(s) executed."
+
+msgid "flash_ticket_bought"
+msgstr "Ticket #%{number} purchased!"
+
+msgid "flash_ticket_returned"
+msgstr "Ticket returned"
+
+# ── Admin Clients ──────────────────────────────────────────
+
+msgid "clients_title"
+msgstr "Clients"
+
+msgid "clients_subtitle"
+msgstr "%{count} registered players"
+
+msgid "clients_empty"
+msgstr "No clients registered yet"
+
+msgid "client_doc_label"
+msgstr "Doc:"
+
+msgid "client_spent_label"
+msgstr "Spent"
+
+msgid "client_won_label"
+msgstr "Won"
+
+msgid "client_balance_label"
+msgstr "Balance"
+
+msgid "client_registered_at"
+msgstr "Registered:"
+
+# ── Admin Reports ──────────────────────────────────────────
+
+msgid "reports_title"
+msgstr "Reports"
+
+msgid "reports_subtitle"
+msgstr "Financial balance and delivered prizes"
+
+msgid "stat_revenue"
+msgstr "Revenue"
+
+msgid "stat_prizes"
+msgstr "Prizes"
+
+msgid "stat_profit"
+msgstr "Profit"
+
+msgid "reports_balance_title"
+msgstr "Balance by Draw"
+
+msgid "reports_balance_empty"
+msgstr "No executed draws"
+
+msgid "reports_col_draw"
+msgstr "Draw"
+
+msgid "reports_col_date"
+msgstr "Date"
+
+msgid "reports_col_revenue"
+msgstr "Revenue"
+
+msgid "reports_col_prizes"
+msgstr "Prizes"
+
+msgid "reports_col_profit"
+msgstr "Profit"
+
+msgid "reports_delivered_title"
+msgstr "Delivered Prizes"
+
+msgid "reports_delivered_empty"
+msgstr "No prizes delivered"
+
+msgid "reports_col_prize_name"
+msgstr "Prize"
+
+msgid "reports_col_winner"
+msgstr "Winner"
+
+msgid "reports_col_winning_number"
+msgstr "Number"
+
+msgid "reports_col_amount"
+msgstr "Amount"
+
+msgid "reports_col_per_fraction"
+msgstr "Per Fraction"
+
+# ── Admin Date ─────────────────────────────────────────────
+
+msgid "date_title"
+msgstr "System Date"
+
+msgid "date_subtitle"
+msgstr "Simulate the passage of time"
+
+msgid "date_current_label"
+msgstr "Current date"
+
+msgid "date_advance_title"
+msgstr "Advance"
+
+msgid "date_field_label"
+msgstr "New date"
+
+msgid "date_advance_btn"
+msgstr "Advance Date"
+
+msgid "date_executed_title"
+msgstr "Executed Draws"
+
+msgid "date_executed_empty"
+msgstr "No pending draws."
+
+# ── Player Dashboard ───────────────────────────────────────
+
+msgid "player_dashboard_greeting"
+msgstr "Hello, %{name}!"
+
+msgid "player_dashboard_default_name"
+msgstr "Player"
+
+msgid "player_dashboard_subtitle"
+msgstr "Your personal summary"
+
+msgid "stat_total_spent"
+msgstr "Total Spent"
+
+msgid "stat_total_won"
+msgstr "Total Won"
+
+msgid "stat_net_balance"
+msgstr "Net Balance"
+
+msgid "player_available_draws"
+msgstr "Available Draws"
+
+msgid "player_see_all"
+msgstr "See all →"
+
+msgid "player_no_draws"
+msgstr "No draws available"
+
+# ── Player Draws ───────────────────────────────────────────
+
+msgid "player_draws_title"
+msgstr "Available Draws"
+
+msgid "player_draws_subtitle"
+msgstr "Choose a draw and buy your ticket"
+
+msgid "player_draws_empty"
+msgstr "No draws available at this time"
+
+msgid "draw_fractions_tickets"
+msgstr "%{fractions} fractions · %{tickets} tickets"
+
+msgid "draw_play_btn"
+msgstr "Play →"
+
+# ── Player My Draws ────────────────────────────────────────
+
+msgid "my_draws_title"
+msgstr "My Draws"
+
+msgid "my_draws_subtitle"
+msgstr "Participation history and prizes won"
+
+msgid "prizes_won_title"
+msgstr "Prizes Won!"
+
+msgid "participated_draws_title"
+msgstr "Draws I Participated In"
+
+msgid "participated_draws_empty"
+msgstr "You haven't participated in any draw yet"
+
+msgid "my_draws_spent_in_draw"
+msgstr "$%{amount} spent"
+
+msgid "my_draws_tickets_count"
+msgstr "%{count} ticket(s) purchased"
+
+msgid "ticket_type_full"
+msgstr "Full ticket"
+
+msgid "ticket_type_fraction"
+msgstr "Fraction %{frac}"
+
+# ── Player Notifications ───────────────────────────────────
+
+msgid "notifications_title"
+msgstr "Notifications"
+
+msgid "notifications_subtitle"
+msgstr "System messages and alerts"
+
+msgid "notifications_empty"
+msgstr "You have no notifications"
+
+msgid "notification_winner"
+msgstr "🎉 You won in %{draw}! Number %{number} — Prize: $%{prize}"
+
+msgid "notification_event"
+msgstr "Event: %{event}"
+
+# ── Buy Ticket ─────────────────────────────────────────────
+
+msgid "buy_back"
+msgstr "← Back to draws"
+
+msgid "buy_ticket_label"
+msgstr "Ticket:"
+
+msgid "buy_fractions_label"
+msgstr "%{count} fractions"
+
+msgid "buy_total_tickets_label"
+msgstr "%{count} tickets"
+
+msgid "buy_prizes_section"
+msgstr "Prizes"
+
+msgid "my_tickets_title"
+msgstr "My Tickets (%{count})"
+
+msgid "my_tickets_empty"
+msgstr "You haven't bought any tickets yet."
+
+msgid "ticket_return_btn"
+msgstr "Return"
+
+msgid "ticket_return_confirm"
+msgstr "Return this ticket?"
+
+msgid "select_number_title"
+msgstr "Select a Number"
+
+msgid "buy_mode_full"
+msgstr "Full"
+
+msgid "buy_mode_fraction"
+msgstr "Fraction"
+
+msgid "buy_full_confirm"
+msgstr "Buy full ticket #%{number}?"
+
+msgid "buy_fraction_confirm"
+msgstr "Buy fraction %{frac} of #%{number}?"
+
+msgid "fraction_of_number"
+msgstr "Fractions of number"
+
+msgid "fraction_btn"
+msgstr "Fraction %{frac}"
+
+# ── Status Badge ───────────────────────────────────────────
+
+msgid "status_pending"
+msgstr "◈ Pending"
+
+msgid "status_done"
+msgstr "✓ Executed"
+
+# ── Flash / Generic (Phoenix) ──────────────────────────────
+
+msgid "We can't find the internet"
+msgstr "We can't find the internet"
+
+msgid "Attempting to reconnect"
+msgstr "Attempting to reconnect"
+
+msgid "close"
+msgstr "Close"
+
+msgid "Actions"
+msgstr "Actions"

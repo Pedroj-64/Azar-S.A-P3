@@ -4,6 +4,7 @@ defmodule ProyectoWeb.UIComponents do
   Paleta: mostaza, naranja quemado, chocolate, teal.
   """
   use Phoenix.Component
+  use Gettext, backend: ProyectoWeb.Gettext
   import ProyectoWeb.CoreComponents, only: [icon: 1]
 
   # ── Tarjeta Vintage ─────────────────────────────────────────
@@ -142,7 +143,7 @@ defmodule ProyectoWeb.UIComponents do
       @status == "pending" && "badge-pending",
       @status == "done" && "badge-done"
     ]}>
-      {if @status == "pending", do: "◈ Pendiente", else: "✓ Ejecutado"}
+      {if @status == "pending", do: gettext("status_pending"), else: gettext("status_done")}
     </span>
     """
   end

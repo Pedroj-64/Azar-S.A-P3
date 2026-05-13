@@ -6,12 +6,14 @@ defmodule ProyectoWeb.Plugs.PlayerAuth do
   import Phoenix.LiveView
   import Phoenix.Component
 
+  use Gettext, backend: ProyectoWeb.Gettext
+
   def on_mount(:default, _params, session, socket) do
     case session["client_id"] do
       nil ->
         {:halt,
          socket
-         |> put_flash(:error, "Debes iniciar sesión")
+         |> put_flash(:error, gettext("auth_player_required"))
          |> redirect(to: "/login")}
 
       client_id ->

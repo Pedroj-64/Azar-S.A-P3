@@ -18,7 +18,7 @@ defmodule ProyectoWeb.SessionController do
 
       {:error, _reason} ->
         conn
-        |> put_flash(:error, "Documento o contraseña inválidos")
+        |> put_flash(:error, gettext("session_login_failed"))
         |> redirect(to: ~p"/login")
     end
   end
@@ -33,7 +33,7 @@ defmodule ProyectoWeb.SessionController do
 
       {:error, _reason} ->
         conn
-        |> put_flash(:error, "Usuario o contraseña inválidos")
+        |> put_flash(:error, gettext("session_admin_login_failed"))
         |> redirect(to: ~p"/admin/login")
     end
   end
@@ -44,12 +44,12 @@ defmodule ProyectoWeb.SessionController do
         conn
         |> put_session(:client_id, client.id)
         |> put_session(:client_name, client.name)
-        |> put_flash(:info, "¡Registro exitoso! Bienvenido a Azar S.A.")
+        |> put_flash(:info, gettext("session_register_success"))
         |> redirect(to: ~p"/player")
 
       {:error, _reason} ->
         conn
-        |> put_flash(:error, "El documento ya está registrado")
+        |> put_flash(:error, gettext("session_register_failed"))
         |> redirect(to: ~p"/register")
     end
   end
@@ -57,7 +57,7 @@ defmodule ProyectoWeb.SessionController do
   def delete(conn, _params) do
     conn
     |> configure_session(drop: true)
-    |> put_flash(:info, "Sesión cerrada correctamente")
+    |> put_flash(:info, gettext("session_logout_success"))
     |> redirect(to: ~p"/")
   end
 end

@@ -1,6 +1,7 @@
 defmodule ProyectoWeb.Admin.DrawsLive do
   @moduledoc """
   Gestión de sorteos: listar, crear, agregar premios, ejecutar y eliminar.
+  También permite consultar clientes de un sorteo y ver ganadores por premio.
   """
   use ProyectoWeb, :live_view
 
@@ -12,10 +13,12 @@ defmodule ProyectoWeb.Admin.DrawsLive do
 
     {:ok,
      assign(socket,
-       page_title: "Sorteos",
+       page_title: gettext("draws_title"),
        draws: draws,
        show_create: false,
        show_prizes: nil,
+       show_clients: nil,
+       draw_clients: nil,
        prize_draw_id: nil
      )}
   end
@@ -42,7 +45,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         {:noreply,
          socket
          |> assign(draws: draws, show_create: false)
-         |> put_flash(:info, "Sorteo creado exitosamente")}
+         |> put_flash(:info, gettext("flash_draw_created"))}
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
@@ -57,7 +60,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         {:noreply,
          socket
          |> assign(draws: draws)
-         |> put_flash(:info, "¡Sorteo ejecutado! Ganador: ##{result["winner_number"]}")}
+         |> put_flash(:info, gettext("flash_draw_run", number: result["winner_number"]))}
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
@@ -72,7 +75,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         {:noreply,
          socket
          |> assign(draws: draws)
-         |> put_flash(:info, "Sorteo eliminado")}
+         |> put_flash(:info, gettext("flash_draw_deleted"))}
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
@@ -90,6 +93,22 @@ defmodule ProyectoWeb.Admin.DrawsLive do
   end
 
   @impl true
+  def handle_event("show_clients", %{"id" => draw_id}, socket) do
+    case CentralServer.get_draw_clients_with_names(draw_id) do
+      {:ok, clients} ->
+        {:noreply, assign(socket, show_clients: draw_id, draw_clients: clients)}
+
+      {:error, _} ->
+        {:noreply, assign(socket, show_clients: draw_id, draw_clients: nil)}
+    end
+  end
+
+  @impl true
+  def handle_event("hide_clients", _params, socket) do
+    {:noreply, assign(socket, show_clients: nil, draw_clients: nil)}
+  end
+
+  @impl true
   def handle_event("add_prize", %{"draw_id" => draw_id, "name" => name, "amount" => amount}, socket) do
     case CentralServer.add_prize(draw_id, name, String.to_integer(amount)) do
       {:ok, _prize} ->
@@ -97,7 +116,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
         {:noreply,
          socket
          |> assign(draws: draws)
-         |> put_flash(:info, "Premio agregado")}
+         |> put_flash(:info, gettext("flash_prize_added"))}
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
@@ -109,7 +128,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
     case CentralServer.delete_prize(draw_id, prize_id) do
       :ok ->
         draws = CentralServer.list_draws()
-        {:noreply, socket |> assign(draws: draws) |> put_flash(:info, "Premio eliminado")}
+        {:noreply, socket |> assign(draws: draws) |> put_flash(:info, gettext("flash_prize_deleted"))}
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
@@ -121,25 +140,25 @@ defmodule ProyectoWeb.Admin.DrawsLive do
     ~H"""
     <div>
       <div class="flex items-center justify-between mb-8">
-        <.page_header title="Sorteos" subtitle="Crea, gestiona y ejecuta sorteos" />
+        <.page_header title={gettext("draws_title")} subtitle={gettext("draws_subtitle")} />
         <.gold_button phx-click="toggle_create">
           <.icon name="hero-plus" class="w-5 h-5 mr-2 inline" />
-          Nuevo Sorteo
+          {gettext("draws_new_btn")}
         </.gold_button>
       </div>
 
       <%!-- Create Form --%>
       <div :if={@show_create} class="mb-8 page-enter">
         <.glass_card>
-          <h3 class="font-display text-lg text-[var(--crema)] mb-4">Crear Nuevo Sorteo</h3>
+          <h3 class="font-display text-lg text-[var(--crema)] mb-4">{gettext("create_draw_title")}</h3>
           <form phx-submit="create_draw" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <.glass_input name="name" label="Nombre" placeholder="Sorteo de Navidad" required={true} />
-            <.glass_input name="date" type="date" label="Fecha del Sorteo" required={true} />
-            <.glass_input name="ticket_price" type="number" label="Precio del Billete ($)" placeholder="10000" required={true} />
-            <.glass_input name="fractions" type="number" label="Fracciones" placeholder="1" required={true} />
-            <.glass_input name="total_tickets" type="number" label="Total de Billetes" placeholder="100" required={true} />
+            <.glass_input name="name" label={gettext("draw_field_name")} placeholder={gettext("draw_field_name_placeholder")} required={true} />
+            <.glass_input name="date" type="date" label={gettext("draw_field_date")} required={true} />
+            <.glass_input name="ticket_price" type="number" label={gettext("draw_field_price")} placeholder="10000" required={true} />
+            <.glass_input name="fractions" type="number" label={gettext("draw_field_fractions")} placeholder="1" required={true} />
+            <.glass_input name="total_tickets" type="number" label={gettext("draw_field_total")} placeholder="100" required={true} />
             <div class="flex items-end">
-              <.emerald_button type="submit" class="w-full">Crear Sorteo</.emerald_button>
+              <.emerald_button type="submit" class="w-full">{gettext("draw_create_btn")}</.emerald_button>
             </div>
           </form>
         </.glass_card>
@@ -148,7 +167,7 @@ defmodule ProyectoWeb.Admin.DrawsLive do
       <%!-- Draws List --%>
       <div :if={@draws == []}>
         <.glass_card>
-          <.empty_state icon_name="hero-ticket" message="No hay sorteos creados. ¡Crea el primero!" />
+          <.empty_state icon_name="hero-ticket" message={gettext("draw_empty")} />
         </.glass_card>
       </div>
 
@@ -163,13 +182,13 @@ defmodule ProyectoWeb.Admin.DrawsLive do
                   <h3 class="font-display text-lg text-[var(--crema)]">{draw["name"]}</h3>
                   <div class="flex items-center gap-3 mt-1">
                     <span class="font-mono text-xs text-[var(--crema-oscura)]">
-                      <.icon name="hero-calendar" class="w-4 h-4 inline mr-1" />{draw["date"] || "Sin fecha"}
+                      <.icon name="hero-calendar" class="w-4 h-4 inline mr-1" />{draw["date"] || gettext("draw_no_date")}
                     </span>
                     <span class="font-mono text-xs text-[var(--crema-oscura)]">
                       <.icon name="hero-banknotes" class="w-4 h-4 inline mr-1" />${fmt(draw["ticket_price"] || 0)}
                     </span>
                     <span class="font-mono text-xs text-[var(--crema-oscura)]">
-                      <.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-1" />{map_size(draw["tickets"] || %{})} vendidos
+                      <.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-1" />{gettext("draw_tickets_sold", count: map_size(draw["tickets"] || %{}))}
                     </span>
                   </div>
                 </div>
@@ -186,41 +205,105 @@ defmodule ProyectoWeb.Admin.DrawsLive do
                   <.icon name="hero-gift" class="w-4 h-4" />
                 </.ghost_button>
 
+                <.ghost_button
+                  phx-click="show_clients"
+                  phx-value-id={draw["id"]}
+                >
+                  <.icon name="hero-users" class="w-4 h-4" />
+                </.ghost_button>
+
                 <.emerald_button
                   :if={to_string(draw["status"]) == "pending"}
                   phx-click="run_draw"
                   phx-value-id={draw["id"]}
                   class="px-4 py-2 text-sm"
-                  data-confirm="¿Ejecutar este sorteo?"
+                  data-confirm={gettext("draw_run_confirm")}
                 >
-                  <.icon name="hero-play" class="w-4 h-4 mr-1 inline" /> Ejecutar
+                  <.icon name="hero-play" class="w-4 h-4 mr-1 inline" /> {gettext("draw_run_btn")}
                 </.emerald_button>
 
                 <.danger_button
                   :if={to_string(draw["status"]) == "pending"}
                   phx-click="delete_draw"
                   phx-value-id={draw["id"]}
-                  data-confirm="¿Eliminar este sorteo?"
+                  data-confirm={gettext("draw_delete_confirm")}
                 >
                   <.icon name="hero-trash" class="w-4 h-4" />
                 </.danger_button>
               </div>
             </div>
 
-            <%!-- Result (if done) --%>
+            <%!-- Result (if done) with per-prize winners --%>
             <div :if={draw["result"]} class="mt-4 p-4" style="border-radius: 2px; background: rgba(42,107,107,0.1); border: 1px solid rgba(42,107,107,0.25);">
-              <p class="font-mono text-sm text-[var(--teal-lt)]">
+              <p class="font-mono text-sm text-[var(--teal-lt)] mb-2">
                 <.icon name="hero-trophy" class="w-5 h-5 inline mr-2" />
-                Número ganador: #{draw["result"]["winner_number"]}
-                — Premio total: ${fmt(draw["result"]["total_prize"] || 0)}
+                {gettext("draw_winner_result",
+                  number: draw["result"]["winner_number"],
+                  prize: fmt(draw["result"]["total_prize"] || 0)
+                )}
               </p>
+              <%!-- Per-prize winners detail --%>
+              <div :if={draw["result"]["prize_winners"]} class="mt-2 space-y-1">
+                <div :for={pw <- draw["result"]["prize_winners"] || []}
+                  class="flex items-center justify-between py-1 px-2 font-mono text-xs"
+                  style="background: rgba(42,107,107,0.06); border-radius: 2px;">
+                  <span class="text-[var(--crema-oscura)]">
+                    {pw["prize_name"]} — #{pw["winner_number"]}
+                  </span>
+                  <span class="text-[var(--mostaza)]">${fmt(pw["prize_amount"] || 0)}</span>
+                </div>
+              </div>
+            </div>
+
+            <%!-- Clients Panel --%>
+            <div :if={@show_clients == draw["id"] && @draw_clients} class="mt-4 page-enter">
+              <div style="border-top: 1px solid rgba(212,160,23,0.15); padding-top: 1rem;">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="font-mono text-xs uppercase tracking-widest text-[var(--crema)]">
+                    <.icon name="hero-users" class="w-4 h-4 inline mr-1" /> {gettext("draw_clients_title")}
+                  </h4>
+                  <button phx-click="hide_clients" class="text-[var(--crema-oscura)] hover:text-[var(--mostaza)] cursor-pointer transition-colors">
+                    <.icon name="hero-x-mark" class="w-4 h-4" />
+                  </button>
+                </div>
+
+                <%!-- Full ticket buyers --%>
+                <div class="mb-3">
+                  <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--mostaza)] mb-2">
+                    {gettext("draw_clients_full_buyers")}
+                  </p>
+                  <div :if={@draw_clients.full_buyers == []} class="font-mono text-xs text-[var(--crema-oscura)] italic">
+                    {gettext("draw_clients_none")}
+                  </div>
+                  <div :for={{_id, name} <- @draw_clients.full_buyers}
+                    class="py-1.5 px-3 mb-1 font-mono text-sm text-[var(--crema)]"
+                    style="background: rgba(90,46,16,0.2); border-radius: 2px; border: 1px solid rgba(212,160,23,0.08);">
+                    {name}
+                  </div>
+                </div>
+
+                <%!-- Fraction buyers --%>
+                <div>
+                  <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--teal-lt)] mb-2">
+                    {gettext("draw_clients_fraction_buyers")}
+                  </p>
+                  <div :if={@draw_clients.fraction_buyers == []} class="font-mono text-xs text-[var(--crema-oscura)] italic">
+                    {gettext("draw_clients_none")}
+                  </div>
+                  <div :for={{_id, name} <- @draw_clients.fraction_buyers}
+                    class="py-1.5 px-3 mb-1 font-mono text-sm text-[var(--crema)]"
+                    style="background: rgba(42,107,107,0.08); border-radius: 2px; border: 1px solid rgba(42,107,107,0.15);">
+                    {name}
+                  </div>
+                </div>
+              </div>
             </div>
 
             <%!-- Prizes Panel --%>
             <div :if={@show_prizes == draw["id"]} class="mt-4 page-enter">
               <div style="border-top: 1px solid rgba(212,160,23,0.15); padding-top: 1rem;">
                 <h4 class="font-mono text-xs uppercase tracking-widest text-[var(--crema)] mb-3">
-                  <.icon name="hero-gift" class="w-4 h-4 inline mr-1" /> Premios ({length(draw["prizes"] || [])})
+                  <.icon name="hero-gift" class="w-4 h-4 inline mr-1" /> {gettext("prizes_panel_title", count: length(draw["prizes"] || []))}
                 </h4>
 
                 <div :for={prize <- draw["prizes"] || []}
@@ -245,11 +328,11 @@ defmodule ProyectoWeb.Admin.DrawsLive do
                 <form :if={to_string(draw["status"]) == "pending"}
                   phx-submit="add_prize" class="flex gap-2 mt-3">
                   <input type="hidden" name="draw_id" value={draw["id"]} />
-                  <input name="name" placeholder="Nombre del premio" required
+                  <input name="name" placeholder={gettext("prize_name_placeholder")} required
                     class="vintage-input flex-1" />
-                  <input name="amount" type="number" placeholder="Monto" required
+                  <input name="amount" type="number" placeholder={gettext("prize_amount_placeholder")} required
                     class="vintage-input w-32" />
-                  <.gold_button type="submit" class="px-4 py-2 text-sm">Agregar</.gold_button>
+                  <.gold_button type="submit" class="px-4 py-2 text-sm">{gettext("prize_add_btn")}</.gold_button>
                 </form>
               </div>
             </div>

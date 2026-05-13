@@ -6,7 +6,7 @@ defmodule ProyectoWeb.Admin.LoginLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Consola Admin")}
+    {:ok, assign(socket, page_title: gettext("admin_login_title"))}
   end
 
   @impl true
@@ -18,24 +18,24 @@ defmodule ProyectoWeb.Admin.LoginLive do
 
       <div class="relative z-10 w-full max-w-md mx-auto px-6">
         <.link navigate={~p"/"} class="inline-flex items-center gap-2 mb-8 font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)] hover:text-[var(--mostaza)] transition-colors">
-          ← Volver al inicio
+          {gettext("admin_login_back")}
         </.link>
 
         <div class="vintage-card halo p-8">
           <div class="text-center mb-8">
             <div class="font-mono text-[0.6rem] uppercase tracking-[0.4em] text-[var(--mostaza)] mb-3">
-              ◈ Acceso Restringido ◈
+              {gettext("admin_login_badge")}
             </div>
-            <h1 class="font-display text-3xl text-[var(--crema)] neon-gold">Consola Admin</h1>
+            <h1 class="font-display text-3xl text-[var(--crema)] neon-gold">{gettext("admin_login_title")}</h1>
             <div class="divider-ornament mt-4 text-[0.6rem]">◈</div>
           </div>
 
           <form action={~p"/session/admin"} method="post" class="space-y-5">
             <input type="hidden" name="_csrf_token" value={Plug.CSRFProtection.get_csrf_token()} />
-            <.glass_input name="username" label="Usuario" placeholder="admin" icon_name="hero-user-circle" required={true} />
-            <.glass_input name="password" type="password" label="Contraseña" placeholder="••••••••" icon_name="hero-lock-closed" required={true} />
+            <.glass_input name="username" label={gettext("admin_login_label_user")} placeholder="admin" icon_name="hero-user-circle" required={true} />
+            <.glass_input name="password" type="password" label={gettext("admin_login_label_pass")} placeholder="••••••••" icon_name="hero-lock-closed" required={true} />
             <.gold_button type="submit" class="w-full justify-center">
-              Activar Sistema
+              {gettext("admin_login_submit")}
             </.gold_button>
           </form>
         </div>

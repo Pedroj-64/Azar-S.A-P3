@@ -14,12 +14,13 @@ defmodule ProyectoWeb.Layouts do
   # ── Layout Público ─────────────────────────────────────────
   attr :flash, :map, required: true
   attr :current_scope, :map, default: nil
-  slot :inner_block, required: true
+  attr :inner_content, :any, default: nil
+  slot :inner_block
 
   def app(assigns) do
     ~H"""
     <main class="min-h-screen relative overflow-hidden">
-      {render_slot(@inner_block)}
+      {render_slot(@inner_block) || @inner_content}
     </main>
     <.flash_group flash={@flash} />
     """
@@ -28,7 +29,8 @@ defmodule ProyectoWeb.Layouts do
   # ── Layout Admin ───────────────────────────────────────────
   attr :flash, :map, required: true
   attr :current_scope, :map, default: nil
-  slot :inner_block, required: true
+  attr :inner_content, :any, default: nil
+  slot :inner_block
 
   def admin_app(assigns) do
     ~H"""
@@ -44,7 +46,7 @@ defmodule ProyectoWeb.Layouts do
             <div>
               <div class="font-display text-lg text-[var(--mostaza)] neon-gold leading-none">AZAR S.A.</div>
               <div class="font-mono text-[0.55rem] uppercase tracking-widest text-[var(--naranja)] mt-0.5">
-                Consola Admin
+                {gettext("sidebar_admin_subtitle")}
               </div>
             </div>
           </.link>
@@ -59,11 +61,11 @@ defmodule ProyectoWeb.Layouts do
 
         <%!-- Navegación --%>
         <nav class="flex-1 px-3 py-4 space-y-1">
-          <.sidebar_link href={~p"/admin"} icon="hero-chart-bar-square" label="Dashboard" />
-          <.sidebar_link href={~p"/admin/draws"} icon="hero-ticket" label="Sorteos" />
-          <.sidebar_link href={~p"/admin/clients"} icon="hero-users" label="Clientes" />
-          <.sidebar_link href={~p"/admin/date"} icon="hero-clock" label="Fecha Sistema" />
-          <.sidebar_link href={~p"/admin/reports"} icon="hero-document-chart-bar" label="Reportes" />
+          <.sidebar_link href={~p"/admin"} icon="hero-chart-bar-square" label={gettext("nav_dashboard")} />
+          <.sidebar_link href={~p"/admin/draws"} icon="hero-ticket" label={gettext("nav_draws")} />
+          <.sidebar_link href={~p"/admin/clients"} icon="hero-users" label={gettext("nav_clients")} />
+          <.sidebar_link href={~p"/admin/date"} icon="hero-clock" label={gettext("nav_date")} />
+          <.sidebar_link href={~p"/admin/reports"} icon="hero-document-chart-bar" label={gettext("nav_reports")} />
         </nav>
 
         <%!-- Idioma + Logout --%>
@@ -72,14 +74,14 @@ defmodule ProyectoWeb.Layouts do
           <.link href={~p"/session/logout"} method="delete"
             class="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase tracking-widest text-red-800 hover:text-red-500 transition-colors">
             <.icon name="hero-arrow-right-on-rectangle" class="w-4 h-4" />
-            <span>Salir</span>
+            <span>{gettext("nav_logout")}</span>
           </.link>
         </div>
       </aside>
 
       <%!-- Contenido Principal --%>
       <main class="flex-1 ml-60 p-8 min-h-screen">
-        {render_slot(@inner_block)}
+        {render_slot(@inner_block) || @inner_content}
       </main>
     </div>
     <.flash_group flash={@flash} />
@@ -89,7 +91,8 @@ defmodule ProyectoWeb.Layouts do
   # ── Layout Player ──────────────────────────────────────────
   attr :flash, :map, required: true
   attr :current_scope, :map, default: nil
-  slot :inner_block, required: true
+  attr :inner_content, :any, default: nil
+  slot :inner_block
 
   def player_app(assigns) do
     ~H"""
@@ -105,7 +108,7 @@ defmodule ProyectoWeb.Layouts do
             <div>
               <div class="font-display text-lg text-[var(--mostaza)] neon-gold leading-none">AZAR S.A.</div>
               <div class="font-mono text-[0.55rem] uppercase tracking-widest text-[var(--teal-lt)] mt-0.5">
-                Portal Jugador
+                {gettext("sidebar_player_subtitle")}
               </div>
             </div>
           </.link>
@@ -118,10 +121,10 @@ defmodule ProyectoWeb.Layouts do
         </div>
 
         <nav class="flex-1 px-3 py-4 space-y-1">
-          <.sidebar_link href={~p"/player"} icon="hero-home" label="Inicio" />
-          <.sidebar_link href={~p"/player/draws"} icon="hero-ticket" label="Sorteos" />
-          <.sidebar_link href={~p"/player/my-draws"} icon="hero-trophy" label="Mis Sorteos" />
-          <.sidebar_link href={~p"/player/notifications"} icon="hero-bell" label="Notificaciones" />
+          <.sidebar_link href={~p"/player"} icon="hero-home" label={gettext("nav_home")} />
+          <.sidebar_link href={~p"/player/draws"} icon="hero-ticket" label={gettext("nav_draws")} />
+          <.sidebar_link href={~p"/player/my-draws"} icon="hero-trophy" label={gettext("nav_my_draws")} />
+          <.sidebar_link href={~p"/player/notifications"} icon="hero-bell" label={gettext("nav_notifications")} />
         </nav>
 
         <%!-- Idioma + Logout --%>
@@ -130,13 +133,13 @@ defmodule ProyectoWeb.Layouts do
           <.link href={~p"/session/logout"} method="delete"
             class="flex items-center gap-1.5 font-mono text-[0.65rem] uppercase tracking-widest text-red-800 hover:text-red-500 transition-colors">
             <.icon name="hero-arrow-right-on-rectangle" class="w-4 h-4" />
-            <span>Salir</span>
+            <span>{gettext("nav_logout")}</span>
           </.link>
         </div>
       </aside>
 
       <main class="flex-1 ml-60 p-8 min-h-screen">
-        {render_slot(@inner_block)}
+        {render_slot(@inner_block) || @inner_content}
       </main>
     </div>
     <.flash_group flash={@flash} />
@@ -178,7 +181,7 @@ defmodule ProyectoWeb.Layouts do
       </.flash>
       <.flash
         id="server-error" kind={:error}
-        title={gettext("Something went wrong!")}
+        title={gettext("We can't find the internet")}
         phx-disconnected={show(".phx-server-error #server-error") |> JS.remove_attribute("hidden")}
         phx-connected={hide("#server-error") |> JS.set_attribute({"hidden", ""})}
         hidden

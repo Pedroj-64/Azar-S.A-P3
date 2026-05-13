@@ -1,0 +1,47 @@
+[
+  {
+    "id": "client_771C3E81",
+    "name": "Test Player",
+    "document": "1111111111",
+    "password_hash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "credit_card": "4111111111111111",
+    "notifications": [],
+    "created_at": "2026-05-13 01:13:47.565506Z"
+  },
+  {
+    "created_at": "2026-05-12 20:43:18.438748Z",
+    "credit_card": "4444444444444444",
+    "document": "1007778888",
+    "id": "client_9F386DB9",
+    "name": "María Rodríguez",
+    "notifications": [],
+    "password_hash": "c1d31407264f3206d425f527294bc254cac487add3798dc6f29e86ead91a6894"
+  },
+  {
+    "created_at": "2026-05-12 20:43:18.436346Z",
+    "credit_card": "4333333333333333",
+    "document": "1005551234",
+    "id": "client_AE4B07D1",
+    "name": "Luis Martínez",
+    "notifications": [],
+    "password_hash": "9dbd5c893b5b573a1aa909c8cade58df194310e411c590d9fb0d63431841fd67"
+  },
+  {
+    "created_at": "2026-05-12 20:43:18.435226Z",
+    "credit_card": "4222222222222222",
+    "document": "1009876543",
+    "id": "client_96815E1F",
+    "name": "Ana Gómez",
+    "notifications": [],
+    "password_hash": "1d4598d1949b47f7f211134b639ec32238ce73086a83c2f745713b3f12f817e5"
+  },
+  {
+    "created_at": "2026-05-12 20:43:18.413156Z",
+    "credit_card": "4111111111111111",
+    "document": "1001234567",
+    "id": "client_02883A2E",
+    "name": "Carlos Pérez",
+    "notifications": [],
+    "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4"
+  }
+]

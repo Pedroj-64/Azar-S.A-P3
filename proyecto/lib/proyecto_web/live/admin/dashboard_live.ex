@@ -19,7 +19,7 @@ defmodule ProyectoWeb.Admin.DashboardLive do
 
     {:ok,
      assign(socket,
-       page_title: "Dashboard",
+       page_title: gettext("dashboard_title"),
        balance: balance,
        system_date: date,
        pending_count: pending_count,
@@ -33,32 +33,32 @@ defmodule ProyectoWeb.Admin.DashboardLive do
     ~H"""
     <div>
       <.page_header
-        title="Dashboard"
-        subtitle={"Fecha del sistema: #{@system_date}"}
+        title={gettext("dashboard_title")}
+        subtitle={gettext("dashboard_system_date", date: @system_date)}
       />
 
       <%!-- Stats Grid --%>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <.stat_card
-          title="Ingresos Totales"
+          title={gettext("stat_total_revenue")}
           value={"$#{fmt(@balance.summary.total_revenue)}"}
           icon_name="hero-banknotes"
           color="emerald"
         />
         <.stat_card
-          title="Premios Entregados"
+          title={gettext("stat_total_prizes")}
           value={"$#{fmt(@balance.summary.total_prizes)}"}
           icon_name="hero-gift"
           color="yellow"
         />
         <.stat_card
-          title="Ganancia Neta"
+          title={gettext("stat_net_profit")}
           value={"$#{fmt(@balance.summary.total_profit)}"}
           icon_name="hero-arrow-trending-up"
           color={if @balance.summary.total_profit >= 0, do: "emerald", else: "red"}
         />
         <.stat_card
-          title="Sorteos Pendientes"
+          title={gettext("stat_pending_draws")}
           value={to_string(@pending_count)}
           icon_name="hero-clock"
           color="blue"
@@ -68,14 +68,14 @@ defmodule ProyectoWeb.Admin.DashboardLive do
       <%!-- Recent Draws --%>
       <.glass_card>
         <div class="flex items-center justify-between mb-6">
-          <h2 class="font-display text-xl text-[var(--crema)]">Sorteos Recientes</h2>
+          <h2 class="font-display text-xl text-[var(--crema)]">{gettext("recent_draws_title")}</h2>
           <.link navigate={~p"/admin/draws"} class="font-mono text-xs uppercase tracking-widest text-[var(--mostaza)] hover:neon-gold transition-all">
-            Ver todos →
+            {gettext("recent_draws_see_all")}
           </.link>
         </div>
 
         <div :if={@recent_draws == []} class="text-center py-8">
-          <.empty_state icon_name="hero-ticket" message="No hay sorteos creados aún" />
+          <.empty_state icon_name="hero-ticket" message={gettext("no_draws_created")} />
         </div>
 
         <div :if={@recent_draws != []} class="space-y-3">
@@ -88,7 +88,7 @@ defmodule ProyectoWeb.Admin.DashboardLive do
               </div>
               <div>
                 <p class="text-[var(--crema)] font-semibold">{draw["name"]}</p>
-                <p class="font-mono text-xs text-[var(--crema-oscura)]">{draw["date"] || "Sin fecha"}</p>
+                <p class="font-mono text-xs text-[var(--crema-oscura)]">{draw["date"] || gettext("draw_no_date")}</p>
               </div>
             </div>
             <div class="flex items-center gap-4">

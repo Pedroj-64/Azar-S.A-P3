@@ -15,7 +15,10 @@ defmodule ProyectoWeb.Player.NotificationsLive do
       Phoenix.PubSub.subscribe(Proyecto.PubSub, "notifications:#{client_id}")
     end
 
-    {:ok, assign(socket, page_title: "Notificaciones", notifications: notifications)}
+    {:ok, assign(socket,
+      page_title: gettext("notifications_title"),
+      notifications: notifications
+    )}
   end
 
   @impl true
@@ -27,11 +30,11 @@ defmodule ProyectoWeb.Player.NotificationsLive do
   def render(assigns) do
     ~H"""
     <div>
-      <.page_header title="Notificaciones" subtitle="Mensajes y alertas del sistema" />
+      <.page_header title={gettext("notifications_title")} subtitle={gettext("notifications_subtitle")} />
 
       <.glass_card>
         <div :if={@notifications == []}>
-          <.empty_state icon_name="hero-bell-slash" message="No tienes notificaciones" />
+          <.empty_state icon_name="hero-bell-slash" message={gettext("notifications_empty")} />
         </div>
 
         <div class="space-y-3">
@@ -64,9 +67,9 @@ defmodule ProyectoWeb.Player.NotificationsLive do
   defp notification_icon_bg(_), do: "bg-[rgba(42,107,107,0.15)] text-[var(--teal-lt)]"
 
   defp format_message(%{event: :draw_winner, draw_name: name, number: num, prize: prize}) do
-    "🎉 ¡Ganaste en #{name}! Número #{num} — Premio: $#{fmt(prize)}"
+    gettext("notification_winner", draw: name, number: num, prize: fmt(prize))
   end
-  defp format_message(%{event: event}), do: "Evento: #{event}"
+  defp format_message(%{event: event}), do: gettext("notification_event", event: event)
   defp format_message(msg) when is_binary(msg), do: msg
   defp format_message(msg), do: inspect(msg)
 end

@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-05-13 01:07:17.988703Z",
+  "date": "2026-06-15",
+  "fractions": 5,
+  "id": "sorteo_junio_2026",
+  "name": "Sorteo Especial Junio 2026",
+  "prizes": [
+    {
+      "amount": 50000000,
+      "created_at": "2026-05-13 01:07:18.092703Z",
+      "id": "7BD79C37",
+      "name": "Premio Único"
+    }
+  ],
+  "result": null,
+  "status": "pending",
+  "ticket_price": 100000,
+  "tickets": {},
+  "total_tickets": 50,
+  "winning_numbers": []
+}

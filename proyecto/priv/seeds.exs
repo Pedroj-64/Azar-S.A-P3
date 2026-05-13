@@ -2,55 +2,69 @@
 # priv/seeds.exs
 # ─────────────────────────────────────────────────────────────────
 # Datos de prueba para Azar S.A.
-# Ejecutar con: mix run priv/seeds.exs
-# Crea clientes, sorteos, premios y compras de tickets de ejemplo.
+# Ejecutar con:  mix run priv/seeds.exs
+#
+# Credenciales de prueba:
+#   Admin  → usuario: admin       contraseña: 1234
+#   Player → cédula : 1001234567  contraseña: 1234
 # ─────────────────────────────────────────────────────────────────
 
 alias AzarSa.Core.Servers.CentralServer
 
-IO.puts("Iniciando carga de datos de prueba...")
+IO.puts("""
+============================================================
+  🎰  AZAR S.A. — Cargando datos de prueba
+============================================================
+""")
 
-# ── Administradores ───────────────────────────────────────────────────
-IO.puts("Creando administrador por defecto...")
+# ── Administrador ─────────────────────────────────────────────────
+IO.puts("► Creando administrador...")
 
-case AzarSa.Core.Services.AdminService.create_admin("admin", "admin123") do
+case AzarSa.Core.Services.AdminService.create_admin("admin", "1234") do
   {:ok, admin} ->
-    IO.puts("  ✅ Administrador creado: #{admin["username"]}")
+    IO.puts("  ✅ Admin creado: #{admin["username"]} / 1234")
 
   {:error, :admin_exists} ->
-    IO.puts("  ⚠️  Administrador 'admin' ya existe.")
+    IO.puts("  ⚠️  Admin 'admin' ya existe (contraseña: 1234)")
 end
 
-:timer.sleep(200)
+:timer.sleep(100)
 
-# ── Clientes ──────────────────────────────────────────────────────
+# ── Clientes / Jugadores ──────────────────────────────────────────
+IO.puts("\n► Registrando jugadores...")
+
 clients = [
-  {"Carlos Pérez",     "1001234567", "password123", "4111111111111111"},
-  {"Ana Gómez",        "1009876543", "password456", "4222222222222222"},
-  {"Luis Martínez",    "1005551234", "password789", "4333333333333333"},
-  {"María Rodríguez",  "1007778888", "pass2024",    "4444444444444444"}
+  # {nombre,           cédula,        contraseña, tarjeta}
+  {"Carlos Pérez",     "1001234567",  "1234",     "4111111111111111"},
+  {"Ana Gómez",        "1009876543",  "pass456",  "4222222222222222"},
+  {"Luis Martínez",    "1005551234",  "pass789",  "4333333333333333"},
+  {"María Rodríguez",  "1007778888",  "pass2024", "4444444444444444"}
 ]
 
 registered_clients =
   Enum.map(clients, fn {name, doc, pass, card} ->
     case CentralServer.register_client(name, doc, pass, card) do
       {:ok, client} ->
-        IO.puts("  ✅ Cliente registrado: #{name} (#{doc})")
+        IO.puts("  ✅ #{name}  |  cédula: #{doc}  |  pass: #{pass}")
         client
 
       {:error, :document_exists} ->
-        IO.puts("  ⚠️  Cliente ya existe: #{doc}")
-        nil
+        IO.puts("  ⚠️  Ya existe: #{doc}")
+        # Buscar el cliente en la store para seguir usando su ID
+        clients_in_store = AzarSa.Core.Data.Store.read("clients.json")
+        Enum.find(clients_in_store, fn c -> c["document"] == doc end)
     end
   end)
   |> Enum.reject(&is_nil/1)
 
-:timer.sleep(200)
+:timer.sleep(100)
 
 # ── Sorteos ───────────────────────────────────────────────────────
+IO.puts("\n► Creando sorteos...")
+
 draws = [
   %{
-    id: "sorteo_mayo_2026",
+    id: "sorteo_default",
     name: "Gran Sorteo Mayo 2026",
     date: "2026-05-31",
     ticket_price: 50_000,
@@ -85,62 +99,88 @@ Enum.each(draws, fn draw ->
          draw.total_tickets
        ) do
     {:ok, id} ->
-      IO.puts("  ✅ Sorteo creado: #{draw.name} (#{id})")
+      IO.puts("  ✅ #{draw.name}  (id: #{id})")
 
     {:error, :draw_already_exists} ->
-      IO.puts("  ⚠️  Sorteo ya existe: #{draw.id}")
+      IO.puts("  ⚠️  Ya existe: #{draw.id}")
   end
 end)
 
-:timer.sleep(200)
+:timer.sleep(100)
 
 # ── Premios ───────────────────────────────────────────────────────
+IO.puts("\n► Agregando premios...")
+
 prizes = [
-  {"sorteo_mayo_2026",   "Premio Mayor",     30_000_000},
-  {"sorteo_mayo_2026",   "Segundo Premio",   10_000_000},
-  {"sorteo_junio_2026",  "Premio Único",     50_000_000},
-  {"sorteo_pasado",      "Gran Premio",      25_000_000}
+  {"sorteo_default",   "Premio Mayor",    30_000_000},
+  {"sorteo_default",   "Segundo Premio",  10_000_000},
+  {"sorteo_default",   "Tercer Premio",    5_000_000},
+  {"sorteo_junio_2026","Premio Único",    50_000_000},
+  {"sorteo_pasado",    "Gran Premio",     25_000_000}
 ]
 
 Enum.each(prizes, fn {draw_id, name, amount} ->
   case CentralServer.add_prize(draw_id, name, amount) do
     {:ok, _} ->
-      IO.puts("  ✅ Premio creado: #{name} → #{draw_id}")
+      IO.puts("  ✅ #{name}  →  #{draw_id}  ($#{amount |> Integer.to_string() |> String.reverse() |> String.replace(~r/(\d{3})(?=\d)/, "\\1.") |> String.reverse()})")
 
     {:error, reason} ->
-      IO.puts("  ⚠️  Error en premio #{name}: #{reason}")
+      IO.puts("  ⚠️  Error en #{name}: #{reason}")
   end
 end)
 
-:timer.sleep(200)
+:timer.sleep(100)
 
-# ── Compra de tickets (sorteo de prueba) ──────────────────────────
-if length(registered_clients) > 0 do
-  first_client = hd(registered_clients)
-  client_id = first_client.id
+# ── Comprar tickets para el jugador principal (Carlos / 1234) ─────
+IO.puts("\n► Comprando tickets para Carlos Pérez...")
 
-  tickets = [{0, :full}, {1, 1}, {1, 2}, {5, :full}, {10, :full}]
+first_client = Enum.find(registered_clients, fn c ->
+  c["document"] == "1001234567"
+end)
+
+if first_client do
+  client_id = first_client["id"]
+  tickets = [{0, :full}, {1, 1}, {2, 2}, {5, :full}, {10, :full}]
 
   Enum.each(tickets, fn {number, fraction} ->
-    case CentralServer.buy_ticket("sorteo_mayo_2026", client_id, number, fraction) do
+    case CentralServer.buy_ticket("sorteo_default", client_id, number, fraction) do
       {:ok, result} ->
-        IO.puts("  ✅ Ticket comprado: número #{result.number} (#{inspect(result.fraction)})")
+        IO.puts("  ✅ Ticket ##{result.number} (fracción: #{inspect(result.fraction)})")
 
       {:error, reason} ->
-        IO.puts("  ⚠️  Error comprando ticket #{number}: #{reason}")
+        IO.puts("  ⚠️  Ticket ##{number}: #{reason}")
     end
   end)
+else
+  IO.puts("  ⚠️  No se encontró a Carlos, saltando compra de tickets")
 end
 
-:timer.sleep(200)
+:timer.sleep(100)
 
-# ── Ejecutar sorteo histórico ─────────────────────────────────────
+# ── Ejecutar el sorteo histórico ──────────────────────────────────
+IO.puts("\n► Ejecutando sorteo histórico...")
+
 case CentralServer.run_draw("sorteo_pasado") do
   {:ok, result} ->
-    IO.puts("  ✅ Sorteo histórico ejecutado: ganador #{result["winner_number"]}")
+    IO.puts("  ✅ Sorteo histórico ejecutado. Número ganador: #{result["winner_number"]}")
 
   {:error, reason} ->
-    IO.puts("  ⚠️  No se pudo ejecutar sorteo histórico: #{reason}")
+    IO.puts("  ⚠️  No se pudo ejecutar: #{reason}")
 end
 
-IO.puts("\n✅ Datos de prueba cargados correctamente.")
+IO.puts("""
+
+============================================================
+  ✅ Datos cargados correctamente.
+
+  Credenciales para ingresar:
+  ┌─────────────┬──────────────┬──────────┐
+  │  Rol        │  Usuario     │  Clave   │
+  ├─────────────┼──────────────┼──────────┤
+  │  Admin      │  admin       │  1234    │
+  │  Jugador    │  1001234567  │  1234    │
+  └─────────────┴──────────────┴──────────┘
+
+  http://localhost:4000
+============================================================
+""")

@@ -4,6 +4,9 @@ defmodule AzarSa.Core.Servers.DrawServer do
 
   Cada instancia gestiona un sorteo único: compra de tickets (completos y fracciones),
   premios, ejecución y persistencia en JSON.
+
+  Al ejecutar el sorteo, se genera UN número ganador por cada premio definido,
+  seleccionado aleatoriamente entre los números vendidos.
   """
 
   use GenServer
@@ -81,7 +84,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
             tickets: %{},
             prizes: [],
             status: :pending,
-            winning_number: nil,
+            winning_numbers: [],
             result: nil,
             created_at: DateTime.utc_now() |> DateTime.to_string()
           }
@@ -110,7 +113,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
             tickets: %{},
             prizes: [],
             status: :pending,
-            winning_number: nil,
+            winning_numbers: [],
             result: nil,
             created_at: DateTime.utc_now() |> DateTime.to_string()
           }
@@ -188,7 +191,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
     end
   end
 
-  # Ejecuta el sorteo: elige ganador aleatorio y notifica
+  # Ejecuta el sorteo: elige un número ganador POR CADA PREMIO y notifica
   @impl true
   def handle_call(:run, _from, state) do
     cond do
@@ -206,15 +209,31 @@ defmodule AzarSa.Core.Servers.DrawServer do
           |> Enum.map(fn t -> t["number"] end)
           |> Enum.uniq()
 
-        winner_number = Enum.random(sold_numbers)
+        # Generar 1 número ganador POR CADA PREMIO
+        prize_winners =
+          state.prizes
+          |> Enum.map(fn prize ->
+            winner_number = Enum.random(sold_numbers)
 
-        # Encontrar el cliente con la fracción ganadora (o billete completo)
-        winner_ticket =
-          state.tickets
-          |> Map.values()
-          |> Enum.find(fn t -> t["number"] == winner_number end)
+            # Encontrar el dueño del billete/fracción con ese número
+            winner_ticket =
+              state.tickets
+              |> Map.values()
+              |> Enum.find(fn t -> t["number"] == winner_number end)
 
-        winner_client = winner_ticket["client_id"]
+            prize_id = prize["id"] || Map.get(prize, :id)
+            prize_name = prize["name"] || Map.get(prize, :name, "")
+            prize_amount = prize["amount"] || Map.get(prize, :amount, 0)
+
+            %{
+              "prize_id" => prize_id,
+              "prize_name" => prize_name,
+              "prize_amount" => prize_amount,
+              "winner_number" => winner_number,
+              "winner_client_id" => winner_ticket["client_id"],
+              "winner_fraction" => winner_ticket["fraction"]
+            }
+          end)
 
         total_prize =
           Enum.reduce(state.prizes, 0, fn p, acc ->
@@ -222,22 +241,38 @@ defmodule AzarSa.Core.Servers.DrawServer do
             acc + amount
           end)
 
+        # El primer ganador es el "ganador principal" (compatibilidad)
+        first_winner = List.first(prize_winners)
+
         result = %{
-          "winner_number" => winner_number,
-          "winner_client_id" => winner_client,
+          "winner_number" => if(first_winner, do: first_winner["winner_number"], else: Enum.random(sold_numbers)),
+          "winner_client_id" => if(first_winner, do: first_winner["winner_client_id"], else: nil),
           "total_prize" => total_prize,
+          "prize_winners" => prize_winners,
           "drawn_at" => DateTime.utc_now() |> DateTime.to_string()
         }
 
-        NotificationServer.notify(winner_client, %{
-          event: :draw_winner,
-          draw_id: state.id,
-          draw_name: state.name,
-          number: winner_number,
-          prize: total_prize
-        })
+        winning_numbers =
+          prize_winners
+          |> Enum.map(fn pw -> pw["winner_number"] end)
+          |> Enum.uniq()
 
-        new_state = %{state | status: :done, winning_number: winner_number, result: result}
+        # Notificar a CADA ganador individual
+        prize_winners
+        |> Enum.group_by(fn pw -> pw["winner_client_id"] end)
+        |> Enum.each(fn {client_id, client_prizes} ->
+          total_won = Enum.sum(Enum.map(client_prizes, fn p -> p["prize_amount"] end))
+
+          NotificationServer.notify(client_id, %{
+            event: :draw_winner,
+            draw_id: state.id,
+            draw_name: state.name,
+            number: Enum.map(client_prizes, fn p -> p["winner_number"] end) |> Enum.join(", "),
+            prize: total_won
+          })
+        end)
+
+        new_state = %{state | status: :done, winning_numbers: winning_numbers, result: result}
         Store.write(file(state.id), state_to_map(new_state))
 
         {:reply, {:ok, result}, new_state}
@@ -392,13 +427,25 @@ defmodule AzarSa.Core.Servers.DrawServer do
       "tickets" => state.tickets,
       "prizes" => state.prizes,
       "status" => state.status,
-      "winning_number" => state.winning_number,
+      "winning_numbers" => state.winning_numbers,
       "result" => state.result,
       "created_at" => state.created_at
     }
   end
 
   defp map_to_state(map) do
+    # Compatibilidad: winning_number (string viejo) -> winning_numbers (lista nueva)
+    winning_numbers =
+      case map["winning_numbers"] do
+        list when is_list(list) -> list
+        nil ->
+          case map["winning_number"] do
+            nil -> []
+            n -> [n]
+          end
+        _ -> []
+      end
+
     %{
       id: map["id"],
       name: map["name"] || map["id"],
@@ -409,7 +456,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
       tickets: map["tickets"] || %{},
       prizes: map["prizes"] || [],
       status: if(map["status"], do: String.to_existing_atom(map["status"]), else: :pending),
-      winning_number: map["winning_number"],
+      winning_numbers: winning_numbers,
       result: map["result"],
       created_at: map["created_at"] || DateTime.utc_now() |> DateTime.to_string()
     }

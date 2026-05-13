@@ -23,7 +23,7 @@ defmodule ProyectoWeb.Admin.ClientsLive do
 
     {:ok,
      assign(socket,
-       page_title: "Clientes",
+       page_title: gettext("clients_title"),
        clients: clients_with_balance
      )}
   end
@@ -32,11 +32,11 @@ defmodule ProyectoWeb.Admin.ClientsLive do
   def render(assigns) do
     ~H"""
     <div>
-      <.page_header title="Clientes" subtitle={"#{length(@clients)} jugadores registrados"} />
+      <.page_header title={gettext("clients_title")} subtitle={gettext("clients_subtitle", count: length(@clients))} />
 
       <div :if={@clients == []}>
         <.glass_card>
-          <.empty_state icon_name="hero-users" message="No hay clientes registrados aún" />
+          <.empty_state icon_name="hero-users" message={gettext("clients_empty")} />
         </.glass_card>
       </div>
 
@@ -47,25 +47,25 @@ defmodule ProyectoWeb.Admin.ClientsLive do
               <img src={~p"/images/avatar_default.svg"} class="w-12 h-12" style="border-radius: 2px; border: 1px solid rgba(212,160,23,0.2);" />
               <div>
                 <h3 class="text-[var(--crema)] font-semibold">{client["name"]}</h3>
-                <p class="font-mono text-xs text-[var(--crema-oscura)]">Doc: {client["document"]}</p>
+                <p class="font-mono text-xs text-[var(--crema-oscura)]">{gettext("client_doc_label")} {client["document"]}</p>
               </div>
             </div>
 
             <div class="grid grid-cols-3 gap-2">
               <div class="p-3 text-center" style="background: rgba(90,46,16,0.2); border-radius: 2px;">
-                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">Gastado</p>
+                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">{gettext("client_spent_label")}</p>
                 <p class="font-display text-sm text-[var(--naranja)]">
                   ${fmt(client["balance_info"].spent)}
                 </p>
               </div>
               <div class="p-3 text-center" style="background: rgba(90,46,16,0.2); border-radius: 2px;">
-                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">Ganado</p>
+                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">{gettext("client_won_label")}</p>
                 <p class="font-display text-sm text-[var(--teal-lt)]">
                   ${fmt(client["balance_info"].won)}
                 </p>
               </div>
               <div class="p-3 text-center" style="background: rgba(90,46,16,0.2); border-radius: 2px;">
-                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">Balance</p>
+                <p class="font-mono text-[0.6rem] uppercase tracking-widest text-[var(--crema-oscura)]">{gettext("client_balance_label")}</p>
                 <p class={[
                   "font-display text-sm",
                   client["balance_info"].balance >= 0 && "text-[var(--teal-lt)]",
@@ -78,7 +78,7 @@ defmodule ProyectoWeb.Admin.ClientsLive do
 
             <p class="font-mono text-[0.6rem] text-[var(--crema-oscura)] mt-3 uppercase tracking-widest">
               <.icon name="hero-calendar" class="w-3 h-3 inline" />
-              Registrado: {client["created_at"] |> String.slice(0, 10)}
+              {gettext("client_registered_at")} {client["created_at"] |> String.slice(0, 10)}
             </p>
           </.glass_card>
         </div>
