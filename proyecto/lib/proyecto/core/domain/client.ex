@@ -1,4 +1,16 @@
 defmodule AzarSa.Core.Domain.Client do
+  @moduledoc """
+  Constructor del dominio Cliente.
+
+  Campos:
+  - id: identificador único (string)
+  - name: nombre del cliente
+  - document: documento del cliente
+  - password_hash: hash de la contraseña
+  - credit_card: número de tarjeta
+  - notifications: lista de notificaciones
+  - created_at: timestamp UTC en string
+  """
   @derive Jason.Encoder
   defstruct [
     :id,
@@ -10,7 +22,7 @@ defmodule AzarSa.Core.Domain.Client do
     :created_at
   ]
 
-  # 🔹 Constructor
+  # Constructor
   def new(name, document, password, card) do
     %__MODULE__{
       id: generate_id(),
@@ -23,13 +35,13 @@ defmodule AzarSa.Core.Domain.Client do
     }
   end
 
-  # 🔹 Hash SHA256
+  # Hash SHA256
   defp hash_password(password) do
     :crypto.hash(:sha256, password)
     |> Base.encode16(case: :lower)
   end
 
-  # 🔹 Helpers
+  # Helpers
   defp generate_id do
     "client_" <> (:crypto.strong_rand_bytes(4) |> Base.encode16())
   end

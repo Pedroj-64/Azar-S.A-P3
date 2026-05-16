@@ -99,58 +99,143 @@
           );
       }
 
-      /* ── NEÓN DE GAS (no LED) ─────────────────────────── */
+      /* ── NEÓN DE GAS VINTAGE (tubos viejos, mal contacto) ─── */
+
+      /* Naranja: tubo de neón con gas agotándose — parpadea y se apaga */
       .neon-gas {
         text-shadow:
-          0 0 4px  rgba(255, 107, 26, 0.9),
-          0 0 12px rgba(255, 107, 26, 0.6),
-          0 0 28px rgba(255, 107, 26, 0.3),
-          0 0 60px rgba(212, 160, 23, 0.15);
-        animation: neon-flicker 8s infinite;
+          0 0 3px  rgba(255, 107, 26, 0.7),
+          0 0 10px rgba(255, 107, 26, 0.35),
+          0 0 25px rgba(255, 107, 26, 0.12);
+        animation: gas-sputter 18s infinite;
       }
+
+      /* Dorado: tubo viejo que hace contacto intermitente */
       .neon-gold {
         text-shadow:
-          0 0 4px  rgba(255, 215, 0, 0.95),
-          0 0 14px rgba(255, 215, 0, 0.65),
-          0 0 32px rgba(255, 215, 0, 0.3),
-          0 0 70px rgba(212, 160, 23, 0.2);
-        animation: neon-flicker 6s infinite 2s;
+          0 0 3px  rgba(255, 215, 0, 0.7),
+          0 0 10px rgba(255, 215, 0, 0.3),
+          0 0 22px rgba(212, 160, 23, 0.1);
+        animation: gold-dying 22s infinite 3s;
       }
+
+      /* Teal: tubo de mercurio con zumbido eléctrico */
       .neon-teal {
         text-shadow:
-          0 0 4px  rgba(42, 200, 200, 0.9),
-          0 0 14px rgba(42, 200, 200, 0.55),
-          0 0 30px rgba(42, 107, 107, 0.3);
-        animation: neon-flicker 10s infinite 4s;
+          0 0 3px  rgba(42, 200, 200, 0.7),
+          0 0 10px rgba(42, 200, 200, 0.3),
+          0 0 20px rgba(42, 107, 107, 0.1);
+        animation: teal-buzz 15s infinite 7s;
       }
 
-      /* Parpadeo de neón de gas (irregular, no sinusoidal) */
-      @keyframes neon-flicker {
-        0%, 95%, 100%    { opacity: 1; }
-        96%              { opacity: 0.85; }
-        97%              { opacity: 1; }
-        98%              { opacity: 0.7; }
-        99%              { opacity: 1; }
+      /*
+       * ANIMACIÓN 1: Gas sputtering — se apaga por completo un instante,
+       * intenta prender 2 veces rápido, y luego vuelve.
+       */
+      @keyframes gas-sputter {
+        0%, 100%  { opacity: 1; }
+        /* Funcionando normal... */
+        62%       { opacity: 1; }
+        /* Parpadeo rápido previo al apagón */
+        63%       { opacity: 0.4; }
+        63.5%     { opacity: 0.9; }
+        64%       { opacity: 0.3; }
+        64.5%     { opacity: 0.85; }
+        /* Apagón breve */
+        65%       { opacity: 0.08; }
+        66.5%     { opacity: 0.08; }
+        /* Intenta prender */
+        67%       { opacity: 0.5; }
+        67.3%     { opacity: 0.15; }
+        /* Prende de nuevo */
+        68%       { opacity: 0.7; }
+        69%       { opacity: 1; }
+        /* Micro-flicker más tarde */
+        85%       { opacity: 1; }
+        85.5%     { opacity: 0.6; }
+        86%       { opacity: 1; }
       }
 
-      /* ── HALO ALREDEDOR DE ELEMENTOS ─────────────────── */
+      /*
+       * ANIMACIÓN 2: Tubo dorado agonizante — se va debilitando
+       * gradualmente, casi muere, y luego vuelve con fuerza.
+       */
+      @keyframes gold-dying {
+        0%, 100%  { opacity: 1; }
+        /* Normal... */
+        40%       { opacity: 1; }
+        /* Empieza a debilitarse */
+        42%       { opacity: 0.7; }
+        44%       { opacity: 0.5; }
+        46%       { opacity: 0.25; }
+        /* Casi muerto */
+        48%       { opacity: 0.1; }
+        49%       { opacity: 0.1; }
+        /* Intento de resurrección — stutter triple */
+        49.5%     { opacity: 0.6; }
+        50%       { opacity: 0.15; }
+        50.5%     { opacity: 0.7; }
+        51%       { opacity: 0.2; }
+        51.5%     { opacity: 0.8; }
+        /* Vuelve a la vida */
+        53%       { opacity: 1; }
+        /* Micro-parpadeo secundario */
+        78%       { opacity: 1; }
+        78.5%     { opacity: 0.5; }
+        79%       { opacity: 0.85; }
+        79.5%     { opacity: 1; }
+      }
+
+      /*
+       * ANIMACIÓN 3: Zumbido de mercurio — vibraciones rápidas
+       * como un transformador que hace ruido.
+       */
+      @keyframes teal-buzz {
+        0%, 100%  { opacity: 1; }
+        /* Normal... */
+        30%       { opacity: 1; }
+        /* Buzz eléctrico: vibraciones rápidas */
+        30.3%     { opacity: 0.7; }
+        30.6%     { opacity: 0.95; }
+        30.9%     { opacity: 0.6; }
+        31.2%     { opacity: 0.9; }
+        31.5%     { opacity: 0.55; }
+        31.8%     { opacity: 0.85; }
+        32%       { opacity: 1; }
+        /* Apagón limpio más tarde */
+        72%       { opacity: 1; }
+        73%       { opacity: 0.1; }
+        74.5%     { opacity: 0.1; }
+        75%       { opacity: 0.4; }
+        75.3%     { opacity: 0.12; }
+        76%       { opacity: 0.8; }
+        77%       { opacity: 1; }
+      }
+
+      /* ── HALO VINTAGE CON PULSO ────────────────────────── */
       .halo {
         box-shadow:
-          0 0 8px  rgba(212, 160, 23, 0.25),
-          0 0 24px rgba(212, 160, 23, 0.12),
-          0 0 60px rgba(212, 160, 23, 0.06);
+          0 0 6px  rgba(212, 160, 23, 0.15),
+          0 0 18px rgba(212, 160, 23, 0.07);
+        animation: halo-pulse 8s ease-in-out infinite;
       }
       .halo-teal {
         box-shadow:
-          0 0 8px  rgba(42, 107, 107, 0.35),
-          0 0 24px rgba(42, 107, 107, 0.18),
-          0 0 60px rgba(42, 107, 107, 0.08);
+          0 0 6px  rgba(42, 107, 107, 0.2),
+          0 0 18px rgba(42, 107, 107, 0.08);
+        animation: halo-pulse 10s ease-in-out infinite 2s;
       }
       .halo-orange {
         box-shadow:
-          0 0 8px  rgba(194, 82, 26, 0.4),
-          0 0 24px rgba(194, 82, 26, 0.2),
-          0 0 60px rgba(194, 82, 26, 0.08);
+          0 0 6px  rgba(194, 82, 26, 0.22),
+          0 0 18px rgba(194, 82, 26, 0.09);
+        animation: halo-pulse 9s ease-in-out infinite 5s;
+      }
+
+      /* Pulso suave — el halo "respira" como un foco incandescente */
+      @keyframes halo-pulse {
+        0%, 100% { filter: brightness(1); }
+        50%      { filter: brightness(1.08); }
       }
 
       /* ── TARJETA VINTAGE ──────────────────────────────── */
@@ -160,6 +245,11 @@
         border-radius: 4px;
         position: relative;
         overflow: hidden;
+        transition: box-shadow 0.4s ease, border-color 0.4s ease;
+      }
+      .vintage-card:hover {
+        box-shadow: 0 0 12px rgba(212, 160, 23, 0.08);
+        border-color: rgba(212, 160, 23, 0.45);
       }
       .vintage-card::before {
         content: '';
@@ -235,7 +325,9 @@
         box-shadow:
           0 4px 0 #6b2a0a,
           0 8px 16px rgba(194,82,26,0.3),
+          0 0 20px rgba(255, 107, 26, 0.12),
           inset 0 1px 0 rgba(255,255,255,0.2);
+        text-shadow: 0 0 4px rgba(255, 200, 100, 0.3);
       }
       .btn-lever:active {
         transform: translateY(3px);
@@ -342,7 +434,7 @@
         border-radius: 0;
       }
 
-      /* ── STATUS BADGE ─────────────────────────────────── */
+      /* ── STATUS BADGE (indicadores luminosos) ────────── */
       .badge-pending {
         background: rgba(212,160,23,0.15);
         border: 1px solid rgba(212,160,23,0.3);
@@ -353,6 +445,9 @@
         text-transform: uppercase;
         padding: 0.2rem 0.6rem;
         border-radius: 1px;
+        text-shadow: 0 0 4px rgba(255, 215, 0, 0.4);
+        box-shadow: 0 0 4px rgba(212,160,23,0.1);
+        animation: gold-dying 22s infinite 8s;
       }
       .badge-done {
         background: rgba(42,107,107,0.2);
@@ -364,9 +459,11 @@
         text-transform: uppercase;
         padding: 0.2rem 0.6rem;
         border-radius: 1px;
+        text-shadow: 0 0 4px rgba(42, 200, 200, 0.3);
+        box-shadow: 0 0 4px rgba(42,107,107,0.1);
       }
 
-      /* ── SIDEBAR LINK HOVER ───────────────────────────── */
+      /* ── SIDEBAR LINK (signage iluminada) ──────────────── */
       .sidebar-link {
         display: flex;
         align-items: center;
@@ -378,7 +475,7 @@
         font-size: 0.8rem;
         letter-spacing: 0.05em;
         text-transform: uppercase;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s, text-shadow 0.3s;
         border-left: 2px solid transparent;
         text-decoration: none;
       }
@@ -386,7 +483,8 @@
         background: rgba(212,160,23,0.08);
         color: var(--mostaza);
         border-left-color: var(--mostaza);
-        box-shadow: inset 0 0 20px rgba(212,160,23,0.04);
+        box-shadow: inset 0 0 20px rgba(212,160,23,0.06);
+        text-shadow: 0 0 6px rgba(255, 215, 0, 0.3);
       }
     </style>
   </head>

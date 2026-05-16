@@ -40,7 +40,10 @@ defmodule Proyecto.Application do
       # 6. Servidor Central (fachada que orquesta todo)
       AzarSa.Core.Servers.CentralServer,
 
-      # 7. Endpoint web
+      # 7. Restaurar sorteos persistidos en disco (levanta DrawServers desde JSON)
+      AzarSa.Core.Servers.DrawRestorer,
+
+      # 8. Endpoint web
       ProyectoWeb.Endpoint
     ]
 

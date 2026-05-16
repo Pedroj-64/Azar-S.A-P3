@@ -127,7 +127,7 @@ defmodule ProyectoWeb.UIComponents do
       <p class="font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)] mb-1">
         {@title}
       </p>
-      <p class="font-display text-3xl text-[var(--mostaza)] neon-gold">
+      <p class="font-display text-3xl text-[var(--mostaza)]">
         {@value}
       </p>
     </div>

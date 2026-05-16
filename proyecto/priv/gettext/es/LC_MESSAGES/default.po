@@ -125,7 +125,7 @@ msgstr "Portal Jugador"
 # ── Home / Landing ─────────────────────────────────────────
 
 msgid "home_badge"
-msgstr "Sistema de Lotería · Est. 2024"
+msgstr "Sistema de Lotería · Est. 2026"
 
 msgid "home_hero_line1"
 msgstr "Tu"
@@ -247,7 +247,7 @@ msgstr "Conseguir mi Boleto"
 # ── Admin Dashboard ────────────────────────────────────────
 
 msgid "dashboard_title"
-msgstr "Dashboard"
+msgstr "Resumen Ejecutivo"
 
 msgid "dashboard_system_date"
 msgstr "Fecha del sistema: %{date}"

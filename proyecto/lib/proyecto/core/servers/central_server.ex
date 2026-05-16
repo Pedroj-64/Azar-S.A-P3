@@ -15,7 +15,7 @@ defmodule AzarSa.Core.Servers.CentralServer do
   alias AzarSa.Core.Servers.DrawServer
   alias AzarSa.Core.Support.AuditLogger
 
-  ## 🚀 API pública — Optimizada (Bypass del proceso CentralServer para escalar)
+  ##API pública — Optimizada (Bypass del proceso CentralServer para escalar)
 
   def start_link(_args) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)

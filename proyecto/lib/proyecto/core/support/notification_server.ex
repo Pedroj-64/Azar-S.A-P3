@@ -1,7 +1,7 @@
 defmodule AzarSa.Core.Support.NotificationServer do
   use GenServer
 
-  ## 🔹 API
+  ## API
 
   def start_link(_args) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
@@ -15,7 +15,7 @@ defmodule AzarSa.Core.Support.NotificationServer do
     GenServer.call(__MODULE__, {:get, client_id})
   end
 
-  ## 🔹 Callbacks
+  ## Callbacks
 
   @impl true
   def init(state) do

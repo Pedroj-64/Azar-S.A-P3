@@ -1,11 +1,29 @@
 defmodule AzarSa.Core.Services.ClientService do
+  @moduledoc """
+  Servicio para gestionar clientes.
+
+  API pública:
+  - register/4: Registra un nuevo cliente
+  - authenticate/2: Autentica un cliente
+  - get_balance/1: Obtiene el balance del cliente
+  - list/0: Lista todos los clientes
+  - list_draws/0: Lista todos los sorteos
+  - get_client_draws/1: Obtiene los sorteos del cliente
+
+  Helpers:
+  - document_exists?/2: Verifica si existe un cliente por documento
+  - hash/1: Hash de la contraseña
+  - spent_in_draw/2: Calcula el gasto en un sorteo
+  - won_in_draw/2: Calcula la ganancia en un sorteo
+  - client_exists?/1: Verifica si existe un cliente por ID
+  """
   alias AzarSa.Core.Domain.Client
   alias AzarSa.Core.Data.Store
 
   # @file is reserved in Elixir (points to the source file path). Use @clients_file instead.
   @clients_file "clients.json"
 
-  # 🔹 Registrar cliente
+  # Registrar cliente
   def register(name, document, password, card) do
     clients = Store.read(@clients_file)
 
@@ -18,7 +36,7 @@ defmodule AzarSa.Core.Services.ClientService do
     end
   end
 
-  # 🔹 Login
+  # Login
   def authenticate(document, password) do
     clients = Store.read(@clients_file)
 
@@ -35,7 +53,7 @@ defmodule AzarSa.Core.Services.ClientService do
     end
   end
 
-  # 🔹 Obtener balance del cliente
+  #  Obtener balance del cliente
   def get_balance(client_id) do
     draws = Store.list_draws()
 
@@ -56,12 +74,12 @@ defmodule AzarSa.Core.Services.ClientService do
     end
   end
 
-  # 🔹 Listar clientes
+  # Listar clientes
   def list do
     Store.read(@clients_file)
   end
 
-  # 🔹 Helpers
+  # Helpers
   defp document_exists?(clients, document) do
     Enum.any?(clients, fn c -> c["document"] == document end)
   end
@@ -110,13 +128,13 @@ defmodule AzarSa.Core.Services.ClientService do
     Enum.any?(clients, fn c -> c["id"] == client_id end)
   end
 
-  # 🔹 Listar sorteos
+  # Listar sorteos
   def list_draws do
     draws = Store.list_draws()
     {:ok, draws}
   end
 
-  # 🔹 Historial de sorteos del cliente
+  # Historial de sorteos del cliente
   def get_client_draws(client_id) do
     if not client_exists?(client_id) do
       {:error, :client_not_found}

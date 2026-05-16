@@ -125,7 +125,7 @@ msgstr "Player Portal"
 # ── Home / Landing ─────────────────────────────────────────
 
 msgid "home_badge"
-msgstr "Lottery System · Est. 2024"
+msgstr "Lottery System · Est. 2026"
 
 msgid "home_hero_line1"
 msgstr "Your"
