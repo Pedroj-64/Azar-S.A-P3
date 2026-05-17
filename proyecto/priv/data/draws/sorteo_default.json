@@ -24,8 +24,39 @@
       "name": "Premio Mayor"
     }
   ],
-  "result": null,
-  "status": "pending",
+  "result": {
+    "drawn_at": "2026-05-16 23:58:47.482213Z",
+    "prize_winners": [
+      {
+        "prize_amount": 5000000,
+        "prize_id": "86F05ADE",
+        "prize_name": "Tercer Premio",
+        "winner_client_id": "client_02883A2E",
+        "winner_fraction": "full",
+        "winner_number": "10"
+      },
+      {
+        "prize_amount": 10000000,
+        "prize_id": "987E5F4E",
+        "prize_name": "Segundo Premio",
+        "winner_client_id": "client_02883A2E",
+        "winner_fraction": "1",
+        "winner_number": "1"
+      },
+      {
+        "prize_amount": 30000000,
+        "prize_id": "064DE20D",
+        "prize_name": "Premio Mayor",
+        "winner_client_id": "client_02883A2E",
+        "winner_fraction": "1",
+        "winner_number": "1"
+      }
+    ],
+    "total_prize": 45000000,
+    "winner_client_id": "client_02883A2E",
+    "winner_number": "10"
+  },
+  "status": "done",
   "ticket_price": 50000,
   "tickets": {
     "0_full": {
@@ -60,5 +91,8 @@
     }
   },
   "total_tickets": 100,
-  "winning_numbers": []
+  "winning_numbers": [
+    "10",
+    "1"
+  ]
 }

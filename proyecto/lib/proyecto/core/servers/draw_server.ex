@@ -323,14 +323,28 @@ defmodule AzarSa.Core.Servers.DrawServer do
     end
   end
 
-  # Verifica si el sorteo puede eliminarse (sin premios)
+  # Verifica si el sorteo puede eliminarse
+  # Permite eliminar si: no tiene premios, o ya fue ejecutado
   @impl true
   def handle_call(:delete, _from, state) do
-    if length(state.prizes) > 0 do
-      {:reply, {:error, :draw_has_prizes}, state}
-    else
-      Store.delete(file(state.id))
-      {:reply, :ok, state}
+    prizes = state.prizes || []
+    has_tickets = map_size(state.tickets || %{}) > 0
+
+    cond do
+      state.status == :done ->
+        # Sorteos ejecutados siempre se pueden archivar/eliminar
+        Store.delete(file(state.id))
+        {:reply, :ok, state}
+
+      has_tickets ->
+        {:reply, {:error, :draw_has_tickets}, state}
+
+      length(prizes) > 0 ->
+        {:reply, {:error, :draw_has_prizes}, state}
+
+      true ->
+        Store.delete(file(state.id))
+        {:reply, :ok, state}
     end
   end
 

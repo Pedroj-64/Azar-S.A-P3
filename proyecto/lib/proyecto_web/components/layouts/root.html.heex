@@ -541,6 +541,36 @@
         void el.offsetWidth; // reflow
         el.classList.add('page-enter');
       });
+
+      // ── AUTO-DISMISS FLASH después de 20 segundos ──────────────────
+      (function() {
+        function autoDismissFlash(el) {
+          if (el._flashTimer) return;
+          el._flashTimer = setTimeout(() => {
+            el.style.transition = 'opacity 0.6s ease-out';
+            el.style.opacity = '0';
+            setTimeout(() => { el.style.display = 'none'; }, 600);
+          }, 20000);
+        }
+
+        // Observar cuando aparecen flashes nuevos
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach(m => {
+            m.addedNodes.forEach(n => {
+              if (n.nodeType === 1) {
+                if (n.classList && n.classList.contains('flash-auto-dismiss')) {
+                  autoDismissFlash(n);
+                }
+                n.querySelectorAll && n.querySelectorAll('.flash-auto-dismiss').forEach(autoDismissFlash);
+              }
+            });
+          });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        // Atrapar los que ya existan
+        document.querySelectorAll('.flash-auto-dismiss').forEach(autoDismissFlash);
+      })();
     </script>
   </body>
 </html>

@@ -247,7 +247,7 @@ msgstr "Get my Ticket"
 # ── Admin Dashboard ────────────────────────────────────────
 
 msgid "dashboard_title"
-msgstr "Dashboard"
+msgstr "Executive Summary"
 
 msgid "dashboard_system_date"
 msgstr "System date: %{date}"
