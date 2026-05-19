@@ -18,9 +18,12 @@ defmodule AzarSa.Core.Domain.Client do
     :document,
     :password_hash,
     :credit_card,
+    :balance,
     :notifications,
     :created_at
   ]
+
+  @initial_balance 500_000
 
   # Constructor
   def new(name, document, password, card) do
@@ -30,6 +33,7 @@ defmodule AzarSa.Core.Domain.Client do
       document: document,
       password_hash: hash_password(password),
       credit_card: card,
+      balance: @initial_balance,
       notifications: [],
       created_at: now()
     }

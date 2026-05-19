@@ -7,13 +7,15 @@ defmodule ProyectoWeb.Admin.DrawsLive do
   use ProyectoWeb, :live_view
 
   alias AzarSa.Core.Servers.CentralServer
+  alias AzarSa.Core.Services.ImageService
 
   @impl true
   def mount(_params, _session, socket) do
     draws = CentralServer.list_draws()
 
     {:ok,
-     assign(socket,
+     socket
+     |> assign(
        page_title: gettext("draws_title"),
        draws: draws,
        sorted_draws: sort_draws(draws, "date", "asc"),
@@ -24,8 +26,11 @@ defmodule ProyectoWeb.Admin.DrawsLive do
        show_clients: nil,
        draw_clients: nil,
        clients_sort: "name",
-       prize_draw_id: nil
-     )}
+       prize_draw_id: nil,
+       upload_draw_id: nil
+     )
+     |> allow_upload(:draw_image, accept: ~w(.jpg .jpeg .png .webp .gif), max_entries: 1, max_file_size: 10_000_000)
+     |> allow_upload(:create_image, accept: ~w(.jpg .jpeg .png .webp .gif), max_entries: 1, max_file_size: 10_000_000)}
   end
 
   # ── Sorting ───────────────────────────────────────────────
@@ -62,6 +67,20 @@ defmodule ProyectoWeb.Admin.DrawsLive do
            String.to_integer(params["total_tickets"] || "100")
          ) do
       {:ok, _id} ->
+        # Process uploaded image if any
+        uploaded =
+          consume_uploaded_entries(socket, :create_image, fn %{path: path}, _entry ->
+            case ImageService.process_and_save(path, draw_id) do
+              {:ok, public_path} -> {:ok, public_path}
+              {:error, _} -> {:ok, nil}
+            end
+          end)
+
+        case List.first(uploaded) do
+          nil -> :ok
+          img_path -> CentralServer.update_draw_image(draw_id, img_path)
+        end
+
         draws = CentralServer.list_draws()
         {:noreply,
          socket
@@ -100,6 +119,50 @@ defmodule ProyectoWeb.Admin.DrawsLive do
 
       {:error, reason} ->
         {:noreply, put_flash(socket, :error, translate_error(reason))}
+    end
+  end
+
+  # ── Image Upload ─────────────────────────────────────────
+
+  @impl true
+  def handle_event("validate", _params, socket), do: {:noreply, socket}
+
+  @impl true
+  def handle_event("cancel-upload", %{"ref" => ref, "upload" => upload_name}, socket) do
+    {:noreply, cancel_upload(socket, String.to_existing_atom(upload_name), ref)}
+  end
+
+  @impl true
+  def handle_event("show_upload", %{"id" => draw_id}, socket) do
+    {:noreply, assign(socket, upload_draw_id: draw_id)}
+  end
+
+  @impl true
+  def handle_event("hide_upload", _params, socket) do
+    {:noreply, assign(socket, upload_draw_id: nil)}
+  end
+
+  @impl true
+  def handle_event("save_image", %{"draw_id" => draw_id}, socket) do
+    uploaded =
+      consume_uploaded_entries(socket, :draw_image, fn %{path: path}, _entry ->
+        case ImageService.process_and_save(path, draw_id) do
+          {:ok, public_path} -> {:ok, public_path}
+          {:error, _} -> {:ok, nil}
+        end
+      end)
+
+    case List.first(uploaded) do
+      nil ->
+        {:noreply, put_flash(socket, :error, "No se pudo procesar la imagen")}
+
+      img_path ->
+        CentralServer.update_draw_image(draw_id, img_path)
+        draws = CentralServer.list_draws()
+        {:noreply,
+         socket
+         |> assign(draws: draws, sorted_draws: sort_draws(draws, socket.assigns.sort_by, socket.assigns.sort_dir), upload_draw_id: nil)
+         |> put_flash(:info, "Imagen actualizada")}
     end
   end
 
@@ -201,12 +264,28 @@ defmodule ProyectoWeb.Admin.DrawsLive do
       <div :if={@show_create} class="mb-8 page-enter">
         <.glass_card>
           <h3 class="font-display text-lg text-[var(--crema)] mb-4">{gettext("create_draw_title")}</h3>
-          <form phx-submit="create_draw" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form phx-submit="create_draw" phx-change="validate" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <.glass_input name="name" label={gettext("draw_field_name")} placeholder={gettext("draw_field_name_placeholder")} required={true} />
             <.glass_input name="date" type="date" label={gettext("draw_field_date")} required={true} />
             <.glass_input name="ticket_price" type="number" label={gettext("draw_field_price")} placeholder="10000" required={true} />
             <.glass_input name="fractions" type="number" label={gettext("draw_field_fractions")} placeholder="1" required={true} />
             <.glass_input name="total_tickets" type="number" label={gettext("draw_field_total")} placeholder="100" required={true} />
+            <%!-- Image Upload --%>
+            <div class="space-y-2">
+              <label class="font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)]">Imagen del sorteo</label>
+              <div class="relative" phx-drop-target={@uploads.create_image.ref}>
+                <.live_file_input upload={@uploads.create_image}
+                  class="vintage-input w-full file:mr-4 file:py-1 file:px-3 file:border-0 file:text-xs file:font-mono file:uppercase file:tracking-widest file:bg-[rgba(212,160,23,0.15)] file:text-[var(--mostaza)] file:cursor-pointer cursor-pointer" />
+              </div>
+              <div :for={entry <- @uploads.create_image.entries} class="flex items-center gap-3 mt-2">
+                <.live_img_preview entry={entry} class="w-16 h-12 object-cover rounded" style="border: 1px solid rgba(212,160,23,0.3);" />
+                <span class="font-mono text-xs text-[var(--crema-oscura)]">{entry.client_name}</span>
+                <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} phx-value-upload="create_image"
+                  class="text-[var(--naranja)] hover:text-red-400 cursor-pointer">
+                  <.icon name="hero-x-mark" class="w-4 h-4" />
+                </button>
+              </div>
+            </div>
             <div class="flex items-end">
               <.emerald_button type="submit" class="w-full">{gettext("draw_create_btn")}</.emerald_button>
             </div>
@@ -280,6 +359,14 @@ defmodule ProyectoWeb.Admin.DrawsLive do
                   <.icon name="hero-users" class="w-4 h-4" />
                 </.ghost_button>
 
+                <.ghost_button
+                  :if={to_string(draw["status"]) == "pending"}
+                  phx-click="show_upload"
+                  phx-value-id={draw["id"]}
+                >
+                  <.icon name="hero-photo" class="w-4 h-4" />
+                </.ghost_button>
+
                 <.emerald_button
                   :if={to_string(draw["status"]) == "pending"}
                   phx-click="run_draw"
@@ -333,6 +420,42 @@ defmodule ProyectoWeb.Admin.DrawsLive do
                   </span>
                   <span class="text-[var(--mostaza)] font-bold">${fmt(pw["prize_amount"] || 0)}</span>
                 </div>
+              </div>
+            </div>
+
+            <%!-- Image Upload Panel --%>
+            <div :if={@upload_draw_id == draw["id"]} class="mt-4 page-enter">
+              <div style="border-top: 1px solid rgba(212,160,23,0.15); padding-top: 1rem;">
+                <div class="flex items-center justify-between mb-3">
+                  <h4 class="font-mono text-xs uppercase tracking-widest text-[var(--crema)]">
+                    <.icon name="hero-photo" class="w-4 h-4 inline mr-1" /> Imagen del Sorteo
+                  </h4>
+                  <button phx-click="hide_upload" class="text-[var(--crema-oscura)] hover:text-[var(--mostaza)] cursor-pointer transition-colors">
+                    <.icon name="hero-x-mark" class="w-4 h-4" />
+                  </button>
+                </div>
+                <form phx-submit="save_image" phx-change="validate">
+                  <input type="hidden" name="draw_id" value={draw["id"]} />
+                  <div phx-drop-target={@uploads.draw_image.ref}
+                    class="p-6 text-center transition-colors"
+                    style="border: 2px dashed rgba(212,160,23,0.25); border-radius: 4px; background: rgba(90,46,16,0.1);">
+                    <.icon name="hero-cloud-arrow-up" class="w-8 h-8 mx-auto text-[var(--mostaza)] opacity-40 mb-2" />
+                    <p class="font-mono text-xs text-[var(--crema-oscura)] mb-3">Arrastra una imagen o selecciona un archivo</p>
+                    <.live_file_input upload={@uploads.draw_image}
+                      class="vintage-input file:mr-4 file:py-1 file:px-3 file:border-0 file:text-xs file:font-mono file:uppercase file:tracking-widest file:bg-[rgba(212,160,23,0.15)] file:text-[var(--mostaza)] file:cursor-pointer cursor-pointer" />
+                  </div>
+                  <div :for={entry <- @uploads.draw_image.entries} class="flex items-center gap-3 mt-3">
+                    <.live_img_preview entry={entry} class="w-20 h-14 object-cover rounded" style="border: 1px solid rgba(212,160,23,0.3);" />
+                    <span class="font-mono text-xs text-[var(--crema-oscura)] flex-1">{entry.client_name}</span>
+                    <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref} phx-value-upload="draw_image"
+                      class="text-[var(--naranja)] hover:text-red-400 cursor-pointer">
+                      <.icon name="hero-x-mark" class="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div :if={@uploads.draw_image.entries != []} class="mt-3">
+                    <.emerald_button type="submit" class="w-full">Guardar Imagen</.emerald_button>
+                  </div>
+                </form>
               </div>
             </div>
 

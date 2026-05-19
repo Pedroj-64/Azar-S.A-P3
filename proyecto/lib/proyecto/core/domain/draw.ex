@@ -17,7 +17,7 @@ defmodule AzarSa.Core.Domain.Draw do
   - created_at: timestamp UTC en string
   """
 
-  def new(id, name, date, ticket_price, fractions, total_tickets) do
+  def new(id, name, date, ticket_price, fractions, total_tickets, image \\ nil) do
     %{
       id: id,
       name: name,
@@ -30,6 +30,7 @@ defmodule AzarSa.Core.Domain.Draw do
       status: :pending,
       winning_number: nil,
       result: nil,
+      image: image,
       created_at: DateTime.utc_now() |> DateTime.to_string()
     }
   end

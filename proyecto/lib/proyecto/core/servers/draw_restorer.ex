@@ -40,15 +40,15 @@ defmodule AzarSa.Core.Servers.DrawRestorer do
 
           case DrawSupervisor.start_draw(draw_id, name, date, ticket_price, fractions, total_tickets) do
             {:ok, _pid} ->
-              Logger.info("[DrawRestorer]   ✔ #{name} (#{draw_id})")
+              Logger.info("[DrawRestorer] #{name} (#{draw_id})")
               :ok
 
             {:error, {:already_started, _pid}} ->
-              Logger.info("[DrawRestorer]   ⊘ #{draw_id} ya estaba vivo")
+              Logger.info("[DrawRestorer] #{draw_id} ya estaba vivo")
               :ok
 
             error ->
-              Logger.warning("[DrawRestorer]   ✘ #{draw_id}: #{inspect(error)}")
+              Logger.warning("[DrawRestorer] #{draw_id}: #{inspect(error)}")
               :error
           end
         end)

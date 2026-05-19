@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-01-03 00:00:00.000000Z",
+  "date": "2026-06-02",
+  "fractions": 3,
+  "id": "sorteo_mayo",
+  "image": null,
+  "name": "Sorteo Especial Mayo",
+  "prizes": [
+    {
+      "amount": 20000000,
+      "created_at": "2026-01-01 00:00:00.000000Z",
+      "id": "prize_may_01",
+      "name": "Gran Premio Mayo"
+    },
+    {
+      "amount": 5000000,
+      "created_at": "2026-01-01 00:00:01.000000Z",
+      "id": "prize_may_02",
+      "name": "Premio Secundario"
+    }
+  ],
+  "result": null,
+  "status": "pending",
+  "ticket_price": 25000,
+  "tickets": {},
+  "total_tickets": 150,
+  "winning_numbers": []
+}

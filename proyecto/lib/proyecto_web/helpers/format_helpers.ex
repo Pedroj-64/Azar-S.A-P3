@@ -18,14 +18,20 @@ defmodule ProyectoWeb.FormatHelpers do
   @doc "Alias de `fmt/1` para compatibilidad."
   def format_number(n), do: fmt(n)
 
-  @doc "Retorna la imagen SVG correspondiente al tier del sorteo según precio."
+  @doc "Retorna la imagen del sorteo: imagen personalizada si existe, o SVG por tier."
   def draw_img(draw) when is_map(draw) do
-    price = draw["ticket_price"] || draw[:ticket_price] || 0
+    custom = draw["image"] || draw[:image]
 
-    cond do
-      price >= 50_000 -> "/images/sorteo_oro.svg"
-      price >= 20_000 -> "/images/sorteo_plata.svg"
-      true -> "/images/sorteo_bronce.svg"
+    if custom && custom != "" do
+      custom
+    else
+      price = draw["ticket_price"] || draw[:ticket_price] || 0
+
+      cond do
+        price >= 50_000 -> "/images/sorteo_oro.svg"
+        price >= 20_000 -> "/images/sorteo_plata.svg"
+        true -> "/images/sorteo_bronce.svg"
+      end
     end
   end
 end

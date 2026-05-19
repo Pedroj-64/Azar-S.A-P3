@@ -66,6 +66,10 @@ defmodule AzarSa.Core.Servers.DrawServer do
     GenServer.call(via(draw_id), :get_revenue)
   end
 
+  def update_image(draw_id, image_path) do
+    GenServer.call(via(draw_id), {:update_image, image_path})
+  end
+
   ## Callbacks
 
   @impl true
@@ -86,6 +90,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
             status: :pending,
             winning_numbers: [],
             result: nil,
+            image: nil,
             created_at: DateTime.utc_now() |> DateTime.to_string()
           }
 
@@ -115,6 +120,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
             status: :pending,
             winning_numbers: [],
             result: nil,
+            image: nil,
             created_at: DateTime.utc_now() |> DateTime.to_string()
           }
 
@@ -162,6 +168,15 @@ defmodule AzarSa.Core.Servers.DrawServer do
         new_state = %{state | tickets: new_tickets}
 
         Store.write(file(state.id), state_to_map(new_state))
+
+        # Notificar compra al cliente
+        NotificationServer.notify(client_id, %{
+          event: :ticket_purchased,
+          draw_id: state.id,
+          draw_name: state.name,
+          number: number_str
+        })
+
         {:reply, {:ok, %{number: number, fraction: fraction}}, new_state}
     end
   end
@@ -186,6 +201,15 @@ defmodule AzarSa.Core.Servers.DrawServer do
         new_tickets = Map.drop(state.tickets, owned_keys)
         new_state = %{state | tickets: new_tickets}
         Store.write(file(state.id), state_to_map(new_state))
+
+        # Notificar devolución al cliente
+        NotificationServer.notify(client_id, %{
+          event: :ticket_returned,
+          draw_id: state.id,
+          draw_name: state.name,
+          number: number_str
+        })
+
         {:reply, :ok, new_state}
       end
     end
@@ -257,18 +281,42 @@ defmodule AzarSa.Core.Servers.DrawServer do
           |> Enum.map(fn pw -> pw["winner_number"] end)
           |> Enum.uniq()
 
-        # Notificar a CADA ganador individual
-        prize_winners
-        |> Enum.group_by(fn pw -> pw["winner_client_id"] end)
-        |> Enum.each(fn {client_id, client_prizes} ->
-          total_won = Enum.sum(Enum.map(client_prizes, fn p -> p["prize_amount"] end))
+        # Notificar a CADA ganador individual y acreditar premio a su billetera
+        winner_client_ids =
+          prize_winners
+          |> Enum.group_by(fn pw -> pw["winner_client_id"] end)
+          |> Enum.map(fn {client_id, client_prizes} ->
+            total_won = Enum.sum(Enum.map(client_prizes, fn p -> p["prize_amount"] end))
 
+            # Acreditar premio a la billetera del ganador
+            AzarSa.Core.Services.ClientService.credit_balance(client_id, total_won)
+
+            NotificationServer.notify(client_id, %{
+              event: :draw_winner,
+              draw_id: state.id,
+              draw_name: state.name,
+              number: Enum.map(client_prizes, fn p -> p["winner_number"] end) |> Enum.join(", "),
+              prize: total_won
+            })
+
+            client_id
+          end)
+
+        # Notificar a los participantes que NO ganaron
+        all_participants =
+          state.tickets
+          |> Map.values()
+          |> Enum.map(fn t -> t["client_id"] end)
+          |> Enum.uniq()
+
+        loser_ids = all_participants -- winner_client_ids
+
+        Enum.each(loser_ids, fn client_id ->
           NotificationServer.notify(client_id, %{
-            event: :draw_winner,
+            event: :draw_completed,
             draw_id: state.id,
             draw_name: state.name,
-            number: Enum.map(client_prizes, fn p -> p["winner_number"] end) |> Enum.join(", "),
-            prize: total_won
+            winning_numbers: Enum.join(winning_numbers, ", ")
           })
         end)
 
@@ -403,6 +451,14 @@ defmodule AzarSa.Core.Servers.DrawServer do
     {:reply, {:ok, revenue}, state}
   end
 
+  # Actualiza la imagen del sorteo
+  @impl true
+  def handle_call({:update_image, image_path}, _from, state) do
+    new_state = %{state | image: image_path}
+    Store.write(file(state.id), state_to_map(new_state))
+    {:reply, :ok, new_state}
+  end
+
   ## Helpers privados
 
   defp via(draw_id) do
@@ -443,6 +499,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
       "status" => state.status,
       "winning_numbers" => state.winning_numbers,
       "result" => state.result,
+      "image" => state[:image],
       "created_at" => state.created_at
     }
   end
@@ -472,6 +529,7 @@ defmodule AzarSa.Core.Servers.DrawServer do
       status: if(map["status"], do: String.to_existing_atom(map["status"]), else: :pending),
       winning_numbers: winning_numbers,
       result: map["result"],
+      image: map["image"],
       created_at: map["created_at"] || DateTime.utc_now() |> DateTime.to_string()
     }
   end

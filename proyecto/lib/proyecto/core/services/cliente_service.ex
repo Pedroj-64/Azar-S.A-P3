@@ -53,24 +53,73 @@ defmodule AzarSa.Core.Services.ClientService do
     end
   end
 
-  #  Obtener balance del cliente
+  #  Obtener balance del cliente (wallet + historial)
   def get_balance(client_id) do
-    draws = Store.list_draws()
+    clients = Store.read(@clients_file)
 
-    if not client_exists?(client_id) do
-      {:error, :client_not_found}
-    else
-      {spent, won} =
-        Enum.reduce(draws, {0, 0}, fn draw, {s, w} ->
-          {s + spent_in_draw(draw, client_id), w + won_in_draw(draw, client_id)}
-        end)
+    case Enum.find(clients, fn c -> c["id"] == client_id end) do
+      nil ->
+        {:error, :client_not_found}
 
-      {:ok,
-       %{
-         spent: spent,
-         won: won,
-         balance: won - spent
-       }}
+      client ->
+        draws = Store.list_draws()
+
+        {spent, won} =
+          Enum.reduce(draws, {0, 0}, fn draw, {s, w} ->
+            {s + spent_in_draw(draw, client_id), w + won_in_draw(draw, client_id)}
+          end)
+
+        wallet = client["balance"] || 500_000
+
+        {:ok,
+         %{
+           wallet: wallet,
+           spent: spent,
+           won: won,
+           balance: won - spent,
+           net_worth: wallet + won - spent
+         }}
+    end
+  end
+
+  # Deducir del balance del cliente (al comprar ticket)
+  def deduct_balance(client_id, amount) do
+    clients = Store.read(@clients_file)
+
+    case Enum.find_index(clients, fn c -> c["id"] == client_id end) do
+      nil ->
+        {:error, :client_not_found}
+
+      idx ->
+        client = Enum.at(clients, idx)
+        current = client["balance"] || 500_000
+
+        if current < amount do
+          {:error, :insufficient_balance}
+        else
+          updated = Map.put(client, "balance", current - amount)
+          new_clients = List.replace_at(clients, idx, updated)
+          Store.write(@clients_file, new_clients)
+          {:ok, current - amount}
+        end
+    end
+  end
+
+  # Acreditar al balance del cliente (al devolver ticket o ganar premio)
+  def credit_balance(client_id, amount) do
+    clients = Store.read(@clients_file)
+
+    case Enum.find_index(clients, fn c -> c["id"] == client_id end) do
+      nil ->
+        {:error, :client_not_found}
+
+      idx ->
+        client = Enum.at(clients, idx)
+        current = client["balance"] || 500_000
+        updated = Map.put(client, "balance", current + amount)
+        new_clients = List.replace_at(clients, idx, updated)
+        Store.write(@clients_file, new_clients)
+        {:ok, current + amount}
     end
   end
 
@@ -110,16 +159,21 @@ defmodule AzarSa.Core.Services.ClientService do
 
   defp won_in_draw(draw, client_id) do
     result = draw["result"] || %{}
-    winner = result["winner_client_id"]
+    prize_winners = result["prize_winners"] || []
 
-    if winner == client_id do
-      total_prizes =
+    if prize_winners != [] do
+      # Sumar todos los premios ganados por este cliente en este sorteo
+      prize_winners
+      |> Enum.filter(fn pw -> pw["winner_client_id"] == client_id end)
+      |> Enum.reduce(0, fn pw, acc -> acc + (pw["prize_amount"] || 0) end)
+    else
+      # Fallback: compatibilidad con resultado simple (solo un ganador)
+      if result["winner_client_id"] == client_id do
         (draw["prizes"] || [])
         |> Enum.reduce(0, fn p, acc -> acc + (p["amount"] || 0) end)
-
-      total_prizes
-    else
-      0
+      else
+        0
+      end
     end
   end
 

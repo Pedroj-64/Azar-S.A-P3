@@ -1,8 +1,8 @@
 [
   {
-    "created_at": "2026-05-12 20:43:18.289758Z",
-    "id": "C3818B23",
+    "id": "admin_001",
+    "username": "admin",
     "password_hash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
-    "username": "admin"
+    "created_at": "2026-01-01 00:00:00.000000Z"
   }
 ]

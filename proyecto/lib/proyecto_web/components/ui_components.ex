@@ -1,6 +1,6 @@
 defmodule ProyectoWeb.UIComponents do
   @moduledoc """
-  Componentes UI con estética Las Vegas Vintage (era dorada, melancólica).
+  Componentes UI con estética Las Vegas o Fallout New Vegas.
   Paleta: mostaza, naranja quemado, chocolate, teal.
   """
   use Phoenix.Component

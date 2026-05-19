@@ -7,6 +7,7 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
     draw = CentralServer.get_draw(draw_id)
     {:ok, available} = CentralServer.get_available_numbers(draw_id)
     client_id = socket.assigns.client_id
+    {:ok, balance_info} = CentralServer.get_client_balance(client_id)
 
     my_tickets =
       (draw.tickets || %{})
@@ -19,6 +20,7 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
       draw_id: draw_id,
       available: available,
       my_tickets: my_tickets,
+      wallet: balance_info.wallet,
       selected_number: nil,
       buy_mode: "full"
     )}
@@ -38,19 +40,40 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
   def handle_event("buy", %{"number" => num_str, "fraction" => frac}, socket) do
     number = String.to_integer(num_str)
     fraction = if frac == "full", do: :full, else: String.to_integer(frac)
+    draw = socket.assigns.draw
+    price = if fraction == :full, do: draw.ticket_price, else: div(draw.ticket_price, max(draw.fractions, 1))
 
-    case CentralServer.buy_ticket(socket.assigns.draw_id, socket.assigns.client_id, number, fraction) do
-      {:ok, _} -> {:noreply, reload(socket) |> put_flash(:info, gettext("flash_ticket_bought", number: number))}
-      {:error, reason} -> {:noreply, put_flash(socket, :error, translate_error(reason))}
+    # Check wallet balance first
+    case CentralServer.deduct_client_balance(socket.assigns.client_id, price) do
+      {:ok, _new_balance} ->
+        case CentralServer.buy_ticket(socket.assigns.draw_id, socket.assigns.client_id, number, fraction) do
+          {:ok, _} ->
+            {:noreply, reload(socket) |> put_flash(:info, gettext("flash_ticket_bought", number: number))}
+          {:error, reason} ->
+            # Refund if ticket buy failed
+            CentralServer.credit_client_balance(socket.assigns.client_id, price)
+            {:noreply, put_flash(socket, :error, translate_error(reason))}
+        end
+      {:error, :insufficient_balance} ->
+        {:noreply, put_flash(socket, :error, "Saldo insuficiente. Tu billetera tiene $#{fmt(socket.assigns.wallet)}")}
+      {:error, reason} ->
+        {:noreply, put_flash(socket, :error, translate_error(reason))}
     end
   end
 
   @impl true
   def handle_event("return", %{"number" => num_str}, socket) do
     number = String.to_integer(num_str)
+    draw = socket.assigns.draw
+    price = div(draw.ticket_price, max(draw.fractions, 1))
+
     case CentralServer.return_ticket(socket.assigns.draw_id, socket.assigns.client_id, number) do
-      :ok -> {:noreply, reload(socket) |> put_flash(:info, gettext("flash_ticket_returned"))}
-      {:error, reason} -> {:noreply, put_flash(socket, :error, translate_error(reason))}
+      :ok ->
+        # Refund the ticket price
+        CentralServer.credit_client_balance(socket.assigns.client_id, price)
+        {:noreply, reload(socket) |> put_flash(:info, gettext("flash_ticket_returned"))}
+      {:error, reason} ->
+        {:noreply, put_flash(socket, :error, translate_error(reason))}
     end
   end
 
@@ -59,8 +82,9 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
     draw = CentralServer.get_draw(draw_id)
     {:ok, available} = CentralServer.get_available_numbers(draw_id)
     client_id = socket.assigns.client_id
+    {:ok, balance_info} = CentralServer.get_client_balance(client_id)
     my_tickets = (draw.tickets || %{}) |> Enum.filter(fn {_k, t} -> t["client_id"] == client_id end) |> Enum.map(fn {_k, t} -> t end)
-    assign(socket, draw: draw, available: available, my_tickets: my_tickets, selected_number: nil)
+    assign(socket, draw: draw, available: available, my_tickets: my_tickets, wallet: balance_info.wallet, selected_number: nil)
   end
 
   @impl true
@@ -82,6 +106,13 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
               <p><.icon name="hero-banknotes" class="w-4 h-4 inline mr-2" />{gettext("buy_ticket_label")} ${fmt(@draw.ticket_price)}</p>
               <p><.icon name="hero-squares-2x2" class="w-4 h-4 inline mr-2" />{gettext("buy_fractions_label", count: @draw.fractions)}</p>
               <p><.icon name="hero-ticket" class="w-4 h-4 inline mr-2" />{gettext("buy_total_tickets_label", count: @draw.total_tickets)}</p>
+            </div>
+            <%!-- Wallet Balance --%>
+            <div class="mt-4 p-3" style="border-radius: 2px; background: rgba(42,107,107,0.1); border: 1px solid rgba(42,107,107,0.25);">
+              <p class="font-mono text-xs uppercase tracking-widest text-[var(--crema-oscura)] mb-1">
+                <.icon name="hero-wallet" class="w-4 h-4 inline mr-1" /> Tu billetera
+              </p>
+              <p class="font-display text-2xl text-[var(--teal-lt)]">${fmt(@wallet)}</p>
             </div>
             <%!-- Prizes --%>
             <div :if={@draw.prizes != []} class="mt-4 pt-4" style="border-top: 1px solid rgba(212,160,23,0.15);">
@@ -139,14 +170,27 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
             </div>
 
             <div class="grid grid-cols-8 md:grid-cols-10 gap-2 max-h-96 overflow-y-auto p-1">
-              <button :for={num <- @available.full}
-                phx-click={if @buy_mode == "full", do: "buy", else: "select_number"}
+              <%!-- In full mode: show only fully available numbers, click to buy --%>
+              <button :if={@buy_mode == "full"} :for={num <- @available.full}
+                phx-click="buy"
                 phx-value-number={num}
                 phx-value-fraction="full"
-                data-confirm={if @buy_mode == "full", do: gettext("buy_full_confirm", number: num)}
+                data-confirm={gettext("buy_full_confirm", number: num)}
                 class="aspect-square flex items-center justify-center text-xs font-mono cursor-pointer transition-all
                        text-[var(--crema-oscura)] hover:text-[var(--mostaza)] hover:halo"
                 style="background: rgba(90,46,16,0.25); border: 1px solid rgba(212,160,23,0.1); border-radius: 2px;">
+                {num}
+              </button>
+              <%!-- In fraction mode: show all numbers with available fractions --%>
+              <button :if={@buy_mode == "fraction"} :for={num <- fraction_numbers(@available)}
+                phx-click="select_number"
+                phx-value-number={num}
+                class={"aspect-square flex items-center justify-center text-xs font-mono cursor-pointer transition-all " <>
+                  if(@selected_number == num,
+                    do: "text-[var(--teal-lt)] font-bold",
+                    else: "text-[var(--crema-oscura)] hover:text-[var(--mostaza)]"
+                  )}
+                style={"background: #{if @selected_number == num, do: "rgba(42,107,107,0.2)", else: "rgba(90,46,16,0.25)"}; border: 1px solid #{if @selected_number == num, do: "rgba(42,107,107,0.4)", else: "rgba(212,160,23,0.1)"}; border-radius: 2px;"}>
                 {num}
               </button>
             </div>
@@ -158,19 +202,43 @@ defmodule ProyectoWeb.Player.BuyTicketLive do
                 {gettext("fraction_of_number")} <span class="font-display text-[var(--teal-lt)]">#{@selected_number}</span>:
               </p>
               <div class="flex gap-2 flex-wrap">
-                <button :for={frac <- Map.get(@available.fractions, @selected_number, [])}
+                <button :for={frac <- get_fractions(@available, @selected_number)}
                   phx-click="buy" phx-value-number={@selected_number} phx-value-fraction={to_string(frac)}
                   data-confirm={gettext("buy_fraction_confirm", frac: frac, number: @selected_number)}
-                  class="px-4 py-2 font-mono text-sm cursor-pointer transition-all text-[var(--teal-lt)]"
+                  class="px-4 py-2 font-mono text-sm cursor-pointer transition-all text-[var(--teal-lt)] hover:bg-[rgba(42,107,107,0.25)]"
                   style="background: rgba(42,107,107,0.12); border: 1px solid rgba(42,107,107,0.3); border-radius: 2px;">
                   {gettext("fraction_btn", frac: frac)}
                 </button>
               </div>
+              <p :if={get_fractions(@available, @selected_number) == []} class="font-mono text-xs text-[var(--crema-oscura)] italic">
+                Todas las fracciones de este número ya están vendidas
+              </p>
             </div>
           </.glass_card>
         </div>
       </div>
     </div>
     """
+  end
+
+  # Get sorted list of numbers that have at least one available fraction
+  defp fraction_numbers(available) do
+    available.fractions
+    |> Enum.filter(fn {_num, fracs} -> fracs != [] end)
+    |> Enum.map(fn {num, _fracs} -> num end)
+    |> Enum.sort_by(fn num -> String.to_integer(num) end, :desc)
+  rescue
+    _ -> []
+  end
+
+  # Robust fraction lookup: try string key, then integer key
+  defp get_fractions(available, number) do
+    fracs = available.fractions
+    Map.get(fracs, number) ||
+      Map.get(fracs, to_string(number)) ||
+      Map.get(fracs, String.to_integer(number)) ||
+      []
+  rescue
+    _ -> []
   end
 end

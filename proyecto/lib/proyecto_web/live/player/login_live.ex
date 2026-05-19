@@ -6,7 +6,13 @@ defmodule ProyectoWeb.Player.LoginLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: gettext("player_login_title"))}
+    {:ok, assign(socket, page_title: gettext("player_login_title"), login_error: nil)}
+  end
+
+  @impl true
+  def handle_params(_params, _uri, socket) do
+    error = Phoenix.Flash.get(socket.assigns.flash, :error)
+    {:noreply, assign(socket, login_error: error)}
   end
 
   @impl true
@@ -28,6 +34,14 @@ defmodule ProyectoWeb.Player.LoginLive do
             </div>
             <h1 class="font-display text-3xl text-[var(--crema)] neon-teal">{gettext("player_login_title")}</h1>
             <div class="divider-ornament mt-4 text-[0.6rem]">◈</div>
+          </div>
+
+          <%!-- Error Message --%>
+          <div :if={@login_error} class="mb-5 p-3 page-enter" style="border-radius: 2px; background: rgba(194,82,26,0.15); border: 1px solid rgba(194,82,26,0.3);">
+            <div class="flex items-center gap-2">
+              <.icon name="hero-exclamation-triangle" class="w-5 h-5 text-[var(--naranja)] shrink-0" />
+              <p class="font-mono text-sm text-[var(--naranja)]">{@login_error}</p>
+            </div>
           </div>
 
           <form action={~p"/session/player"} method="post" class="space-y-5">

@@ -1,0 +1,58 @@
+{
+  "created_at": "2026-01-02 00:00:00.000000Z",
+  "date": "2026-05-22",
+  "fractions": 2,
+  "id": "sorteo_express",
+  "image": null,
+  "name": "Sorteo Express",
+  "prizes": [
+    {
+      "amount": 1000000,
+      "created_at": "2026-01-01 00:00:00.000000Z",
+      "id": "prize_exp_01",
+      "name": "Premio Único"
+    }
+  ],
+  "result": {
+    "drawn_at": "2026-05-19 13:13:17.686296Z",
+    "prize_winners": [
+      {
+        "prize_amount": 1000000,
+        "prize_id": "prize_exp_01",
+        "prize_name": "Premio Único",
+        "winner_client_id": "client_CARLOS01",
+        "winner_fraction": "full",
+        "winner_number": "7"
+      }
+    ],
+    "total_prize": 1000000,
+    "winner_client_id": "client_CARLOS01",
+    "winner_number": "7"
+  },
+  "status": "done",
+  "ticket_price": 10000,
+  "tickets": {
+    "13_full": {
+      "bought_at": "2026-01-05 11:00:00.000000Z",
+      "client_id": "client_ANA002",
+      "fraction": "full",
+      "number": "13"
+    },
+    "25_1": {
+      "bought_at": "2026-01-05 12:00:00.000000Z",
+      "client_id": "client_LUIS003",
+      "fraction": "1",
+      "number": "25"
+    },
+    "7_full": {
+      "bought_at": "2026-01-05 10:00:00.000000Z",
+      "client_id": "client_CARLOS01",
+      "fraction": "full",
+      "number": "7"
+    }
+  },
+  "total_tickets": 50,
+  "winning_numbers": [
+    "7"
+  ]
+}

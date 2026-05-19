@@ -51,6 +51,18 @@ defmodule AzarSa.Core.Servers.CentralServer do
     GenServer.call(__MODULE__, {:get_client_prizes, client_id})
   end
 
+  def deduct_client_balance(client_id, amount) do
+    result = ClientService.deduct_balance(client_id, amount)
+    log_op("deduct_balance(#{client_id}, #{amount})", result)
+    result
+  end
+
+  def credit_client_balance(client_id, amount) do
+    result = ClientService.credit_balance(client_id, amount)
+    log_op("credit_balance(#{client_id}, #{amount})", result)
+    result
+  end
+
   # --- Sorteos (Bypass CentralServer Process -> Direct to DrawServer) ---
 
   def create_draw(draw_id, name, date, ticket_price, fractions, total_tickets) do
@@ -147,6 +159,12 @@ defmodule AzarSa.Core.Servers.CentralServer do
   def delete_prize(draw_id, prize_id) do
     result = try_call(draw_id, fn -> DrawServer.delete_prize(draw_id, prize_id) end)
     log_op("delete_prize(#{draw_id}, #{prize_id})", result)
+    result
+  end
+
+  def update_draw_image(draw_id, image_path) do
+    result = try_call(draw_id, fn -> DrawServer.update_image(draw_id, image_path) end)
+    log_op("update_draw_image(#{draw_id})", result)
     result
   end
 
